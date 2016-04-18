@@ -15,7 +15,7 @@ print sum / n
 
 
 #九九乘法表
-# for x in range(1,10):
-#     print
-#     for y in range(1,x+1):
-#         print  '%d x %d = %2d' % (x,y,x*y)  ,
+for x in range(1,10):
+    print
+    for y in range(1,x+1):
+        print  '%d x %d = %2d' % (x,y,x*y)  ,

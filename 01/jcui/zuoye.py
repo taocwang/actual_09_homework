@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+# by jcui
+# by 2016-04-18
 
 sum = 0
 num = 0

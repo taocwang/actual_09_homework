@@ -22,3 +22,13 @@ for x in range(1,10):
 
 
 #取列表最大的两个值
+list = [1,2,3,4,54,5,6,7,8,9,9,45]
+print list
+m = 0
+n = 0
+for i in list:
+    if i > m:
+        m = i
+    elif n < i <m:
+        n = i
+print m,n

@@ -38,7 +38,7 @@ print m,n
 sum = 10000
 n = 0
 while True:
-    sum = sum * (1+0.03)
+    sum = sum * (1+0.003)
     if sum >= 20000:
         break
     n = n + 1

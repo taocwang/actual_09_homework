@@ -1,7 +1,7 @@
 #!/usr/local/bin/python2.7 python
 #Filename : bidaxiao.py
 #Author : LiXu
-#Date : 2016/04/18 
+#Date : 2016/04/19
 
 nums = [1,2,3,2,12,3,1,3,21,2,2,3,4111,22,3333,444,111,4,5,777,65555,45,33,45] 
 num = nums[0]

@@ -13,3 +13,7 @@ for j in nums:
 	if num != j  and num1 < j :
                 num1 = j
 print  num,num1
+
+'''
+功能ok， 可考虑下用一次循环得到结果的情况
+'''

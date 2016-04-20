@@ -3,14 +3,18 @@
 
 #列表取最大值以及最小值
 List = [1,2,3,2,12,3,1,3,21,2,2,3,4111,22,3333,444,111,4,5,777,65555,45,33,45]
-Min,Max = List[0],List[0]
+Min,Max,Max2 = List[0],List[0],List[0]
 for i in List:
     if i < Min:
         Min = i
     elif i > Max:
+        Max2=Max
         Max = i
+    elif i >Max2:
+        Max2 = i
 print "The max is %s" % (Max)
 print "The min is %s" % (Min)
+print "The max2 is %s" % (Max2)
 
 #列表去重
 List2 = []
@@ -37,3 +41,8 @@ for i in range(0,len(List)/2):
         if List[j]>List[len(List)-i-1]:
             List[j],List[len(List)-i-1] = List[len(List)-i-1],List[j]
 print List
+
+
+'''
+作业功能ok，自学能力强，继续加油
+'''

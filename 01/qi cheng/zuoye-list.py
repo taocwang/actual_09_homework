@@ -12,3 +12,7 @@ for i in a:
     if i != b and c < i: 
        c = i 
 print b,c 
+
+'''
+功能ok，可考虑循环一次的时候如何完成
+'''

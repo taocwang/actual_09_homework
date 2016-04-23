@@ -43,3 +43,8 @@ while True:
         break
     n = n + 1
 print "%d年之后钱翻倍" % n
+
+
+'''
+作业ok，在写代码时注意变量命名与python关键字和内置变量冲突，比如sum、list的使用，随课程介绍经验积累，加油
+'''

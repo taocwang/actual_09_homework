@@ -13,3 +13,7 @@ for i in li:
         num[1] = i
 
 print "The large number is %d, The bigger number is %d" %(num[0], num[1])
+
+'''
+功能ok，可以考虑下该种做法的优缺点，比如list中都有负数呢？
+'''

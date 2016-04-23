@@ -37,3 +37,8 @@ for i in range(0,len(List)/2):
         if List[j]>List[len(List)-i-1]:
             List[j],List[len(List)-i-1] = List[len(List)-i-1],List[j]
 print List
+
+
+'''
+作业功能ok，自学能力强，继续加油
+'''

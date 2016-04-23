@@ -6,3 +6,7 @@ for i in range(1,10):
     for j in range(1,i+1):
         print "%s * %s = %s\t" % (j,i,i*j),
     print
+
+'''
+功能ok
+'''

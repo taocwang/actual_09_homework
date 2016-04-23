@@ -15,3 +15,8 @@ for nu in num:
         next_max=nu
 
 print "最大的两个数字是%d和%d" % (max,next_max)
+
+
+'''
+功能ok，后续随着课程的积累，尽量避免python中关键字和已使用变量的冲突定义
+'''

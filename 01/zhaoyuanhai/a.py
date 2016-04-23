@@ -7,3 +7,7 @@ for i in range(1,10):
         print "%d * %d = %d" %(j, i, i * j),
     print ""
 
+
+'''
+功能ok
+'''

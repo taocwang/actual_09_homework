@@ -11,7 +11,8 @@ while num != '' :
     if num.isdigit():
         sum = sum + int(num)
         n = n + 1.0
-
+    else:
+        n = 1
 print sum / n
 
 

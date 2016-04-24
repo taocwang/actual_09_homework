@@ -219,3 +219,10 @@ num_listaa[-1].append(123)
 print num_listaa
 num_listaa[-1].append(123)
 print num_listaa
+
+
+'''
+作业：
+1.随机抽取两个人的名字
+2.插入排序法
+'''

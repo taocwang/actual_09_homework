@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # by jcui
-# by 2016-04-20
+# by 2016-04-24
 
 
 #输入数字求平均数
@@ -24,7 +24,7 @@ print "九九乘法表:------------------------------------------------"
 for x in range(1,10):
     print
     for y in range(1,x+1):
-        print  '%d x %d = %2d' % (x,y,x*y)  ,
+        print  '%d x %d = %2d' % (y,x,x*y)  ,
 
 print "\n "
 
@@ -45,7 +45,7 @@ print m,n
 
 
 
-
+print list
 #列表排序
 for i in range(0,len(list)):
     for j in range(i+1,len(list)):

@@ -45,7 +45,7 @@ print m,n
 
 
 
-
+print list
 #列表排序
 for i in range(0,len(list)):
     for j in range(i+1,len(list)):

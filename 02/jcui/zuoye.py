@@ -9,13 +9,25 @@
 '''
 # num_list = [1,3,5,6,8,9]
 num_list = [-1, 5, 6, 10, 23, 34, 123, 213, 344, 435, 65535]
-# nums = int(raw_input("请输入要查找的数字:"))
-#
-# if nums < len(num_list)/2:
-#     print 'aa'
+nums = int(raw_input("%s 请从列表中选择查找的数字:" % num_list))
+print nums
+mid = len(num_list)/2
+while True:
+    if mid == 0  :
+        print mid
+        break
+    if nums > num_list[mid]:
+        mid = mid + mid/2
+    elif nums < num_list[mid]:
+        mid = mid - mid/2
+    else:
+        print mid
+        break
 
 
-
+'''
+#猜数字的游戏
+'''
 
 
 '''

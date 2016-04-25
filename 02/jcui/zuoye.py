@@ -8,6 +8,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 '''
 # num_list = [1,3,5,6,8,9]
+num_list = [-1, 5, 6, 10, 23, 34, 123, 213, 344, 435, 65535]
 # nums = int(raw_input("请输入要查找的数字:"))
 #
 # if nums < len(num_list)/2:
@@ -23,14 +24,14 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 '''
 import random
-name_list = ['changhuwei','guoyunfei','hjun','huxianglin','jcui','jinderui','kk','lixu','qctest','qicheng','shezhaohui','tanshuai','woniu','xionghuihui','yangruiyou','zhaoyong','zhaoyuanhai','zhouyang','zz']
+name_list = ['靳德瑞', '祁成', '鲍鹏飞', '佘朝辉', '常华伟', '崔佳', '赵云海', '谭帥','李续', '郭云飞', '周福成', '桑鹏亮','赵勇']
 '''
 #方法一
 '''
-num1 = random.randint(1,len(name_list))
+num1 = random.randint(1,len(name_list)-1)
 name1 = name_list[num1]
 name_list.pop(num1)
-num2 = random.randint(1,len(name_list))
+num2 = random.randint(1,len(name_list)-1)
 name2 = name_list[num2]
 print "本次抽查%s,%s的作业" % (name1,name2)
 '''

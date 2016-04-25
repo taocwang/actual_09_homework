@@ -212,3 +212,19 @@ print max(num_num)
 print min(num_num)
 print num_num.index(3)
 print num_num.count(3)
+
+num_listaa = (1,2,5,65,6,[])
+print num_listaa
+num_listaa[-1].append(123)
+print num_listaa
+num_listaa[-1].append(123)
+print num_listaa
+
+
+'''
+作业：
+1.随机抽取两个人的名字
+2.插入排序法
+3.二分查找
+4.mm图
+'''

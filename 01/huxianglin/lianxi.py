@@ -103,18 +103,18 @@ names=['woniu','wd','kk']
 
 
 #希尔排序
-List = []
-for i in range(0,10):
-    List.append(random.randint(0,100))
-grep = len(List)/2
-while grep > 0:
-    for i in range(grep,len(List)):
-        j=i
-        tmp=List[i]
-        while j>=grep and List[j-grep]>tmp:
-            List[j-grep],List[j]=List[j],List[j-grep]
-            j-=grep
-    grep=grep/2
-print List
-        
-    
+# List = []
+# for i in range(0,20):
+#     List.append(random.randint(0,100))
+# grep = len(List)/2
+# while grep > 0:
+#     for i in range(grep,len(List)):
+#         j=i
+#         tmp=List[i]
+#         while j>=grep and List[j-grep]>tmp:
+#             List[j-grep],List[j]=List[j],List[j-grep]
+#             j-=grep
+#     grep=grep/2
+#     print List
+# print List
+  

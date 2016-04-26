@@ -71,13 +71,27 @@ print "方法二:本次抽查%s,%s的作业" % (names[0],names[1])
     所谓插入排序法，就是检查第i个数字，如果在它的左边的数字比它大，进行交换，这个动作一直继续下去，直到这个数字的左边数字比它还要小，就可以停止了。插入排序法主要的回圈有两个变数：i和j，每一次执行这个回圈，就会将第i个数字放到左边恰当的位置去。
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 '''
+'''
+方法一
+'''
 num_list = [23,344,34,5,6,-1,213,65535,123,435,10]
 for x in range(0,len(num_list)):
     for y in range(0,x+1):   #每次插入的数据与新的序列中的数做比较
         if num_list[x] < num_list[y]:
             num_list[x],num_list[y] = num_list[y],num_list[x]
-print "插入排序",num_list
+    # print num_list #调试用
+print "插入排序(升幂)",num_list
 
+'''
+方法二
+'''
+num_list = [23,344,34,5,6,-1,213,65535,123,435,10]
+for x in range(0,len(num_list)):
+    for y in range(x+1,len(num_list)):   #每次插入的数据与新的序列中的数做比较
+        if num_list[x] < num_list[y]:
+            num_list[x],num_list[y] = num_list[y],num_list[x]
+    # print num_list #调试用
+print "插入排序(降幂)",num_list
 
 
 '''

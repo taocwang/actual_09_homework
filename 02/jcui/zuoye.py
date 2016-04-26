@@ -10,17 +10,7 @@
 # num_list = [1,3,5,6,8,9]
 num_list = [-1, 5, 6, 10, 23, 34, 123, 213, 344, 435, 65535]
 nums = int(raw_input("%s 请从列表中选择查找的数字:" % num_list))
-left = 0
-right = len(num_list)-1
-mid = len(num_list[left:right])/2
-while left<=right:
-    if nums == num_list[mid]:
-        print mid
-        break
-    elif nums > num_list[mid]:
-        mid = mid + (right - mid)/2 + 1
-    else:
-        mid = mid - (right - mid)/2
+
 
 '''
 #猜数字的游戏

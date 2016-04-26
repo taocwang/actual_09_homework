@@ -1,6 +1,6 @@
 #encoding:utf-8
 ''
-
+import random
 '''
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 #二分查找
@@ -15,7 +15,7 @@ right = len(num_list)-1
 mid = len(num_list)/2
 while left <= right:
     if nums == num_list[mid] :
-        print mid
+        print "您输入的数字:%s在列表的索引位置为:%s" % (nums,mid)
         break
     elif nums > num_list[mid]:
         left = mid + 1
@@ -23,10 +23,25 @@ while left <= right:
     else :
         right = mid - 1
         mid = mid - len(num_list[left:right])/2  - 1
+else:
+    print "您输入的数字:%s不在列表中" % nums
 
 '''
 #猜数字的游戏
 '''
+nums = random.randint(0,100)
+while True :
+    guess = int(raw_input('Please guess a family of 0-100 number:'))
+    if guess >100 or guess < 0 :
+        print "您输入的数字超出范围,请重新输入"
+    else:
+        if nums == guess:
+            print "恭喜你猜对了!!!"
+            break
+        elif guess > nums:
+            print "您猜的数字太大了"
+        else:
+            print "您猜的数字太小了"
 
 
 '''
@@ -34,7 +49,6 @@ while left <= right:
 #随机抽取两面同学的作业
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 '''
-import random
 name_list = ['靳德瑞', '祁成', '鲍鹏飞', '佘朝辉', '常华伟', '崔佳', '赵云海', '谭帥','李续', '郭云飞', '周福成', '桑鹏亮','赵勇']
 '''
 #方法一

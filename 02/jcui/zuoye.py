@@ -42,6 +42,29 @@ def binary_search():
         print "您输入的数字:%s不在列表中" % nums ,
 
 '''
+二分查找优化版本
+'''
+@time_consuming()
+def binary_search_two():
+   num_list = [-1, 5, 6, 10, 23, 34, 123, 213, 344, 435, 65535]
+   nums = int(raw_input("%s 请从列表中选择查找的数字:" % num_list))
+   left = 0
+   right = len(num_list)
+   while True:
+       if left <= right:
+           mid = (left+right)/2
+           if nums == num_list[mid]:
+               print "您输入的数字:%s在列表的索引位置为:%s" % (nums,mid) ,
+               break
+           elif nums > num_list[mid]:
+               left = mid + 1
+           else:
+               right = mid - 1
+       else:
+           print "您输入的数字:%s不在列表中" % nums ,
+
+
+'''
 #猜数字的游戏
 '''
 

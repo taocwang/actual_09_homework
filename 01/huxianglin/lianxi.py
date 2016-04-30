@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import random
-
+import json
 names=['woniu','wd','kk']
 # name = raw_input("please input your name:")
 # Tag=False
@@ -117,4 +117,3 @@ names=['woniu','wd','kk']
 #     grep=grep/2
 #     print List
 # print List
-  

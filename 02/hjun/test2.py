@@ -12,7 +12,6 @@ while r <= h:
 	x = (r + h) / 2
 	if s[x] == int(num):
 		print '找到了:%s' % s[x]
-		i = 1
 		break
 	elif s[x] > int(num):
 		h = x - 1 

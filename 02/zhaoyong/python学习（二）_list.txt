@@ -1,0 +1,190 @@
+list 
+
+集合：
+1. 可随意增加
+2. 可以删除
+3. 可以修改
+4. 可索引的
+5. 可遍历的
+
+list：列表
+定义：用[]包含的一些元素
+test_list = [0,'xxx',None,True,[],[1]]
+
+1. 访问：
+    索引，从左到右依次编号为0,1,2,3....
+              从右到左依次编号为-1，-2
+list('abc')
+range(0,10)
+range(1,10,2)
+
+names = ['aa','bb']
+'cc' in names
+False
+
+nums = [-1,2,4,5,789]
+max(nums)
+min(nums)
+len(nums)
+random.randint(0,len(nums) - 1 )
+
+list: 访问，max,min,len,in ,for in 
+
+切片:从list获取一部分元素组成新的list
+list_name[start:end:step]
+num_list = range(1,10)
+num_list[::2]
+num_list[3:6]
+
+names=['aa','bb','cc']
+names2=names
+names2[-1]='dd'
+names
+names2
+names3=names[:]
+names3[-1]='ee'
+names
+names2
+names3
+
+赋值：传值，传址
+
+添加一个元素
+names[idx:idx] = [a,b]
+删除某一个元素
+names[idx:idx+1] = []
+names[idx:idx+n] = []
+
+删除指定元素
+del num[::2]
+
+改某一个元素
+names[idx:idx+1] = [xxx]
+
+反转
+num = range(0,10)
+num[::-1]
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+
+列表拼接
+names = ['a','b','c']
+names2 = ['d','e']
+names + names2
+['a', 'b', 'c', 'd', 'e']
+
+names2 * 2
+['d', 'e', 'd', 'e']
+
+[0] * 10
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+list 中的函数
+
+append 追加元素
+count 统计次数
+extend 扩展原列表
+index 获取索引
+insert 插入元素
+pop remove 移除一个元素
+reverse反向存储   （在原基础上反转）
+
+
+1. 队列
+    先进先出
+    works = []
+    
+#coding:utf-8
+works = []
+
+while True:
+    _action = raw_input('please input add or do or exit: ')
+    if _action == 'add':
+       _work = raw_input('请输入工作内容：')
+       works.append(_work)
+    elif _action == 'do':
+       if not works:
+          print '没有工作要完成'
+       else:
+          print '工作内容：%s' %works.pop(0)
+    elif _action == 'exit':
+       if works:
+          print '还有工作要完成'
+       else:
+          break
+    else:
+       print '输入有误重新输入'
+
+2. 堆栈
+    先进后出
+
+for i in range(0, len(num_list)/2):
+    temp = num_list[i]
+    num_list[i] = num_list[]
+
+
+冒泡排序
+
+heigh = [165, 168, 179, 169, 173, 175, 178]
+
+for i in range(0, len(heigh) -1):
+    if heigh[i] > heigh[i+1]:
+          print '交换%s[%s], %s[%s]' %(i,heigh[i],i+1,heigh[i+1]) 
+          heigh[i],heigh[i+1] = heigh[i+1],heigh[i]
+          print heigh
+
+
+heigh = [179, 178, 175, 173, 169, 168, 165]
+for j in range(0, len(heigh), -1):
+    for i in range(0, len(heigh), -1):
+        if heigh[i] > heigh[i+1]:
+              print '交换%s[%s], %s[%s]' %(i,heigh[i],i+1,heigh[i+1]) 
+              heigh[i],heigh[i+1] = heigh[i+1],heigh[i]
+              print heigh
+
+
+
+>>> arr1 = [1,2,3,4,2,12,3,14,3,2,12,3,14,3,21,2,2,3,4111,22,3333,4]
+>>> arr1.sort()
+>>> arr1
+[1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 12, 12, 14, 14, 21, 22, 3333, 4111]
+>>> arr1.sort(reverse=False)
+>>> 
+>>> arr1
+[1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 12, 12, 14, 14, 21, 22, 3333, 4111]
+>>> arr1.sort(reverse=True)
+>>> arr1
+[4111, 3333, 22, 21, 14, 14, 12, 12, 4, 4, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 1]
+>>> set(arr1)
+set([1, 2, 3, 4, 3333, 12, 14, 4111, 21, 22])
+>>> list(set(arr1))
+[1, 2, 3, 4, 3333, 12, 14, 4111, 21, 22]
+
+
+
+tuple
+list => 所有修改的功能去掉
+            不可修改
+
+>>> nums = (1,2,3,[])
+>>> nums
+(1, 2, 3, [])
+>>> nums[1] = 1
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+>>> nums[-1] = 4
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+>>> nums[-1].append(4)
+>>> nums
+(1, 2, 3, [4])
+
+二分查找
+集合是有序的
+
+
+
+
+
+

@@ -1,12 +1,9 @@
 #encoding: utf-8
 
+list_num = [6,5,4,3,2,1]
 
-num_list = [1,2,3,2,12,3,1,3,21,2,2,3,4111,22,3333,444,111,4,5,777,65555,45,33,45]
-
-for i in range(0,len(num_list) -1):
-    print i
-    for j in range(i+1, len(num_list)):
-        print j
-        if num_list[i] > num_list[j]:
-            num_list[i],num_list[j] = num_list[j],num_list[i]
-            print num_list
+for i in range(1,len(list_num)):
+    for j in range(i,0,-1):
+        if list_num[j-1] > list_num[j]:
+            list_num[j-1],list_num[j] = list_num[j],list_num[j-1]
+            print list_num

@@ -1,0 +1,85 @@
+一、序列解包
+	1、x,y,z = 1,2,3
+	2、x,y = y,x
+	3、valude = 1,2,3  x,y,z = values
+
+二、链式赋值
+	1、x = y = somefunction()
+
+
+三、增量赋值
+	1、x = 2 x += 1 x *= 2
+
+
+四、运算符
+	1、is:统一性运算符 和==不一样。
+	2、in:成员资格运算符
+	3、== < > != 比较运算符
+	4、布尔运算符：and or not 只有两种结果：True、False
+	下面的值在作为布尔表达式的时候，会被解释器看做假.其余都为真
+    False、 None、 0、 "" 、()、 []、 {}
+
+    5、字符串只有乘和加： 
+    	>>> 'hi' * 2
+			'hihi'
+
+		>>> 'hi' + 'hello'
+			'hihello
+
+
+五、用户输入：
+	1、raw_input("xxx")  输入内容为字符串
+
+六、 类型
+	1、字符串类型str
+	2、整形int，浮点型float、布尔型 True False
+
+七、id函数可以获得对象的内存地址
+	type 查看对象的类型。是字符串，还是列表 还是元祖等
+
+八、注释
+	1、注释两个方法一个是 在内容前面加入'#'号或者用三引号把内容包起来。
+
+九、条件执行和if语句 
+	1、（如果i>j执行语句1 如果i<j执行语句2 否则执行语句3）
+		if i > j:
+	    	语句1
+		elif i < j:
+	    	语句2
+		else：
+			语句3
+	2、if还支持嵌套（通过缩进来控制）
+		if i > j:
+	    	if a > b:
+	    		语句
+	    	else：
+	    		语句
+		elif xxx：
+			语句
+		else：
+			语句
+十、循环
+	1、while 语句非常灵活。它可以在任何条件为真的情况下重复执行一个代码块
+	2、for 循环 主要为一个集合（序列和其他可迭代对象）的每个元素都执行一个代码块----遍历
+		a、并行迭代
+			names = ['anne', 'beth', 'george', 'damon']
+			ages = [12,45,32,102]
+
+			for i in range(len(names)):
+			    print names[i],'is',ages[i], 'years old'
+
+			或者：
+			for name, age in zip(names,ages):
+				print names[i],'is',ages[i], 'years old'
+
+		b、按索引迭代：
+			names = ['anne', 'beth', 'george', 'damon']
+			for index,name in enumerate(names):
+				print index,name
+	3、跳出循环
+		break 结束循环
+		continue 跳过剩余的循环体，但不结束循环
+
+十一、字符串格式化
+	1、%s 		print "how are %s" %('you')
+	2、format	print "how are {0}" .format('you')    print "how are {name}" .format(name='you')

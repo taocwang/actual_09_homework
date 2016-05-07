@@ -15,7 +15,7 @@ def search2(a,m):
         else:
             print mid
             return mid
-    print -1
+    #print -1
     return -1
 
 if __name__ == "__main__":

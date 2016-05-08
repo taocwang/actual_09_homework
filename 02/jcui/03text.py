@@ -420,17 +420,17 @@ for line in files:
 files.close()
 
 #读取文件并切割
-# fiels = open(path,'r')
-# user_get = files.read()
-#
-# rt_list = []
-# list = user_get.rstrip().split(',')
-# for i in list:
-#     i = i.strip()
-#     name,id = i.split(':')
-#     rt_list.append((name.strip(),int(id)))
-# print rt_list
-# files.close()
+files = open(path,'r')
+user_get = files.read()
+files.close()
+rt_list = []
+list = user_get.rstrip().split(',')
+for i in list:
+    i = i.strip()
+    name,id = i.split(':')
+    rt_list.append((name.strip(),int(id)))
+print rt_list
+
 
 
 #文件写
@@ -457,5 +457,6 @@ server {{
 }}
 
 /home/shre/www_access_20140823.log
+
 cat /home/shre/www_access_20140823.log |awk {print $1""$7""$9} |sort|uniq -c|sort -nr|head -10
 '''

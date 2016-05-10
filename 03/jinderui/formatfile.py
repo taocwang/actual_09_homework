@@ -9,9 +9,8 @@ rf = handle.read().format(port=port,servername=servername,access_log=access_log,
 handle.close()
 
 
-handlewr = open('nnginx.conf1','w')
+handlewr = open('nginx.conf1','w')
 handlewr.write(rf)
 handlewr.close()
 
-#handle.close()
-#print nginxfile.format(port=port,servername=servername,access_log=access_log,home=home,proxy_port=proxy_port)
+

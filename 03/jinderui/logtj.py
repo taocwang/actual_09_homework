@@ -17,7 +17,7 @@ dl = d.items()
 
 # 利用冒泡排序算法对列表进行排序
 for num in range(len(dl)):
-    for num in range(len(dl) -1):
+    for num in range(len(dl) - 1 - num):
         if dl[num][1] > dl[num+1][1]:
             dl[num],dl[num+1] = dl[num+1],dl[num]
 

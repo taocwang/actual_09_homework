@@ -2,7 +2,6 @@
 
 import time
 
-
 def time_consuming():
     def timess(func):
         start = time.time()
@@ -11,6 +10,9 @@ def time_consuming():
         print '用时:%.3fs' % (end-start)
         return
     return timess
+
+
+
 @time_consuming()
 def copy_file():
     sptah='f:\\360yunpan.zip'

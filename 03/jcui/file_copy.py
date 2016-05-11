@@ -24,6 +24,7 @@ def copy_file():
         if len(data) == 0:
             sfile.close()
             dfile.close()
+            print '复制文件完毕,原文件:%s,目的文件:%s' % (sfile.name,dfile.name),
             break
         else:
             dfile.writelines(data)

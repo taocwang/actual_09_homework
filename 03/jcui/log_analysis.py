@@ -51,18 +51,18 @@ def time_consuming():
 #         print '请求IP地址:{ip},请求文件路径:{url},请求结果状态:{status},请求次数:{nums} ' .format(ip=i[0][0],url=i[0][1],status=i[0][2],nums=i[1])
 
 #方法三(执行效率最快)
-# @time_consuming()
-# def log_analysis_2():
-#     file_dict = {}
-#     path = 'f:\www_access_20140823.log'
-#     files1 = open(path,'r')
-#     for i in files1:
-#         x,y,z = i.split()[0],i.split()[6],i.split()[8]
-#         file_dict[(x,y,z)] = file_dict.get((x,y,z),0) + 1
-#     files1.close()
-#     file_list = sorted(file_dict.items(), key=lambda x:x[1], reverse = True)
-#     for i in file_list[0:10]:
-#         print '请求IP地址:{ip},请求文件路径:{url},请求结果状态:{status},请求次数:{nums} ' .format(ip=i[0][0],url=i[0][1],status=i[0][2],nums=i[1])
+@time_consuming()
+def log_analysis_2():
+    file_dict = {}
+    path = 'f:\www_access_20140823.log'
+    files1 = open(path,'r')
+    for i in files1:
+        x,y,z = i.split()[0],i.split()[6],i.split()[8]
+        file_dict[(x,y,z)] = file_dict.get((x,y,z),0) + 1
+    files1.close()
+    file_list = sorted(file_dict.items(), key=lambda x:x[1], reverse = True)
+    for i in file_list[0:10]:
+        print '请求IP地址:{ip},请求文件路径:{url},请求结果状态:{status},请求次数:{nums} ' .format(ip=i[0][0],url=i[0][1],status=i[0][2],nums=i[1])
 
 #方法四(只取最大值,循环10次)
 @time_consuming()
@@ -75,7 +75,7 @@ def log_analysis_3():
         file_dict[(x,y,z)] = file_dict.get((x,y,z),0) + 1
     files1.close()
     file_list = file_dict.items()
-    for n in range(10):  #(由于只取top10,所以找出最大的10个值即可)
+    for n in range(10):  #(由于只取top10,所以找出最大的10个值即可,该值可作为参数传递给函数调用)
         for i in range(0,len(file_list)-1):
             if file_list[i][1] > file_list[i+1][1]:
                 file_list[i],file_list[i+1] = file_list[i+1],file_list[i]

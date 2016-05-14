@@ -14,3 +14,6 @@ handlewr.write(rf)
 handlewr.close()
 
 
+'''
+功能ok，加油
+'''

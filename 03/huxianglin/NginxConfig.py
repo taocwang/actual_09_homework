@@ -25,7 +25,7 @@ server {{
         print 'nginx配置文件已成功保存到文件%s' %(FileName)
     else:
         print 'nginx配置文件保存失败！！！'
-        
+
 def WritFile(FileName,NginxConfigTemplate):
     f=open(FileName,'w')
     try:
@@ -36,7 +36,7 @@ def WritFile(FileName,NginxConfigTemplate):
         print 'File %s Save Failed!!!' %(FileName),e
         f.close()
         return False
-    
+
 if __name__ == "__main__":
     ItemDict={
              'port':9999,
@@ -47,3 +47,8 @@ if __name__ == "__main__":
              'proxy_port':9990
              }
     NginxConfig('nginx.conf',ItemDict)
+
+
+'''
+功能ok，继续加油
+'''

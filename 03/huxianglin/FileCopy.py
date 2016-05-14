@@ -20,6 +20,10 @@ def CopyFile(SrcFile,DestFile,TmpSize):
     finally:
         SF.close()
         DF.close()
-        
+
 if __name__ == "__main__":
     CopyFile('www_access_20140823.log', 'test3.txt', 1024)
+
+'''
+功能ok, 复习了不少东西，加油
+'''

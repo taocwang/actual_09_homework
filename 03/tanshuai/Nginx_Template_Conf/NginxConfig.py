@@ -17,3 +17,6 @@ create_nginx_conf.write(nginx_conf)
 create_nginx_conf.close()
 
 
+'''
+ok，功能ok，继续加油
+'''

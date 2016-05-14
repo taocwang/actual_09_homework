@@ -25,7 +25,7 @@ Ngx_list = Ngx_cnt.items()
 #     for j in range(len(Ngx_list) - 1 - i):
 #         if Ngx_list[j][1] > Ngx_list[j + 1][1]:
 #             Ngx_list[j], Ngx_list[j+1] = Ngx_list[j+1], Ngx_list[j]
-           
+
 # Ngx_top10 = Ngx_list[-1:-11:-1]
 # j = 1
 # for i in Ngx_top10:
@@ -38,5 +38,8 @@ Ngx_dic = sorted(Ngx_list, key=lambda x:x[1], reverse = True)
 for i in range(1,11):
     print "排名%s: 访问IP：%s, 访问文件：%s，访问状态：%s，访问次数：%s;" %(i, Ngx_dic[i][0][0], Ngx_dic[i][0][1], Ngx_dic[i][0][2], Ngx_dic[i][1])
 
-    
-    
+
+
+'''
+功能ok，加油
+'''

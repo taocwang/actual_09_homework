@@ -83,3 +83,9 @@ def log_analysis_3():
         print '请求IP地址:{ip},请求文件路径:{url},请求结果状态:{status},请求次数:{nums} ' .format(ip=i[0][0],url=i[0][1],status=i[0][2],nums=i[1])
 
 
+
+'''
+功能ok，加油
+改进:
+1. line 60, line 74：可以考虑split一次，通过范围的结果通过索引创建key, split一次，总比split3次快把
+'''

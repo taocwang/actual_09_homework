@@ -25,3 +25,7 @@ f = open(fpath, 'r')
 text = f.read()
 f.close()
 print text
+
+'''
+ok，功能ok，继续加油
+'''

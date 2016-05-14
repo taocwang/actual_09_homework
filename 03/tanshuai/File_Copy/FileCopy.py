@@ -17,3 +17,9 @@ while True:
 # 3、关闭文件
 SF.close()
 DF.close()
+
+'''
+功能ok
+改进点:
+1. 可以考虑将代码中的字面常量定义为变量比如www_access_20140823.log=>src_file, test.txt=>dst_file, 1024=>buffer_zie
+'''

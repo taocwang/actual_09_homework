@@ -15,3 +15,9 @@ while True:
 
 s.close()
 f.close()
+
+'''
+功能ok
+1.可以考虑将的代码中的字面常量定义为变量，比如1024=>buffer_size
+2. line12 len(text) == 0 和not text的结果有什么不同呢?能不能相互替换?
+'''

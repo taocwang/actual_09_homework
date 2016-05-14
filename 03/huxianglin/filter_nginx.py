@@ -22,7 +22,12 @@ def FilterNginx(Lines):
     FilterList=sorted(FilterDict.items(),key=lambda x:x[1],reverse=True)
     for i in range(0,10):
         print '访问次数:%s\t访问IP:%-15s\t访问URL:%-50s\t访问状态:%s' %(FilterList[i][1],FilterList[i][0][0],FilterList[i][0][1],FilterList[i][0][2])
-        
+
 if __name__ == "__main__":
     Lines=ReadFile('www_access_20140823.log')
     FilterNginx(Lines)
+
+
+'''
+功能ok, 加油
+'''

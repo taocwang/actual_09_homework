@@ -11,8 +11,11 @@ while True:
 		wh.write(y)
 	else:
 		break
-	
+
 wh.close()
 rh.close()
 
 
+'''
+功能ok，后续写代码的时候注意变量的命名，可以起一个比较见名知意的名字，比如代码的x=>buffer_size
+'''

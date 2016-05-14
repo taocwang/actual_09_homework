@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 d = {}
-''' 
+'''
 打开文件把数据读入到字典里面用ip,url,返回值组成元组作为key。
 先把所有key赋空值，发现key在字典里面就把value加1。直到循环完成
 '''
@@ -22,3 +22,7 @@ dl2 = sorted(dl,key=lambda dl:dl[1])
 # 取top10
 for x in dl2[-1:-11:-1]:
     print "ip:{ip}  url:{url}  state:{state}  num:{num}".format(ip=x[0][0],url=x[0][1],state=x[0][2],num=x[1])
+
+'''
+功能ok，继续加油
+'''

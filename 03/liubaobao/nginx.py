@@ -13,3 +13,10 @@ tpl.close()
 handler = open('cmdb.conf','w')
 handler.write(nginx)
 handler.close()
+
+
+'''
+功能ok, 继续加油
+
+作业怎么少了一个copy文件？
+'''

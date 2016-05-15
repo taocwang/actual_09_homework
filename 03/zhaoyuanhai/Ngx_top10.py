@@ -20,7 +20,7 @@ Ngx_list = Ngx_cnt.items()
 #         if Ngx_list[j][1] > Ngx_list[j + 1][1]:
 #             Ngx_list[j], Ngx_list[j+1] = Ngx_list[j+1], Ngx_list[j]
 
-#最排访问次数最高的10个，然后私密回
+#最排访问次数最高的10个，然后返回后10个
 # for i in range(11):
 #     for j in range(len(Ngx_list) - 1 - i):
 #         if Ngx_list[j][1] > Ngx_list[j + 1][1]:

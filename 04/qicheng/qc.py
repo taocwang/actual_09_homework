@@ -14,5 +14,5 @@ def local_comp(y):
 				y[ii],y[ii + 1] = y[ii + 1],y[ii]
 	return y		
 
-y = [(1,4,5),(5,1,6),(2,3,8)]	
+y = [(2,4,9),(5,1,3),(2,3,4)]	
 print local_comp(y)	

@@ -54,10 +54,12 @@ def time_consuming():
 @time_consuming()
 def log_analysis_2():
     file_dict = {}
-    path = 'f:\www_access_20140823.log'
+    path = '/home/jcui/files/www_access_20140823.log'
     files1 = open(path,'r')
     for i in files1:
-        x,y,z = i.split()[0],i.split()[6],i.split()[8]
+        i = i.split()
+        x,y,z = i[0],i[6] ,i[8]
+        # x,y,z = i.split()[0],i.split()[6],i.split()[8]
         file_dict[(x,y,z)] = file_dict.get((x,y,z),0) + 1
     files1.close()
     file_list = sorted(file_dict.items(), key=lambda x:x[1], reverse = True)
@@ -68,10 +70,11 @@ def log_analysis_2():
 @time_consuming()
 def log_analysis_3():
     file_dict = {}
-    path = 'f:\www_access_20140823.log'
+    path = '/home/jcui/files/www_access_20140823.log'
     files1 = open(path,'r')
     for i in files1:
-        x,y,z = i.split()[0],i.split()[6],i.split()[8]
+        i = i.split()
+        x, y, z = i[0], i[6], i[8]
         file_dict[(x,y,z)] = file_dict.get((x,y,z),0) + 1
     files1.close()
     file_list = file_dict.items()
@@ -79,9 +82,12 @@ def log_analysis_3():
         for i in range(0,len(file_list)-1):
             if file_list[i][1] > file_list[i+1][1]:
                 file_list[i],file_list[i+1] = file_list[i+1],file_list[i]
+
+    write_file = open('/home/jcui/files/top10.txt','w')
     for i in file_list[-1:-11:-1]:
         print '请求IP地址:{ip},请求文件路径:{url},请求结果状态:{status},请求次数:{nums} ' .format(ip=i[0][0],url=i[0][1],status=i[0][2],nums=i[1])
-
+        write_file.writelines('请求IP地址:{ip} 请求文件路径:{url} 请求结果状态:{status} 请求次数:{nums} \n' .format(ip=i[0][0],url=i[0][1],status=i[0][2],nums=i[1]))
+    write_file.close()
 
 
 '''

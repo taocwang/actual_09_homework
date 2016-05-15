@@ -81,7 +81,7 @@ print user3.pop(3)
 print user3.pop(3,None)
 print user3.pop(3,'试试')
 
-#popitem  每次随机删除一个，并返回
+#popitem  每次随机删除一个，并返回 ,如果字典为空的话，则会报错
 print user3.popitem()
 
 #update
@@ -94,6 +94,7 @@ print user1
 print user.update(user1)
 
 #setdefault  演示在下面
+
 
 
 #遍历

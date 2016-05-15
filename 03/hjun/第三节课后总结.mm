@@ -2,14 +2,14 @@
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1462450910840" ID="ID_919536429" MODIFIED="1463213340320" TEXT="&#x7b2c;&#x4e09;&#x8282;&#x8bfe;">
 <font NAME="SansSerif" SIZE="12"/>
-<node CREATED="1462450910840" FOLDED="true" ID="ID_1074074909" MODIFIED="1463242253156" POSITION="right" TEXT="&#x5b57;&#x5178;">
+<node CREATED="1462450910840" ID="ID_1074074909" MODIFIED="1463276519010" POSITION="right" TEXT="&#x5b57;&#x5178;">
 <font NAME="SansSerif" SIZE="12"/>
 <node CREATED="1463232571362" ID="ID_1169247644" MODIFIED="1463232576490" TEXT="&#x589e;">
 <node CREATED="1463232649143" ID="ID_1721983982" MODIFIED="1463232659262" TEXT="dist1 = {}">
 <node CREATED="1463232793708" ID="ID_1657695543" MODIFIED="1463232869435" TEXT="&#x5b9a;&#x4e49;&#x5b57;&#x5178;"/>
 </node>
 <node CREATED="1463232605425" ID="ID_487493133" MODIFIED="1463232636059" TEXT="dist1[key] = valuse">
-<node CREATED="1463232714544" ID="ID_303786282" MODIFIED="1463232744844" TEXT="key&#x53ef;&#x4ee5;&#x662f;&#x4efb;&#x4f55;&#x4e0d;&#x53ef;&#x53d8;&#x53d8;&#x7684;&#x7c7b;&#x578b;"/>
+<node CREATED="1463232714544" ID="ID_303786282" MODIFIED="1463277530454" TEXT="key&#x53ef;&#x4ee5;&#x662f;&#x4efb;&#x4f55;&#x4e0d;&#x53ef;&#x53d8;&#x53d8;&#x7684;&#x7c7b;&#x578b;&#xff0c;key&#x662f;&#x4e00;&#x4e2a;&#x53ef;hash&#x7684;&#x503c;&#x5305;&#x62ec;tuple&#x4e0d;&#x5305;&#x62ec;list"/>
 </node>
 <node CREATED="1463240548732" ID="ID_248116808" MODIFIED="1463240660507" TEXT="dict1=zip([&quot;key1&quot;,&quot;key2&quot;],[&quot;value1&quot;,&quot;value2&quot;])  &#x901a;&#x8fc7;zip()&#x5bf9;dict&#x5b57;&#x5178;&#x8fdb;&#x884c;&#x6279;&#x91cf;&#x8d4b;&#x503c; "/>
 </node>
@@ -18,6 +18,7 @@
 <node CREATED="1463233279662" ID="ID_1721176995" MODIFIED="1463233350336" TEXT="del(dict1) &#x5220;&#x9664;&#x5b57;&#x5178;"/>
 <node CREATED="1463233356125" ID="ID_1555523042" MODIFIED="1463233466602" TEXT="dict1.clear() &#x6e05;&#x9664;&#x5b57;&#x5178;&#x4e2d;&#x7684;&#x6240;&#x6709;&#x9879;,&#x4f46;&#x662f;&#x53ea;&#x662f;&#x5185;&#x5bb9;&#x6e05;&#x7a7a;,&#x5b57;&#x5178;&#x5b9a;&#x4e49;&#x8fd8;&#x5728;"/>
 <node CREATED="1463239096337" ID="ID_248750645" MODIFIED="1463239171681" TEXT="dict1.popitem() &#x968f;&#x673a;&#x79fb;&#x9664;&#x4e00;&#x5bf9;key,value"/>
+<node CREATED="1463277990370" ID="ID_549392976" MODIFIED="1463278057184" TEXT="dict1.pop(&apos;key1&apos;,&apos;none&apos;)  &#x901a;&#x8fc7;key&#x79fb;&#x9664;&#x4e00;&#x5bf9;key,value. &#x5982;&#x679c;key&#x4e0d;&#x5b58;&#x5728;&#x53ef;&#x8fd4;&#x56de;&#x8bbe;&#x7f6e;&#x7684;&#x9ed8;&#x8ba4;&#x503c;"/>
 </node>
 <node CREATED="1463232596125" ID="ID_941169773" MODIFIED="1463232598039" TEXT="&#x6539;">
 <node CREATED="1463233491515" ID="ID_1643287751" MODIFIED="1463233574043" TEXT="dict1[&apos;key2&apos;]= &apos;vlue2&apos; &#x5982;&#x679c;key&#x5b58;&#x5728;&#x5c31;&#x66f4;&#x65b0;,&#x5982;&#x679c;key&#x4e0d;&#x5b58;&#x5728;&#x5c31;&#x521b;&#x5efa;"/>
@@ -44,13 +45,14 @@
 <node CREATED="1463237834973" ID="ID_118710858" MODIFIED="1463238039827" TEXT="&apos;a&apos; in dict1 &#x5b57;&#x5178;&#x53ef;&#x4ee5;&#x901a;&#x8fc7;in&#x6765;&#x5224;&#x65ad;&#x5173;&#x952e;&#x5b57;&#x662f;&#x5426;&#x5b58;&#x5728;&#x4e8e;key&#x4e2d;,&#x8fd4;&#x56de;True&#x6216;false"/>
 <node CREATED="1463237958435" ID="ID_542677506" MODIFIED="1463238012282" TEXT="dict1.has_key(&apos;a&apos;) &#x5b9e;&#x73b0;&#x4e86;in&#x76f8;&#x540c;&#x7684;&#x6548;&#x679c;&#xff0c;&#x5224;&#x65ad;&#x5173;&#x952e;&#x5b57;&#x5e76;&#x8fd4;&#x56de;True&#x548c;false"/>
 </node>
-<node CREATED="1463238233807" ID="ID_118867401" MODIFIED="1463238411427" TEXT="&#x5b57;&#x5178;&#x53d8;list">
+<node CREATED="1463238233807" ID="ID_118867401" MODIFIED="1463277082351" TEXT="&#x5b57;&#x5178;&#x4e0e;list&#x4e92;&#x6362;">
 <node CREATED="1463238416047" ID="ID_1840768766" MODIFIED="1463238638818" TEXT="dict1.items()   &#x5b57;&#x5178;&#x7684;items()&#x65b9;&#x6cd5;&#x628a;&#x5b57;&#x5178;&#x53d8;&#x6210;&#x4e86;list. key value&#x53d8;&#x6210;&#x4e86;list&#x4e2d;&#x7684;&#x5185;&#x5d4c;list&#x6216;tuple"/>
 <node COLOR="#338800" CREATED="1463238646981" ID="ID_1435368523" MODIFIED="1463238757612" TEXT="dict1.keys() &#x5b57;&#x5178;&#x7684;keys()&#x65b9;&#x6cd5;,&#x628a;&#x5b57;&#x5178;&#x4e2d;&#x7684;&#x6240;&#x6709;key&#x8fd4;&#x56de;&#x4e3a;&#x4e00;&#x4e2a;list&#x5217;&#x8868;."/>
 <node CREATED="1463238759351" ID="ID_1825830893" MODIFIED="1463238808168" TEXT="dict1.values() &#x5b57;&#x5178;&#x7684;alues()&#x65b9;&#x6cd5;&#x628a;&#x5b57;&#x5178;&#x4e2d;&#x7684;&#x6240;&#x6709;value&#x8fd4;&#x56de;&#x4e3a;&#x4e00;&#x4e2a;list&#x5217;&#x8868;"/>
+<node CREATED="1463277096992" ID="ID_1300621386" MODIFIED="1463277361146" TEXT="dict([(&apos;key1&apos;,&apos;value1&apos;),(&apos;key2&apos;,&apos;value2&apos;)])   &#x53ef;&#x4ee5;&#x901a;&#x8fc7;dict()&#x628a;list&#x6362;&#x8f6c;&#x6210;&#x5b57;&#x5178;,&#x4f46;&#x5bf9;list&#x7684;&#x683c;&#x5f0f;&#x6709;&#x8981;&#x6c42;"/>
 </node>
 </node>
-<node CREATED="1462450910840" FOLDED="true" ID="ID_1410155049" MODIFIED="1463242254610" POSITION="right" TEXT="&#x5b57;&#x7b26;&#x4e32;">
+<node CREATED="1462450910840" ID="ID_1410155049" MODIFIED="1463276521293" POSITION="right" TEXT="&#x5b57;&#x7b26;&#x4e32;">
 <font NAME="SansSerif" SIZE="14"/>
 <node CREATED="1462450974751" ID="ID_251090419" MODIFIED="1462453003079" TEXT="join">
 <font NAME="SansSerif" SIZE="14"/>
@@ -96,7 +98,7 @@
 </node>
 <node CREATED="1462452831156" ID="ID_1385837794" MODIFIED="1462453003063" TEXT="strip()">
 <font NAME="SansSerif" SIZE="14"/>
-<node CREATED="1462452843002" ID="ID_1176753292" MODIFIED="1462453003062" TEXT="&apos;   hello   &apos;.strip()&#x53bb;&#x6389;&#x5b57;&#x7b26;&#x4e32;&#x524d;&#x540e;&#x7684;&#x7a7a;&#x683c;">
+<node CREATED="1462452843002" ID="ID_1176753292" MODIFIED="1463278667012" TEXT="&apos;   hello   &apos;.strip()&#x53bb;&#x6389;&#x5b57;&#x7b26;&#x4e32;&#x524d;&#x540e;&#x7684;&#x7a7a;&#x683c;,&#x4e5f;&#x53ef;&#x4ee5;&#x6307;&#x5b9a;&#x53c2;&#x6570;strip(&apos;ab&apos;)&#x5220;&#x9664;&#x524d;&#x540e;a&#x6216;b">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
@@ -122,7 +124,7 @@
 <node CREATED="1462881056086" ID="ID_897075057" MODIFIED="1462881284799" TEXT="&apos;hello,world,pc,wd.split(&apos;,&apos;)&apos;&#x5206;&#x9694;&#x5b57;&#x7b26;&#x4e32;&#xff0c;&#x8fd4;&#x56de;&#x4e00;&#x4e2a;list"/>
 </node>
 </node>
-<node CREATED="1463240683536" FOLDED="true" ID="ID_268596587" MODIFIED="1463242256262" POSITION="right" TEXT="&#x6587;&#x672c;&#x8bfb;&#x5199;">
+<node CREATED="1463240683536" ID="ID_268596587" MODIFIED="1463276523226" POSITION="right" TEXT="&#x6587;&#x672c;&#x8bfb;&#x5199;">
 <node CREATED="1463240732325" ID="ID_913679475" MODIFIED="1463240841852" TEXT="rh = open(&apos;1.txt&apos;,&apos;r&apos;)  &#x751f;&#x6210;1.txt&#x6587;&#x4ef6;&#x8bfb;&#x5bf9;&#x8c61;">
 <node CREATED="1463240816983" ID="ID_187584285" MODIFIED="1463241723756" TEXT="rf = rh.read(size) &#x8bfb;&#x53d6;&#x6587;&#x4ef6;&#x5185;&#x5bb9;&#xff0c;&#x8fd4;&#x56de;&#x7684;&#x662f;&#x4e00;&#x4e2a;&#x5b57;&#x7b26;&#x4e32;. size&#x6307;&#x5b9a;&#x8bfb;&#x53d6;&#x6587;&#x4ef6;&#x5927;&#x5c0f;&#x4ee5;&#x5b57;&#x8282;&#x4e3a;&#x5355;&#x4f4d;,&#x53ef;&#x9009;"/>
 <node CREATED="1463240883175" ID="ID_1096181417" MODIFIED="1463241068019" TEXT="rf = rh.readline()  &#x6bcf;&#x6b21;&#x8bfb;&#x53d6;&#x6587;&#x4ef6;&#x7684;&#x4e00;&#x884c;,&#x8bfb;&#x53d6;&#x901f;&#x5ea6;&#x6162;,&#x4e00;&#x822c;&#x5185;&#x5b58;&#x4e0d;&#x591f;&#x65f6;&#x4f7f;&#x7528;"/>

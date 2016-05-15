@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>TOP10访问日志</title>
+		<script src="./statics/echarts.min.js"></script>
+    </head>
+    <body>
+		<h1 style="color:#00ff00;width: 500px;text-align:center;margin:0 auto">TOP10统计圆饼图</h1>
+		<div id="main" style="width: 1000px;height:800px;margin:0 auto"></div>
+		<div id="main2" style="width: 1000px;height:1000px;margin:0 auto"></div>
+		<script>
+		var myChart = echarts.init(document.getElementById('main'));
+		myChart.setOption(
+		{
+			series : [
+				{
+					name: '访问来源',
+					type: 'pie',
+					radius: '30%',
+					roseType: 'angle',
+					data:[
+						{value:674,name:"IP118.112.143.148URL/images/cursor_zoom.cur状态码404"},
+						{value:662,name:"IP118.112.143.148URL/images/cursor_minify.cur状态码404"},
+						{value:220,name:"IP221.12.76.53URL/images/cursor_zoom.cur状态码404"},
+						{value:218,name:"IP221.12.76.53URL/images/cursor_minify.cur状态码404"},
+						{value:116,name:"IP123.174.51.164URL/public/js/weibo.js?20110824状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/js/tbox/box.css?20110820状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/themes/adreambox/main.css?20110820状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/themes/adreambox/link.css状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/js/jquery.jgrow.min.js状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/themes/adreambox/images/btn_top.gif状态码200"},
+]
+				}
+			],
+			itemStyle: {
+				normal: {
+					// 阴影的大小
+					shadowBlur: 800,
+					// 阴影水平方向上的偏移
+					shadowOffsetX: 0,
+					// 阴影垂直方向上的偏移
+					shadowOffsetY: 0,
+					// 阴影颜色
+					shadowColor: 'rgba(0, 77, 0, 0.7)'
+				}}
+		})
+		var myChart2 = echarts.init(document.getElementById('main2'));
+		myChart2.setOption(
+		{
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b} : {c}"
+			},
+			calculable: true,
+			series: [
+				{
+					name:'漏斗图',
+					type:'funnel',
+					left: '10%',
+					top: 60,
+					//x2: 80,
+					bottom: 60,
+					width: '90%',
+					// height: {totalHeight} - y - y2,
+					min: 0,
+					max: 1000,
+					minSize: '0%',
+					maxSize: '100%',
+					sort: 'ascending',
+					gap: 2,
+					label: {
+						normal: {
+							show: true,
+							position: 'inside'
+						},
+						emphasis: {
+							textStyle: {
+								fontSize: 20
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							length: 10,
+							lineStyle: {
+								width: 1,
+								type: 'solid'
+							}
+						}
+					},
+					itemStyle: {
+						normal: {
+							borderColor: '#fff',
+							borderWidth: 1
+						}
+					},
+					data:[
+						{value:674,name:"IP118.112.143.148URL/images/cursor_zoom.cur状态码404"},
+						{value:662,name:"IP118.112.143.148URL/images/cursor_minify.cur状态码404"},
+						{value:220,name:"IP221.12.76.53URL/images/cursor_zoom.cur状态码404"},
+						{value:218,name:"IP221.12.76.53URL/images/cursor_minify.cur状态码404"},
+						{value:116,name:"IP123.174.51.164URL/public/js/weibo.js?20110824状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/js/tbox/box.css?20110820状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/themes/adreambox/main.css?20110820状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/themes/adreambox/link.css状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/js/jquery.jgrow.min.js状态码200"},
+						{value:116,name:"IP123.174.51.164URL/public/themes/adreambox/images/btn_top.gif状态码200"},
+]
+				}
+			]
+		}
+		)
+		</script>
+    </body>
+</html>

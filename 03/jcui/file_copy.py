@@ -15,19 +15,20 @@ def time_consuming():
 
 @time_consuming()
 def copy_file():
+    size=4096
     sptah='f:\\360yunpan.zip'
     dpath='f:\\testcopy.zip'
     sfile = open(sptah,'rb')
     dfile = open(dpath,'wb')
     while True:
-        data = sfile.read(4096)
+        data = sfile.read(size)
         if len(data) == 0:
             sfile.close()
             dfile.close()
             print '复制文件完毕,原文件:%s,目的文件:%s' % (sfile.name,dfile.name),
             break
         else:
-            dfile.writelines(data)
+            dfile.write(data)
 
 '''
 功能ok

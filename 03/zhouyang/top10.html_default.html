@@ -1,0 +1,7 @@
+#!/bin/env python
+#coding:utf8
+
+from SendMail import SmartMessage,MailServer
+msg=SmartMessage("Me <arthas_zyb@163.com>","You <arthas.zyb@163.com>","Your pics","Hereis your pc i liked")
+#msg.addAttachment(open'')
+MailServer("localhost").sendMessage(msg)

@@ -5,12 +5,11 @@
 '''
 
 # 1、打开源文件和目标文件；
-SF = open('www_access_20140823.log', 'rb')
-DF = open('test.txt', 'wb')
-
+SF = open('1.rmvb', 'rb')
+DF = open('2.rmvb', 'wb')
 # 2、读取源文件，并写入目标文件；
 while True:
-    src_file = SF.read(1024)
+    src_file = SF.read()
     if not src_file:
         break
     DF.write(src_file)

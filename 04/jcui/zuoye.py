@@ -97,7 +97,7 @@ def create_page(x,reverse=False):
     #原列表中每个元祖的最大值或最小值
     tbody += '<tr><th>比较值</th>'
     for i in range(0,len(x)):
-        tbody += '<th>%s</th>' % (max_num(x[i],reverse=reverse))
+        tbody += '<th style="color:red;">%s</th>' % (max_num(x[i],reverse=reverse))
     tbody += '</tr>'
     #新列表
     tbody += '<tr><th>新列表</th>'
@@ -121,6 +121,6 @@ if __name__ == '__main__':
     #按元祖中的最大值进行排序
     print list_sort(x)
     #按元祖中的最小值进行排序
-    print list_sort(x, reverse=True)
-    #生成页面
-    create_page(x,reverse=False)
+    print list_sort(x, True)
+    #生成页面展示排序结果
+    create_page(x,False)

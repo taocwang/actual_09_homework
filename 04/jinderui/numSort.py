@@ -21,7 +21,6 @@ def ms(sl):
 
 
 sl = s[:]
-ms(sl=sl)
 print ms(sl=sl)
 
 

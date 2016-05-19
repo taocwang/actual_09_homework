@@ -86,7 +86,7 @@ def page_tmp(thead,tbody,reverse):
         title = "按元祖内数字大小排序(按最小值排序)"
     return page_tmp.format(title = title,thead = thead,tbody = tbody)
 
-def create_page(x,reverse=False):
+def create_page(x,path,reverse=False):
     thead = '<th>名称</th>'
     #原列表
     tbody = '<th>原列表</th>'
@@ -107,9 +107,14 @@ def create_page(x,reverse=False):
     tbody += '</tr>'
 
     #生成html
-    f = open('/home/op/test/index.html','w')
-    f.write(page_tmp(thead,tbody,reverse))
-    f.close()
+    try:
+        f = open(path,'w')
+        f.write(page_tmp(thead,tbody,reverse))
+    except IOError as e:
+        print '写入文件失败: %s' % e
+    else:
+        f.close()
+        print "请访问页面查看结果: %s" % path
 
 
 if __name__ == '__main__':
@@ -117,10 +122,20 @@ if __name__ == '__main__':
     max_num_sort(num_list1)
     num_list2 = [(11, 4), (5, 1), (2, 3), (10, 2), (6, 3),(23,4,43,4),(34,45),(1,1,1,1,1)]
     print list_sort(num_list2)
-    x = random_list(10)
+    num1,num2 = random_list(6),random_list(10)
+    print '随机生成列表: %s' % num1
     #按元祖中的最大值进行排序
-    print list_sort(x)
-    #按元祖中的最小值进行排序
-    print list_sort(x, True)
-    #生成页面展示排序结果
-    create_page(x,False)
+    print '按最大值排序: %s' % list_sort(num1)
+    # #按元祖中的最小值进行排序
+    print '按最小值排序: %s' % list_sort(num1, True)
+
+    '''生成页面展示排序结果
+
+    参数一: num2 随机生成列表,列表中的每个元素为一个元祖,也是随机生成,参数为生成的个数
+    参数二: path 指定文件生成路径,若文件路径错误会触发异常
+    参数三: 默认为False,即按列表中每个元祖的最大值进行排序;True,即为按列表中每个元祖的最小值进行排序
+
+    '''
+    path = '/home/op/test/index.html'
+    create_page(num2,path,True)
+

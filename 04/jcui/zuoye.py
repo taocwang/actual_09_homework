@@ -116,7 +116,7 @@ if __name__ == '__main__':
     num_list1 = [(1, 4), (5, 1), (2, 3), (10, 2), (6, 3)]
     max_num_sort(num_list1)
     num_list2 = [(11, 4), (5, 1), (2, 3), (10, 2), (6, 3),(23,4,43,4),(34,45),(1,1,1,1,1)]
-    list_sort(num_list2)
+    print list_sort(num_list2)
     x = random_list(10)
     #按元祖中的最大值进行排序
     print list_sort(x)

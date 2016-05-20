@@ -1,0 +1,69 @@
+语法：
+try:
+	xxxx
+except:
+	xxxx
+
+把执行的内容用try包起来。如果有异常会执行except。
+
+可以通过关键字捕获：（如果不通过关键字会默认捕获所有的，当然如果不包含这个关键字，就会输出系统本身错误）
+
+tyr:
+	xxxx
+except ZeroDivisionErrot:
+	xxx
+
+内建异常：
+Exception。所有异常的基类。
+AttributeError  特性引用或赋值失败时引发
+IOError	试图打开不存在文件（包括其他情况）时引发
+IndexError 在使用序列中不存在的索引时引发
+keyError 在使用映射中不存在的键时引发
+NameError 在找不到名字（变量）时引发
+SyntaxError 在代码为错误形式时引发
+TypeError 在内建操作或者函数应用于错误类型的对象时引发
+ValueError 在内建操作或者函数应用于正确类型的对象。但是该对象使用不合适的值时引发
+ZeroDivisionError 在除法或者模除操作的第二个参数为0时引发
+
+如果程序中不确定内建异常是什么可以使用Exception
+
+
+except可以有多个：
+tyr:
+	xxxx
+except ZeroDivisionErrot:
+	xxx
+except ValueError:
+	xxx
+
+一个块捕获多个异常
+try:
+	xxx
+except (AttributeError,ValueError,ZeroDivisionErrot)
+
+
+捕获异常。输出系统的错误提示而非自己定义的
+try:
+	xxx
+except (AttributeError,ValueError,ZeroDivisionErrot) as e:
+	print e
+
+
+全捕获：
+	except 后面不接东西。就是把所有类型的异常全部捕获到了
+
+如果有多个异常可以使用：(这样把所有类型的都会捕获到。输出系统的错误)
+exept Exception as e
+
+
+下面这种，try执行成功才会执行else。如果不成功就执行except
+try:
+	xxx
+except:
+	xxx
+else:
+	xxx
+
+
+
+finally字句肯定会被在还行，不管try字句中是否发生异常。finally字句用于关闭文件或者网络套接字时会非常有用。

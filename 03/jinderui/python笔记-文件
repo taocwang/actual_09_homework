@@ -19,5 +19,8 @@
 	5、	f.read()默认读取所有行，可以指定字节  f.readline()一行一行的读  f.readlines()读取所有行返回一个列表
 		f.wirte() f.writelines()
 
-	6、
+	6、对大文件的时候可以是用文件迭代器（通过for循环进行迭代读取）
 
+	7、fileinput模块 对行进行迭代  需要 import fileinput 
+	8、f.seek(offset[,whence])把当前位置，移动到有offest和whence定义的位置
+	9、f.tell()查看指针位置

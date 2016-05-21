@@ -38,3 +38,8 @@ for j in range(len(rlist) - 1):
 			rlist[k], rlist[k + 1] = rlist[k + 1], rlist[k]
 
 print rlist
+
+'''
+非常棒，继续加油
+改进点: 已经学习了函数，将排序函数能不能封装成函数
+'''

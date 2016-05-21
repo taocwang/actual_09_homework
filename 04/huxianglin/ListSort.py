@@ -21,3 +21,15 @@ for i in range(0,len(List)-1):
         if MaxNum(List[i])>MaxNum(List[j]):
             List[i],List[j]=List[j],List[i]
 print List
+
+
+'''
+功能 ok
+排序方法每次保证第i(0->n-1)为最小的元素
+
+改进:
+1. 函数MaxNum，如果Tuple是两个元素的list/tuple是ok的，但是如果是多个呢比如(4, 1, 2)
+    原因: line 12，是不是应该每次和最大的值相比
+
+加油
+'''

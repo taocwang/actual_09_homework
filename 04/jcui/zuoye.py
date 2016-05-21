@@ -139,3 +139,7 @@ if __name__ == '__main__':
     path = '/home/op/test/index.html'
     create_page(num2,path,True)
 
+
+'''
+功能ok，继续加油
+'''

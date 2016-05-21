@@ -14,7 +14,7 @@ for i in range(0,len(list_a)-1):
         else:
             if list_a[j][1] > list_a[j+1][1]:
                 list_a[j],list_a[j+1] = list_a[j+1],list_a[j]
-print '----------------one------------------------'          
+print '----------------one------------------------'
 print list_a
 
 
@@ -62,3 +62,7 @@ def list_sort1(list_c):
     return temp_list_c
 print '----------four---------------'
 print list_sort1(list_c)
+
+'''
+功能ok，非常棒，加油
+'''

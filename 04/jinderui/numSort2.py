@@ -10,11 +10,11 @@ def tt(sl):
 			maxnuml.append(k)
 		else:
 			maxnuml.append(v)
-			
+
 	return maxnuml
 
-sl = [(1,4),(5,1),(2,3)]	
-	
+sl = [(1,4),(5,1),(2,3)]
+
 #循环比较最大值，如果值maxnum[x]大于maxnum[x+1] 就把最大值和对应的元组都进行调换
 maxnum = tt(sl=sl)
 def maxList(sl):
@@ -26,4 +26,6 @@ def maxList(sl):
 	return sl
 print maxList(sl)
 
-
+'''
+功能ok， 加油
+'''

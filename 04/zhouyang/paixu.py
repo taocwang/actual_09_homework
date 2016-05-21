@@ -11,3 +11,13 @@
 	    if max(src_list[i]) > max(src_list[i+1]):
 		src_list[i],src_list[i+1] = src_list[i+1],src_list[i]
 print src_list
+
+
+'''
+功能ok，非常棒，继续加油
+改进点:
+1. python中的注释有两种
+    #开头，注释一行
+    或者使用三个\'/三个\"注释多行
+    切记不要在三个\'之前加#，会破环注释结构
+'''

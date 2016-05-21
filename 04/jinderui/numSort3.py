@@ -36,3 +36,7 @@ sl = [(1,4),(5,1),(2,3)]
 a = sorted(sl,key=lambda x:tt(x))
 print a
 '''
+
+'''
+功能ok， 加油
+'''

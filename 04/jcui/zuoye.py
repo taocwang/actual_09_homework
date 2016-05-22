@@ -40,6 +40,20 @@ def list_sort(lists,reverse=False):
                 lists[i], lists[i + 1] = lists[i + 1], lists[i]
     return  lists
 
+#方法三
+def cmp(x,y):
+    if x>y:
+        return True
+    else:
+        return False
+
+def list_sort2(lists,key,cmp):
+    for n in range(len(lists)-1):
+        for i in range(len(lists)-1):
+            if cmp(key(lists[i]),key(lists[i+1])):
+                lists[i], lists[i + 1] = lists[i + 1], lists[i]
+    return lists
+
 #随机生成列表
 def random_list(n):
     num_lists = []
@@ -123,11 +137,20 @@ if __name__ == '__main__':
     num_list2 = [(11, 4), (5, 1), (2, 3), (10, 2), (6, 3),(23,4,43,4),(34,45),(1,1,1,1,1)]
     print list_sort(num_list2)
     num1,num2 = random_list(6),random_list(10)
-    print '随机生成列表: %s' % num1
+
+    #方法二
+    print '方法二随机生成列表: %s' % num1
     #按元祖中的最大值进行排序
-    print '按最大值排序: %s' % list_sort(num1)
+    print '方法二按最大值排序: %s' % list_sort(num1)
     # #按元祖中的最小值进行排序
-    print '按最小值排序: %s' % list_sort(num1, True)
+    print '方法二按最小值排序: %s' % list_sort(num1, True)
+
+    #方法三
+    num_list3 = [(11, 4), (5, 1), (2, 3), (10, 2), (6, 3), (23, 4, 43, 4), (34, 45), (1, 1, 1, 1, 1)]
+    print '方法三按最大值排序: %s' % list_sort2(num_list3, key=lambda x: max(x), cmp=cmp)
+    num_list3 = [{'a':1},{'e':9},{'c':0},{'d':3}]
+    print '方法三按最大值排序: %s' % list_sort2(num_list3, key=lambda x: x.values(), cmp=cmp)
+
 
     '''生成页面展示排序结果
 
@@ -136,7 +159,8 @@ if __name__ == '__main__':
     参数三: 默认为False,即按列表中每个元祖的最大值进行排序;True,即为按列表中每个元祖的最小值进行排序
 
     '''
-    path = '/home/op/test/index.html'
+    # path = '/home/op/test/index.html'  #公司电脑
+    path = '/home/jcui/files/index.html' #家电脑
     create_page(num2,path,True)
 
 

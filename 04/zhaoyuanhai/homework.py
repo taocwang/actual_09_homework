@@ -17,10 +17,10 @@ def is_max(t):
 
 
 #使用自定义求最大值函数进行冒泡排序
-def my_sort(rlist):
+def my_sort(rlist, key):
 	for j in range(len(rlist) - 1):
 		for k in range(len(rlist) - 1 - j):
-			if is_max(rlist[k]) > is_max(rlist[k + 1]):
+			if key(rlist[k]) > key(rlist[k + 1]):
 				rlist[k], rlist[k + 1] = rlist[k + 1], rlist[k]
 	return rlist
 
@@ -33,9 +33,9 @@ def sys_sort(rlist):
 				rlist[k], rlist[k + 1] = rlist[k + 1], rlist[k]
 
 	return rlist
-	
+
 rlist = [(1, 4), (5, 1), (2, 3), (2, 1), (8, 5), (2, 3), (6, 4), (15, 8), (-10 ,2), (-8, -2)]
-print my_sort(rlist)
+print my_sort(rlist, is_max)
 print sys_sort(rlist)
 
 #列表推导式：(使用自定义函数进行列表推导式操作)

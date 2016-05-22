@@ -17,7 +17,6 @@ def get_user():
         return []
 
 def validate_login(username,password):
-    print username,password
     users = get_user()
     for user in users:
         if user.get('username') == username and user.get('password') == password:

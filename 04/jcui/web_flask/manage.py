@@ -1,8 +1,8 @@
 #encoding:utf-8
 from flask import Flask,render_template,request,redirect
 
-import cretae_log
-import user
+from logs import cretae_log
+from user import user
 
 app = Flask(__name__)
 
@@ -15,9 +15,8 @@ def index():
 def top10():
     topnum = 10
     a = '/home/jcui/files/www_access_20140823.log'
-    b = '/home/jcui/files/top%s.html' % topnum
     title = 'Top %s ' % topnum
-    rtlist = cretae_log.log_anslysis(sfile=a, dfile=b, topnum=topnum)
+    rtlist = cretae_log.log_anslysis(sfile=a, topnum=topnum)
     return render_template('top.html',title=title,rtlist=rtlist)
 
 

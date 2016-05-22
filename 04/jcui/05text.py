@@ -14,7 +14,9 @@ lambda 匿名函数,是一个函数,调用注意加()
 
 add = lambda x,y: x+y
 
-sort函数
+list.sort函数  只针对列表
+
+sorted函数
 
 '''
 #老方法
@@ -79,6 +81,7 @@ import 文件名
 调用方法: 文件名.函数名()
 
 from 文件名 import 函数名
+from 文件名 import *     #导入所有的包中的所有模块
 
 调用方法: 函数名()
 
@@ -87,6 +90,10 @@ from 文件名 import 函数名
 同级目录必须包含 __init__.py 文件
 
 import完成,在调用的时候优先执行__init_.py的内容
+
+from 文件夹 import 文件名1,文件名2
+
+避免使用与系统默认的包一样的名字
 '''
 print '模块'
 import sortlist
@@ -102,4 +109,39 @@ print list_sort(mylist3,key = lambda x: min(x))
 
 '''
 flask
+
+debug
+1,  修改自动reload
+2,  错误页面会提示,否则报只是报http错误
+
+MVC:
+M: module
+V: view
+C: control
+
+
+json
+import json
+
+json.loads()   将字符串转换为列表
+json.dumps()   将列表转换为字符串
 '''
+
+import json
+
+a = [{'username':'jcui','password':'123456'},{'username':'admin','password':'654321'}]
+
+b = json.dumps(a)
+print b
+print type(b)
+
+c = json.loads(b)
+print c
+print type(c)
+
+def test():
+    a = 1
+    b = 2
+    return a,b
+
+print test()

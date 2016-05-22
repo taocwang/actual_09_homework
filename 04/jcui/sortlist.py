@@ -15,7 +15,5 @@ def list_sort(lists,key=default_key,cmp=default_cmp):      #key默认只对纯�
                 lists[i], lists[i + 1] = lists[i + 1], lists[i]
     return lists
 
-print __name__
-
 if __name__ == '__main__':
     print '123123123'

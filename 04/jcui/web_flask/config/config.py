@@ -1,0 +1,1 @@
+USER_FILE = 'config/user.json'

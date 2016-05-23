@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+</head>
+<body>
+    <form action="/user/create/" method="POST">
+        <p>用户名<input type="text" name="username" value="{{user}}"/></p>
+        <p>密码<input type="password" name="password"/></p>
+        <p>年龄<input type="number" name="age"/></p>
+        <p>提交<input type="submit" name="SUBMIT"/></p>
+    </form>
+    {% if res %}
+        <span style="color:#2023ff">{{res}}</span>
+    {% endif %}
+    {% if fres %}
+        <span style="color:#ff594b">{{fres}}</span>
+    {% endif %}
+</body>
+</html>

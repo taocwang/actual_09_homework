@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<title>用户信息列表</title>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+	{% if Flag %}
+	<span style="color:{{ color }}; width: 100%; text-align: center;" ><h1>{{ Flag }}</h1></span>
+	{% endif %}
+	<h1 style="width: 100%; text-align: center;" class="btn btn-primary">用户信息列表</h1>
+	<table class="table table-bordered table table-condensed table table-hover">
+	<thead>
+		<tr class="info">
+			<th>用户名</th>
+			<th>密码</th>
+			<th>年龄</th>
+			<th>修改</th>
+			<th>删除</th>
+		</tr>
+	</thead>
+			{% for node in userlist %}
+			<tr class="info">
+				<td>{{ node['username'] }}</td>
+				<td>{{ node['password'] }}</td>
+				<td>{{ node['age'] }}</td>
+				<td><a href="/user/modify/?username={{ node['username'] }}&password={{ node['password'] }}&age={{ node['age'] }}"><buttontype="submit" class="btn btn-primary">修改</button></a></td>
+				<td><a href="/user/del/?username={{ node['username'] }}"><buttontype="submit" class="btn btn-primary">删除</button></a></td>
+			</tr>
+			{% endfor %}
+		</tr>
+	</table>
+	<a href="/user/create/" style="display : block;color:#00ff00;width: 100px;text-align:center;margin:0 auto"><buttontype="submit" class="btn btn-primary">增加用户</button></a>
+</body>
+</html>>

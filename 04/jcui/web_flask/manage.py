@@ -51,9 +51,10 @@ def users():
     params = request.args if request.method == 'GET' else request.form
     if not params:
         return render_template('users.html', user_list=user.get_user())
-    elif user.user_update(params):
-        username = params.get('username')
-        return render_template('users.html', update_success=('%s 更新成功' % username), user_list=user.get_user())
+    elif request.method == 'GET':
+        if user.user_update(params):
+            username = params.get('username')
+            return render_template('users.html', update_success=('%s 更新成功' % username), user_list=user.get_user())
     else:
         username = params.get('username')
         if user.user_add(params):
@@ -75,7 +76,7 @@ def users_add():
 
 @app.route('/user/userupdate',methods=['POST','GET'])
 def user_update():
-
+    params = request.args if request.method == 'GET' else request.form
     return render_template('user_update.html',username=params.get('username'))
 
 '''

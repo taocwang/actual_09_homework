@@ -1,8 +1,14 @@
 #encoding:utf-8
 from flask import Flask,render_template,request,redirect
+import sys
 
 from logs import cretae_log
 from user import user
+
+#
+reload(sys)
+sys.setdefaultencoding('utf8')
+#解决字符串默认为ASCII编码的问题,导致输出中文为乱码
 
 app = Flask(__name__)
 
@@ -36,13 +42,27 @@ def login():
     username = params.get('username','')
     password = params.get('password','')
     if user.validate_login(username, password):
-        return redirect('/users/')
+        return redirect('/user/')
     else:
-        return render_template('login.html',username=username,error='user or pass error')
+        return render_template('login.html',username=username,error='用户名或密码错误')
 
-@app.route('/users/')
+@app.route('/user/',methods=['POST','GET'])
 def users():
-    return render_template('users.html', user_list=user.get_user())
+    params = request.args if request.method == 'GET' else request.form
+    if not params:
+        return render_template('users.html', user_list=user.get_user())
+    else:
+        username = params.get('username','')
+        if user.user_add(params):
+            return  render_template('users.html',success='添加成功',user_list=user.get_user())
+        elif not user.user_add(params):
+            return  render_template('useradd.html',username=username,error='用户名已存在')
+
+
+@app.route('/user/useradd',methods=['POST','GET'])
+def users_add():
+    return render_template('useradd.html')
+
 
 '''
 添加用户,删除用户,更新用户,判断用户名是否重复

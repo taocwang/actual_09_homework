@@ -54,7 +54,7 @@ def users():
     else:
         username = params.get('username','')
         if user.user_add(params):
-            return  render_template('users.html',success='添加成功',user_list=user.get_user())
+            return  render_template('users.html',success=('%s 添加成功' % username),user_list=user.get_user())
         elif not user.user_add(params):
             return  render_template('useradd.html',username=username,error='用户名已存在')
 
@@ -63,6 +63,10 @@ def users():
 def users_add():
     return render_template('useradd.html')
 
+@app.route('/user/userupdate',methods=['POST','GET'])
+def user_update():
+    params = request.args if request.method == 'GET' else request.form
+    return render_template('user_update.html',username=params.get('username'))
 
 '''
 添加用户,删除用户,更新用户,判断用户名是否重复

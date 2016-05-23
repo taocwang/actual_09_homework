@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
+    <title>用户管理</title>
 </head>
 <body>
     <table border="1" cellpadding="10">
@@ -30,7 +30,7 @@
                 <td>{{ user['age'] }}</td>
                 <td>{{ user['telphone'] }}</td>
                 <td>{{ user['email'] }}</td>
-                <td><a href="/user/userupdate" >更新</a>&nbsp;&nbsp;<a href="/user/user_del" >删除</a></td>
+                <td><a href="/user/userupdate?username={{ user['username'] }}" >更新</a>&nbsp;&nbsp;<a href="/user/user_del?username={{ user['username'] }}" >删除</a></td>
             </tr>
             {% endfor %}
         </tbody>

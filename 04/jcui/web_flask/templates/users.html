@@ -9,6 +9,8 @@
         <p><a href="/user/useradd">添加用户</a>&nbsp;&nbsp;
             {% if success %}
                 <span style="color:green">{{ success }}</span>
+            {% elif update_success %}
+                <span style="color:green">{{ update_success }}</span>
             {% endif %}
         </p>
 
@@ -30,7 +32,7 @@
                 <td>{{ user['age'] }}</td>
                 <td>{{ user['telphone'] }}</td>
                 <td>{{ user['email'] }}</td>
-                <td><a href="/user/userupdate?username={{ user['username'] }}" >更新</a>&nbsp;&nbsp;<a href="/user/user_del?username={{ user['username'] }}" >删除</a></td>
+                <td><a href="/user/userupdate?username={{ user['username'] }}" >更新</a>&nbsp;&nbsp;<a href="/user/userdel?username={{ user['username'] }}" >删除</a></td>
             </tr>
             {% endfor %}
         </tbody>

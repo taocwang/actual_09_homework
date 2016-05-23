@@ -51,13 +51,23 @@ def users():
     params = request.args if request.method == 'GET' else request.form
     if not params:
         return render_template('users.html', user_list=user.get_user())
+    elif user.user_update(params):
+        username = params.get('username')
+        return render_template('users.html', update_success=('%s 更新成功' % username), user_list=user.get_user())
     else:
-        username = params.get('username','')
+        username = params.get('username')
         if user.user_add(params):
             return  render_template('users.html',success=('%s 添加成功' % username),user_list=user.get_user())
         elif not user.user_add(params):
             return  render_template('useradd.html',username=username,error='用户名已存在')
 
+@app.route('/user/userdel',methods=['POST','GET'])
+def user_del():
+    params = request.args if request.method == 'GET' else request.form
+    username = params.get('username')
+    if user.user_del(username):
+        return render_template('users.html', success=('%s 删除成功' % username), user_list=user.get_user())
+    return render_template('users.html', username=username, error='删除失败')
 
 @app.route('/user/useradd',methods=['POST','GET'])
 def users_add():
@@ -65,7 +75,7 @@ def users_add():
 
 @app.route('/user/userupdate',methods=['POST','GET'])
 def user_update():
-    params = request.args if request.method == 'GET' else request.form
+
     return render_template('user_update.html',username=params.get('username'))
 
 '''

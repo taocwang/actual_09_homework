@@ -43,8 +43,12 @@ def user_add(params):
         return False
 
 
-def user_del(params):
+def user_del(username):
     users = get_user()
+    [users.remove(x) for x in users if x.get('username') == username]
+    if user_write(users):
+        return True
+    return False
 
 def user_write(users):
     try:
@@ -58,6 +62,10 @@ def user_write(users):
 
 def user_update(params):
     users = get_user()
+    new_users = json.dumps(params)
+    new_users = json.loads(new_users)
+    [users.remove(x) for x in users if x.get('username') == new_users.get('username')]
+    users.append(new_users)
     if user_write(users):
         return True
     return False

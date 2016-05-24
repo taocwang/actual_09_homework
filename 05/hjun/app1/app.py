@@ -16,8 +16,8 @@ def index():
 @app.route('/login/', methods=['get','post'])	
 def login():
 	params = request.args if request.method == 'GET' else request.form
-	username = request.form.get('username', '')
-	password = request.form.get('password', '')
+	username = params.get('username', '')
+	password = params.get('password', '')
 	if user.validate_login(username, password):
 		return redirect('/logs/')
 	else:

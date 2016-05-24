@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #-*-coding: UTF-8 -*-
 
-def logscount(nhtml='www_access_20140823.html',path='www_access_20140823.log',cut=10):
+def logscount(path='www_access_20140823.log',cut=10):
 	temp = []
 	log = {}
 	temp2 = []

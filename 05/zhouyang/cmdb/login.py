@@ -14,6 +14,5 @@ def check_user(username,password):
     for user in users:
         if user.get('username') == username and user.get('password')==password:
             return True
-        else:
-            return False
+    return False
 

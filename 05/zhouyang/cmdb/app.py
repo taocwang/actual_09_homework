@@ -62,6 +62,19 @@ def adduser():
     else:
         return render_template('adduser.html',fres='注册信息不全，请重新注册',user=username)
 
+@app.route('/usermodify/',methods=['GET','POST'])
+def usermodify():
+    '''这个有问题，搞不定'''
+    import usermodify
+    params=request.args if request.method == 'GET' else request.form
+    username=params.get('username','')
+    password=params.get('password','')
+    age=params.get('age','')
+    age=int(age) if str(age).isdigit() else ''
+    usermodify.usermodify(username,password,age)
+    return render_template('usermodify.html',username=username)
+
+
 
 if __name__=='__main__':
     app.run(host='127.0.0.1',port=8080,debug=True)

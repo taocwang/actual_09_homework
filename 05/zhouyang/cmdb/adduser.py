@@ -6,7 +6,7 @@ def adduser(username,password,age):
         users = json.loads(userinfo.read())
         newuser={'username':username,'password':password,'age':age}
         for user in users:
-            if user.get('name') == username:
+            if user.get('username') == username:
                 return False
         users.append(newuser)
         newusers=json.dumps(users)

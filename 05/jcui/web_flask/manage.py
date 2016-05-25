@@ -1,7 +1,7 @@
 #encoding:utf-8
 import sys
 
-from flask import Flask,render_template,request,redirect,session
+from flask import Flask,render_template,request,redirect,sessions
 
 from logs import cretae_log
 from user import user

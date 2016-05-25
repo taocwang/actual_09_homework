@@ -1,10 +1,13 @@
 #encoding:utf-8
 import sys
 
-from flask import Flask,render_template,request,redirect,sessions
+from flask import Flask,render_template,request,redirect,session,url_for
+from flask.ext.bootstrap import Bootstrap
+from flask.ext.moment import Moment
 
 from logs import cretae_log
 from user import user
+from datetime import datetime
 
 #
 reload(sys)
@@ -12,7 +15,8 @@ sys.setdefaultencoding('utf8')
 #解决字符串默认为ASCII编码的问题,导致输出中文为乱码
 
 app = Flask(__name__)
-
+bootstrap = Bootstrap(app)
+moment = Moment(app)
 
 @app.route('/')
 def index():
@@ -25,8 +29,13 @@ def top10():
     title = 'Top %s ' % topnum
     rtlist = cretae_log.log_anslysis(sfile=a, topnum=topnum)
     return render_template('top.html',title=title,rtlist=rtlist)
+#--------------------------------------------------------------------------------------
 
+@app.route('/test/')
+def test():
+    return render_template('test/test2.html',current_time=datetime.utcnow())
 
+#--------------------------------------------------------------------------------------
 @app.route('/top/')
 def topn():
     print request.args
@@ -39,12 +48,11 @@ def topn():
 
 @app.route('/login/',methods=['POST','GET'])
 def login():
-    print session
     params = request.args if request.method == 'GET' else request.form
     username = params.get('username','')
     password = params.get('password','')
     if user.validate_login(username, password):
-        return redirect('/user/')
+        return redirect('/user')
     else:
         return render_template('login.html',username=username,error='用户名或密码错误')
 

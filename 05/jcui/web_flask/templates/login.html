@@ -2,17 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/css/css.css">
     <title>用户登陆</title>
 </head>
-<body style="background-image: url('../static/login.jpg');background-position: center;background-repeat: repeat-y">
-    <form action="/login/" method="post" >
-        {% if error %}
-            <span style="color:red">{{ error }}</span>
-        {% endif %}
-        <p>登陆用户<input type="text" name="username" value="{{ username }}"></p>
-        <p>登陆密码<input type="password" name="password" > </p>
-        <p><input type="submit" value="登陆"> </p>
+<body>
+    <div id="crontol">
 
-    </form>
+        <table align="center">
+            <form action="/login/" method="post" >
+                <tr>登陆用户<input type="text" name="username" value="{{ username }}"></tr>&nbsp;&nbsp;
+                <tr>登陆密码<input type="password" name="password" ></tr>&nbsp;&nbsp;
+                <tr><input type="submit" value="登陆"></tr>&nbsp;&nbsp;
+                <tr>
+                    <td>{% if error %}<span style="color:red;text-align: right">{{ error }}</span>{% endif %}</td>
+                </tr>
+            </form>
+        </table>
+    </div>
 </body>
 </html>

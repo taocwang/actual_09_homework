@@ -11,7 +11,6 @@
                     <th>用户名</th>
                     <th>年龄</th>
                     <th>修改</th>
-                    <th>删除</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,7 +18,7 @@
                 <tr>
                     <th>{{row['username']}}</th>
                     <th>{{row['age']}}</th>
-                    <th><a href="/usermodify/?username={{row['username']}}"> 修改</th>
+                    <th><a href="/readytousermodify/?username={{row['username']}}"> 修改</th>
                 </tr>
                 {% endfor %}
             </tbody>

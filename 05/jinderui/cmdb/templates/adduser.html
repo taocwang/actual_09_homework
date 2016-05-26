@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>用户添加</title>
+</head>
+<body>
+	<form action="/commituser/" method="post">
+		用户名：
+		<input name="adduser" type='text'></input>
+		<br />
+
+		年龄：
+		<input name="addage" type='text'></input>
+
+		<br />
+		密码：
+		<input name="password" type='password'></input>
+
+		<br />
+		<input name="submituser" type='submit' value="提交"></input>
+
+		<br />
+		<span style="color:red"> {{info}} </span>
+		<span style="color:red"> {{user}} </span>
+	</form>
+</body>
+</html>

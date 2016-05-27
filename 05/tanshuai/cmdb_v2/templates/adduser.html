@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+</head>
+<body>
+    <form action="/user/add" method="post">
+        {% if error %}
+        <span style="color:red">{{ error }}</span>
+        {% endif %}
+        用户名:
+        <input type="text" name="username"/>
+        年龄:
+        <input type="text" name="age" />
+        密码:
+        <input type="password" name="password"/>
+        <input type="submit" value="添加"/>
+    </form>
+</body>
+</html>

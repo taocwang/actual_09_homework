@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+{# <div>当前日志排行为TOP__<a href="/index2">{{ count   }}  </a>可选: <a href="/index1">5</a></div> #}
+<hr>
+<table border = "1">
+    <thead>
+        <tr>
+            <th>IP</th> <th>URL</th><th>Code</th><th>次数</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+         {% for i in user1 %}
+         <tr>
+            <td>{{ i.ip   }}</td>
+            <td>{{ i.url  }}</td>
+            <td>{{ i.code }}</td>
+            <td>{{ i.cnt }}</td>
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

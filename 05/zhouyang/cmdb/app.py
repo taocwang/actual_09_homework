@@ -46,6 +46,10 @@ def userinfo():
     user_list=login.get_users(uconf.user_conf)
     return render_template('show_users.html',user_list=user_list)
 
+@app.route('/readytoadduser/',methods=['POST'])
+def readytoadduser():
+    return render_template('readytoadduser.html')
+
 @app.route('/user/create/',methods=['GET','POST'])
 def adduser():
     import adduser
@@ -62,17 +66,24 @@ def adduser():
     else:
         return render_template('adduser.html',fres='注册信息不全，请重新注册',user=username)
 
+
+@app.route('/readytousermodify/',methods=['GET','POST'])
+def readytousermodify():
+    username=request.args.get('username','')
+    return render_template('readytousermodify.html',username=username)
+
 @app.route('/usermodify/',methods=['GET','POST'])
 def usermodify():
-    '''这个有问题，搞不定'''
     import usermodify
     params=request.args if request.method == 'GET' else request.form
     username=params.get('username','')
     password=params.get('password','')
     age=params.get('age','')
     age=int(age) if str(age).isdigit() else ''
+    print username,password,age
     usermodify.usermodify(username,password,age)
-    return render_template('usermodify.html',username=username)
+    return render_template('modify_ok.html',username=username)
+    #return redirect('/usermodify/?username=')
 
 
 

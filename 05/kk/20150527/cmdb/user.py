@@ -1,9 +1,4 @@
 #encoding: utf-8
-import sys
-reload(sys)
-sys.setdefaultencoding('gbk')
-
-print '吴科'
 import json
 
 import gconf

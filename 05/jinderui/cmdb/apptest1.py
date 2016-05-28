@@ -74,7 +74,7 @@ def deluser():
 			del user_list[user_list.index(users)]
 
 	user.add_user(json.dumps(user_list))
-	
+
 	return redirect('/users/')
 
 #更新用户先要把用户的信息带过去，这个地方用了get为了不让密码显示html里面写的是***
@@ -109,6 +109,15 @@ def changeuser():
 				return redirect('/users/')
 			else:
 				return redirect('/users/')
-	
+
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port=8888,debug=True)
+
+
+'''
+不错，自己代码里面多写注释
+改进点
+1. app中的代码逻辑越简单越好，只控制逻辑，不控制真实对数据的改写
+	将对用户的增删改查，验证等都写在user模块，由user模块提供统一的接口
+	如果后续要调整逻辑只需要调整user模块
+'''

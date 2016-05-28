@@ -41,26 +41,49 @@ def useradd():
 	password = request.form.get('password', '')
 	age = request.form.get('age', '')
 	if user.user_add(username, password, age):
-		return render_template('useradd.html', useradd_info='Add User [%s] Success') %username
+		return redirect('/users/')
+		#return render_template('users.html', user_list=user.get_users(), user_info='Add User [%s] Success') % username
 	else:
 		return render_template('useradd.html', useradd_info='username or password or age is error')
 	
 @app.route('/userdel/index/', methods=['get','post'])		
 def userdel_index():
-	return render_template('userdel.html')	
+	params = request.args if request.method =='GET' else request.form
+	username = params.get('username', '')
+	if username:
+		if user.user_del(username):
+			return redirect('/users/')
+			#return render_template('users.html', user_list=user.get_users(), user_info='User [%s] successfully deleted') % username
+		else:
+			return render_template('users.html', user_list=user.get_users(), user_info='error, Remove user [%s] failed') % username
+	else:	
+		return render_template('userdel.html')	
 	
 @app.route('/userdel/', methods=['get','post'])		
 def userdel():
 	params = request.args if request.method == 'GET' else request.form
-	username = request.form.get('username', '')	
+	username = params.get('username', '')	
 	if user.user_del(username):
-		return render_template('userdel.html', userdel_info='User [%s] successfully deleted') % username
+		return redirect('/users/')
+		#return render_template('users.html', user_list=user.get_users(), user_info='User [%s] successfully deleted') % username
 	else:
 		return render_template('userdel.html', userdel_info='error, no user')
 
 @app.route('/useredit/index/', methods=['get','post'])
 def useredit_index():
-	return render_template('useredit.html')	
+	params = request.args if request.method =='GET' else request.form
+	username = params.get('username', '')
+	if username:
+		user_info = user.get_user(username)
+		if user_info:
+			username = user_info.get('username')
+			password = user_info.get('password')
+			age = user_info.get('age')
+			return render_template('useredit.html', username=username, password=password, age=age)
+		else:
+			return render_template('useredit.html', useredit_info='username error')
+	else:
+		return render_template('useredit.html')	
 	
 @app.route('/useredit/', methods=['get','post'])	
 def useredit():
@@ -69,7 +92,8 @@ def useredit():
 	password = request.form.get('password', '')
 	age = request.form.get('age', '')	
 	if user.user_edit(username, password, age):
-		return render_template('useredit.html', useredit_info='New users [%s] more successful') % username	
+		return redirect('/users/')
+		#return render_template('users.html', user_list=user.get_users(), user_info='New users [%s] more successful') % username
 	else:
 		return render_template('useredit.html', useredit_info='username error')		
 		

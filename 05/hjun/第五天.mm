@@ -47,7 +47,7 @@
 <node CREATED="1464421756484" ID="ID_1944695557" MODIFIED="1464421826738" TEXT="math&#x6a21;&#x5757;&#x7684;&#x9636;&#x4e58;&#x51fd;&#x6570;"/>
 </node>
 </node>
-<node CREATED="1464090236630" ID="ID_1662482230" MODIFIED="1464421839672" POSITION="right" TEXT="flask">
+<node CREATED="1464090236630" ID="ID_1662482230" MODIFIED="1464432264180" POSITION="right" TEXT="flask">
 <node CREATED="1464090254621" ID="ID_1408748877" MODIFIED="1464090266159" TEXT="&#x4e00;&#x4e2a;python&#x5199;&#x7684;web&#x6846;&#x67b6;"/>
 <node CREATED="1464090294554" ID="ID_276162823" MODIFIED="1464090449931" TEXT="from flask import Flask &#x4ece;flask&#x5305;&#x5bfc;&#x5165;&#x4e00;&#x4e2a;Flask&#x7c7b;"/>
 <node CREATED="1464090453668" ID="ID_1746411094" MODIFIED="1464422069943" TEXT="app = Flask(__name__) &#x751f;&#x6210;&#x4e86;&#x4e00;&#x4e2a;Flask&#x5bf9;&#x8c61;,&#x51b3;&#x5b9a;&#x7a0b;&#x5e8f;&#x7684;&#x6839;&#x76ee;&#x5f55;"/>
@@ -133,6 +133,14 @@
 </node>
 <node CREATED="1464098520445" ID="ID_1399008677" MODIFIED="1464099046516" TEXT="&lt;form action = &quot;/userdel/&quot; method=&quot;post&quot;&gt;&#xa;    &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;{{ username }}&quot;&gt;&#xa;&lt;/form&gt;">
 <node CREATED="1464099049020" ID="ID_1564711869" MODIFIED="1464099132386" TEXT="&#x5728;form&#x8868;&#x5355;&#x6587;&#x672c;&#x6846;&#x4e2d;&#x4f7f;&#x7528;value&#xff1d;{{ }} &#x65b9;&#x5f0f;&#x83b7;&#x53d6;python&#x8fd4;&#x56de;&#x503c;"/>
+</node>
+</node>
+<node CREATED="1464432264125" ID="ID_1547021943" MODIFIED="1464432278925" TEXT="&#x7f16;&#x7801;">
+<node CREATED="1464430723106" ID="ID_777576050" MODIFIED="1464432224780" TEXT="sys.setdefaultencoding(&apos;utf-8&apos;)">
+<node CREATED="1464430760692" ID="ID_632727721" MODIFIED="1464432338683" TEXT="&#x8bbe;&#x7f6e;python&#x542f;&#x52a8;&#x7684;&#x8fdb;&#x7a0b;&#x4e2d;&#x7cfb;&#x7edf;&#x7f16;&#x7801;&#x4e3a;utf-8"/>
+</node>
+<node CREATED="1464432280920" ID="ID_611476879" MODIFIED="1464432292617" TEXT="#encoding: utf-8">
+<node CREATED="1464432294172" ID="ID_1538807862" MODIFIED="1464432311688" TEXT="&#x8bbe;&#x7f6e;&#x6587;&#x4ef6;&#x5185;&#x5bb9;&#x7f16;&#x7801;&#x4e3a;utf-8"/>
 </node>
 </node>
 </node>

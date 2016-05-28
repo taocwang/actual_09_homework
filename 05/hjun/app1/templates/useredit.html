@@ -15,22 +15,28 @@
 						{% endif %}
 						<tr>
 							<td>账号:</td>
-							<td>
-								<input type="text" name="username" value="{{username}}" />
-							</td>
+							{% if username %}
+								<td>
+									<input type="text" name="username" value="{{ username }}" readonly="true" />
+								</td>
+							{% else %}
+								<td>
+									<input type="text" name="username" value="{{ username }}" />
+								</td>
+							{% endif %}		
 						</tr>
 						<br/>
 						<tr>
 							<td>密码:</td>
 							<td>
-								<input type="password" name="password" />
+								<input type="password" name="password" value="{{ password }}" />
 							</td>
 						</tr>
 						<br/>							
 						<tr>
 							<td>年龄:</td>
 							<td>
-								<input type="text" name="age" value="{{age}}" />
+								<input type="text" name="age" value="{{age}}" value="{{ age }}" />
 							</td>
 						</tr>
 						<br/>						

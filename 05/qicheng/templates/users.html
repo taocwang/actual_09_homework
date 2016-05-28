@@ -16,7 +16,8 @@
 			<th>用户名</th>
 			<th>密码</th>
 			<th>年龄</th>
-			<th>操作</th>
+			<th>修改</th>
+			<th>删除</th>
 		</tr>
 	</thead>
 			{% for node in userlist %}
@@ -24,14 +25,12 @@
 				<td>{{ node['username'] }}</td>
 				<td>{{ node['password'] }}</td>
 				<td>{{ node['age'] }}</td>
-				<td><a href="/user/modify/?username={{ node['username'] }}&password={{ node['password'] }}&age=
-				{{ node['age'] }}"><button type="submit" class="btn btn-primary">修改</button></a>
-                    <a href="/user/del/?username={{ node['username'] }}">
-                        <button type="submit" class="btn btn-primary">删除</button></a></td>
+				<td><a href="/user/modify/?username={{ node['username'] }}&password={{ node['password'] }}&age={{ node['age'] }}"><buttontype="submit" class="btn btn-primary">修改</button></a></td>
+				<td><a href="/user/del/?username={{ node['username'] }}"><buttontype="submit" class="btn btn-primary">删除</button></a></td>
 			</tr>
 			{% endfor %}
 		</tr>
 	</table>
-	<a href="/user/create/" style="display : block;color:#00ff00;width: 100px;text-align:center;margin:0 auto"><button type="submit" class="btn btn-primary">增加用户</button></a>
+	<a href="/user/create/" style="display : block;color:#00ff00;width: 100px;text-align:center;margin:0 auto"><buttontype="submit" class="btn btn-primary">增加用户</button></a>
 </body>
 </html>>

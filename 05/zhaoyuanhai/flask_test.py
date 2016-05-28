@@ -92,14 +92,23 @@ def upuser():
 	email = request.form.get('email', '')
 	if username == '' or password == '':
 		content = user_action.get_user()
-		return render_template('user_list.html', error='username or password can not be empty!', content = content) 
+		return render_template('user_list.html', error='username or password can not be empty!', content = content)
 	user_action.modifyUser(username, password, age, phone, email)
 	return redirect('/users/')
 
-	
 
-		
+
+
 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=9001, debug=True)
+
+'''
+功能ok， 继续加油
+
+改进点
+1. app中(C)尽量只保持逻辑调用代码，不关注用户信息检查逻辑和操作逻辑，只从浏览器请求中获取(V)，传递给user模块(M)
+2. 注意app中函数一定要有返回值，line 76函数，若username是随便填写的，程序会发生什么问题？
+3. 用户增、删、改都需要修改user.json文件，是否可以写成一个函数来处理
+'''

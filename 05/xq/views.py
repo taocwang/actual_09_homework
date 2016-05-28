@@ -74,7 +74,7 @@ def mod_user():
     else:
         username =  params.get('username','')
         password =  params.get('password','')
-        age =  params.get('age','') 
+        age =  params.get('age','')
         print "New:%s-%s-%s" %(username,password,age)
         print "Old:%s-%s-%s" %(username1,password1,age1)
         #情况一：用户信息没变化
@@ -113,3 +113,7 @@ def finder_user():
 @app.route('/user/logout/',methods=['POST','GET'])
 def login_out():
     return render_template('login.html')
+
+'''
+功能ok，加油
+'''

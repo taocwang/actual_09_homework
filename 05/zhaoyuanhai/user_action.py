@@ -29,6 +29,7 @@ def user_list(number):
 	else:
 		return userlist
 def add_user(username, password, age, phone, email):
+	userlist = get_user()
 	userinfo = {'username': username, 'password': password, 'age': age, 'phone': phone, 'email': email}
 	userlist.append(userinfo)
 	f = open(gconfig.USER_FILE, 'wb')
@@ -40,16 +41,22 @@ def delUser(username):
 	for i in range(0, len(users)):
 		if users[i]['username'] == username:
 			users.pop(i)
+			break
+	print users
 	f = open(gconfig.USER_FILE, 'wb')
 	f.write(json.dumps(users))
 	f.close()
 
 def modifyUser(username, password, age, phone, email):
 	users = get_user()
+	print users
 	for i in range(0,len(users)):
 		if users[i]['username'] == username:
 			users[i].update({'password': password, 'age': age, 'phone': phone, 'email': email})
 
+	f = open(gconfig.USER_FILE, 'wb')
+	f.write(json.dumps(users))
+	f.close()
 
 if __name__ == '__main__':
-	print get_user()
+	delUser('user2')

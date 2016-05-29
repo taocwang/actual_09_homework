@@ -6,12 +6,15 @@
 </head>
 <body>
     <table border="1" cellpadding="10">
-        <p><a href="/user/useradd">添加用户</a>&nbsp;&nbsp;
+        <p>
+            <a href="/user/useradd">添加用户</a>&nbsp;&nbsp;
             {% if success %}
                 <span style="color:green">{{ success }}</span>
             {% elif update_success %}
                 <span style="color:green">{{ update_success }}</span>
             {% endif %}
+            欢迎 {{ session.get('username',{}).get('username','') }},
+            <a href="/logout/">退出登陆</a>
         </p>
 
         <thead style="text-align: center">

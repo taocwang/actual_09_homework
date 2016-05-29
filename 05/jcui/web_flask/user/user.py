@@ -5,6 +5,8 @@ import base64
 #
 from gconfig import gconfig
 
+from functools import wraps
+from flask import session ,redirect
 
 def get_user():
     try:
@@ -69,3 +71,12 @@ def user_update(params):
         return True
     return False
 
+#定义装饰器函数,为了检查是否处于登陆状态
+def login_check(func):
+    @wraps(func)       #为了解决python多装饰器出现的bug
+    def check(*args,**kwargs):
+        if session.get('username') is None:
+            return redirect('/')
+        rt = func(*args,**kwargs)
+        return rt  #返回函数的值
+    return check   #返回内层函数的结果

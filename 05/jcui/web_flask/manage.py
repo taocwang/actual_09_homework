@@ -2,7 +2,7 @@
 import os
 import sys
 
-from flask import Flask,render_template,request,redirect,session,url_for
+from flask import Flask,render_template,request,redirect,session,url_for,flash
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.moment import Moment
 
@@ -40,7 +40,6 @@ def test():
 #--------------------------------------------------------------------------------------
 @app.route('/top/')
 def topn():
-    print request.args
     topnum = request.args.get('top',10)
     topnum = int(topnum) if str(topnum).isdigit() else 10
     a = '/home/jcui/files/www_access_20140823.log'
@@ -55,8 +54,6 @@ def login():
     password = params.get('password','')
     if user.validate_login(username, password):
         session['username'] = {'username': username}
-        print session
-        print session.get('username')
         return redirect('/user/')
     else:
         return render_template('login.html',username=username,error='用户名或密码错误')
@@ -66,15 +63,16 @@ def login():
 def users():
     params = request.args if request.method == 'GET' else request.form
     if not params:
+        print user.get_user()
         return render_template('users.html', user_list=user.get_user())
     elif request.method == 'GET':
         if user.user_update(params):
             username = params.get('username')
-            return render_template('users.html', update_success=('%s 更新成功' % username), user_list=user.get_user())
+            return render_template('users.html', user_list=user.get_user())
     else:
         username = params.get('username')
         if user.user_add(params):
-            return  render_template('users.html', success=('%s 添加成功' % username), user_list=user.get_user())
+            return  render_template('users.html', user_list=user.get_user())
         elif not user.user_add(params):
             return  render_template('useradd.html',username=username,error='用户名已存在')
 
@@ -84,18 +82,23 @@ def user_del():
     params = request.args if request.method == 'GET' else request.form
     username = params.get('username')
     if user.user_del(username):
-        return render_template('users.html', success=('%s 删除成功' % username), user_list=user.get_user())
-    return render_template('users.html', username=username, error='删除失败')
+        flash("用户删除成功")
+        return redirect('/user/')
+    return render_template('users.html')
 
 @app.route('/user/useradd/',methods=['POST','GET'])
 @user.login_check
 def users_add():
+    flash("用户添加成功")
     return render_template('useradd.html')
 
 @app.route('/user/userupdate/',methods=['POST','GET'])
 @user.login_check
 def user_update():
     params = request.args if request.method == 'GET' else request.form
+    flash("用户更新成功")
+    for i in user.get_user():
+        print i
     return render_template('user_update.html',username=params.get('username'))
 
 

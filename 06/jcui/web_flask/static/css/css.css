@@ -1,0 +1,19 @@
+body{
+    width:1920px;
+    height:900px;
+    background: center;
+    background-image: url('../login.jpg');
+    background-repeat: no-repeat
+
+}
+#crontol{
+    font-family: "宋体";
+    color: chartreuse;
+    font-size: 20px;
+    height: 200px;
+    width: auto;
+    border-radius: 10px;
+    padding-top: 30%;
+    text-align: center;
+
+}

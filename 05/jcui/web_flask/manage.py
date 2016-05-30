@@ -33,9 +33,9 @@ def top10():
     return render_template('top.html',title=title,rtlist=rtlist)
 #--------------------------------------------------------------------------------------
 
-@app.route('/test/')
+@app.route('/tests/')
 def test():
-    return render_template('test/test2.html',current_time=datetime.utcnow())
+    return render_template('tests/test2.html',current_time=datetime.utcnow())
 
 #--------------------------------------------------------------------------------------
 @app.route('/top/')

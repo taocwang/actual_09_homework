@@ -120,7 +120,7 @@ create table user(
 
 #插入数据  insert
 insert into user(username,password,age,telphone,email) values ('jcui','jcui','30','15110138509','cui@163.com') ;
-insert into user(username,password,age,telphone,email) values ('admin','admin','30','15110138508','admin@163.com') ;
+insert into user(username,password,age,telphone,email) values ('admin',md5('admin'),'30','15110138508','admin@163.com') ;
 
 #查询  select
 select * from user;

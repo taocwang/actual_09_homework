@@ -16,8 +16,8 @@ sys.setdefaultencoding('utf8')
 #解决字符串默认为ASCII编码的问题,导致输出中文为乱码
 
 app = Flask(__name__)
-# app.secret_key = os.urandom(32)
-app.secret_key = 'asdasd2342tdasfdasfasdasds'
+app.secret_key = os.urandom(32)
+# app.secret_key = 'asdasd2342tdasfdasfasdasds'
 
 @app.route('/')
 def index():
@@ -84,7 +84,6 @@ def user_update():
     id = params.get('id')
     if id:
         users = user.get_alone_user(int(id))
-        print users
         username = users.get('username')
         age = users.get('age')
         telphone = users.get('telphone')

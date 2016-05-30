@@ -18,26 +18,7 @@ def get_user():
         print e
         return False
 
-def modify_user(username,password,age):
-    new_user = {'username':username,'password':password,'age':age}
-    users = get_user()
-    """"
-   遍历用户，判断将要修改的用户名是否存在于数据库中. 存在，如果信息没变化，则提示用户，信息没变化；如果除了用户名之外的信息有修改，则会新增一条记录，所以要记得把老记录删掉；如果用户不存在，则直接新增用户。
-    """
-    for user in users:
-    #用户信息完全一致，则返回same，提示用户，没有任何修改
-        if user.get('username') == username and user.get('age') == age and user.get('password') == password:
-            return "same"
-    #如果只有除了用户名之外的信息修改，则直接修改用户信息,同时要记得把老的记录删除
-        elif user.get('username') == username:
-            user['username'] = username
-            user['password'] = password
-            user['age']  = age
-            return 'flag'
-    #否则，直接添加新的用户信息
-    else:
-        users.append(new_user)
-    user_list = json.dumps(users)
+def save_user(user_list):
     try:
         with open(gconf.DB_FILE,'w+') as f:
             f.write(user_list)
@@ -45,6 +26,25 @@ def modify_user(username,password,age):
     except Exception as e:
         print e
         return False
+
+def modify_user(username,password,age):
+    new_user = {'username':username,'password':password,'age':age}
+    users = get_user()
+    """"
+   判断用户名是否存在于数据库中. 若存在，且信息没变化，则提示用户没有变化;否则新增一条记录。
+    """
+    #判断username已存在数据库中
+    for user in users:
+    #用户信息没变化
+        if user == new_user:
+            return 'same'
+    #用户已存在数据库
+        elif new_user.get('username') == user.get('username'):
+            return "flag"
+    else:
+        users.append(new_user)
+    user_list = json.dumps(users)
+    save_user(user_list)
 
 def find_user(username):
     """
@@ -68,16 +68,9 @@ def del_user(username,password,age):
     """
     users = get_user()
     del_user = {'username':username,'password':password,'age':age}
-    try:
-        del users[users.index(del_user)]
-        user_list = json.dumps(users)
-        with open(gconf.DB_FILE,'w+') as f:
-            f.write(user_list)
-        return True
-    except Exception as e:
-        print e
-        return False
-
+    del users[users.index(del_user)]
+    user_list = json.dumps(users)
+    save_user(user_list)
 
 def add_user(username,password,age):
     """
@@ -88,20 +81,18 @@ def add_user(username,password,age):
     for user in users:
         if user.get('username') == username or username == '':
             return False
+    #if len(password) <6:
+    #    return False,u'密码长度至少为6位'
+    #if not str(age).isdigit() or int(age) <0 or int(age) >150:
+    #    return False,u'年龄不正确'
     else:
         d['username'] = username
         d['password'] = password
         d['age'] =  age
         users.append(d)
     user_list = json.dumps(users)
-    try:
-        with open(gconf.DB_FILE,'w+') as f:
-            f.write(user_list)
-        return True
-    except Exception as e:
-        print e
-        return False
-            
+    save_user(user_list)
+
 def validate_login(username,password):
     """
     判断输入用户名和密码均正确。

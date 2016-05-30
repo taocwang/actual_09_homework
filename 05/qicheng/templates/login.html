@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<title>用户登录</title>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body background="http://www.bz55.com/uploads1/allimg/101227/1_101227162638_1.jpg">
+	<form action="/login/" method="post"  style="margin:200px auto;width:500px;height: 300px;text-align: center;" class="form-horizontal">
+		{%if error %}
+		<span style ="color:red">&nbsp&nbsp*{{error}}</span>
+		{% endif %} 
+		<div class="form-group">
+			<label for="username" class="col-sm-2 control-label" style="color:green">用户名</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" placeholder="username" name="username" >
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="password" class="col-sm-2 control-label" style="color:green">密码</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" placeholder="password" name="password" >
+			</div>
+		</div>
+		<input type="submit" value="提交" class="btn btn-primary col-sm-12">
+	</form>
+</body>
+</html>

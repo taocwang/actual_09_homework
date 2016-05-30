@@ -21,8 +21,8 @@ def login_check(func):
 
 
 def get_user():
-    colloens = ('username','password','age','telphone','email')
-    _sql = 'select username,password,age,telphone,email from user'
+    colloens = ('id','username','password','age','telphone','email')
+    _sql = 'select * from user'
     rt = []
     sql_count,rt_list = excute_fetch_sql(_sql)
     for i in rt_list:
@@ -30,10 +30,10 @@ def get_user():
     return rt
 
 
-def get_alone_user(username):
+def get_alone_user(id):
     users = get_user()
     for i in users:
-        if i.get('username') == username:
+        if i.get('id') == id:
             return i
     return None
 
@@ -61,9 +61,9 @@ def user_add(params):
     excute_commit_sql(_sql_insert,args2)
     return True
 
-def user_del(username):
-    _sql = 'delete from user where username=%s'
-    args = (username,)
+def user_del(id):
+    _sql = 'delete from user where id=%s'
+    args = (id,)
     _sql_count, rt_list = excute_update_sql(_sql, args)
     if _sql_count != 0:
         return True

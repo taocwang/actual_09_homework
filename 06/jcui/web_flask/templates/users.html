@@ -31,7 +31,7 @@
                 <td>{{ user['age'] }}</td>
                 <td>{{ user['telphone'] }}</td>
                 <td>{{ user['email'] }}</td>
-                <td><a href="/user/userupdate/?username={{ user['username'] }}" >更新</a>&nbsp;&nbsp;<a href="/user/userdel/?username={{ user['username'] }}" >删除</a></td>
+                <td><a href="/user/userupdate/?id={{ user['id'] }}" >更新</a>&nbsp;&nbsp;<a href="/user/userdel/?id={{ user['id'] }}" >删除</a></td>
             </tr>
             {% endfor %}
         </tbody>

@@ -68,9 +68,9 @@ def users_add():
 @user.login_check
 def user_del():
     params = request.args if request.method == 'GET' else request.form
-    username = params.get('username')
-    if user.user_del(username):
-        flash("用户%s删除成功" % username)
+    id = params.get('id')
+    if user.user_del(int(id)):
+        flash("用户删除成功")
         return redirect('/user/')
     return render_template('users.html',error='删除失败')
 
@@ -81,15 +81,17 @@ def user_del():
 @user.login_check
 def user_update():
     params = request.args if request.method == 'GET' else request.form
-    username = params.get('username')
-    if request.method == 'GET':
-        users = user.get_alone_user(username)
+    id = params.get('id')
+    if id:
+        users = user.get_alone_user(int(id))
+        print users
+        username = users.get('username')
         age = users.get('age')
         telphone = users.get('telphone')
         email = users.get('email')
         return render_template('user_update.html', username=username, age=age, telphone=telphone, email=email)
     if user.user_update(params):
-        flash("用户%s更新成功" % username)
+        flash("用户更新成功")
         return redirect('/user/')
     return render_template('user_update.html',error='更新失败')
 

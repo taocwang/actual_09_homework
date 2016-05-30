@@ -17,6 +17,7 @@
 	<table class="table table-bordered table table-condensed table table-hover">
 	<thead>
 		<tr class="info">
+            <th>ID</th>
 			<th>用户名</th>
 			<th>密码</th>
 			<th>年龄</th>
@@ -25,12 +26,12 @@
 	</thead>
 			{% for node in userlist %}
 			<tr class="info">
+                <td>{{ node['id'] }}</td>
 				<td>{{ node['username'] }}</td>
 				<td>{{ node['password'] }}</td>
 				<td>{{ node['age'] }}</td>
-				<td><a href="/user/modify/?username={{ node['username'] }}&password={{ node['password'] }}&age=
-				{{ node['age'] }}"><button type="submit" class="btn btn-primary">修改</button></a>
-                    <a href="/user/del/?username={{ node['username'] }}">
+				<td><a href="/user/modify/?id={{ node['id'] }}"><button type="submit" class="btn btn-primary">修改</button></a>
+                    <a href="/user/del/?id={{ node['id'] }}">
                         <button type="submit" class="btn btn-primary">删除</button></a></td>
 			</tr>
 			{% endfor %}

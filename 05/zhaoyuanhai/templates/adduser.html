@@ -7,9 +7,9 @@
 	<body>
 		<div><h3 style="color: green">添加用户</h3></div>
 		<div>
-			{% if error %}
-				<span>{{error}}</span>
-			{% endif %}
+			{% for msg in get_flashed_messages() %}
+				<div align="center"><h3 style="color: red">{{ msg }}</h3></div>
+   			{% endfor%}
 			<form action="/wuser/" method="post">
 				<table>
 					<tr><td>用户名：</td><td><input type="text" name="username"></td></tr>

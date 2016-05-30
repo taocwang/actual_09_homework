@@ -1,18 +1,35 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
-from flask import Flask, render_template
+from flask import Flask, render_template, session, flash
 from flask import request, redirect
-import user_action, gconfig, json
+import user_action, gconfig, json, os, sys
+from functools import wraps
 
 app = Flask(__name__)
+app.secret_key = os.urandom(32)
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
+def login_required(func):
+	@wraps(func)
+	def wrapper(*args, **kwargs):
+		if session.get('user') is None:
+			return redirect('/')
+		rt = func(*args, **kwargs)
+		return rt
+	return wrapper
+
 
 @app.route('/')
 def index():
     return render_template('user_login.html')
 
 @app.route('/users/')
+@login_required
 def re_userlist():
 	#return number
+	# if session.get('user') is None:   判断用户是否登陆
+	# 	return redirect('/')
 	number = request.args.get('number', 10)
 	result = user_action.user_list(number)
 	title = 'user top{number}'.format(number=number)
@@ -30,6 +47,8 @@ def login():
 	password = parms.get('password', '')
 	#return '%s:%s'%(username,password)
 	if user_action.validate_login(username, password):
+		session['user'] = {'username' : username}
+		flash('登陆成功')
 		return redirect('/users/')
 	else:
 		#登陆失败，返回错误信息回页面
@@ -37,11 +56,15 @@ def login():
 
 
 @app.route('/adduser/', methods=['POST', 'GET'])
+@login_required
 def add_user():
+	# if session.get('user') is None:
+	# 	return redirect('/')
 	return render_template('adduser.html')
 
 
 @app.route('/wuser/', methods=['POST', 'GET'])
+@login_required
 def writeuser():
 	if request.method == 'GET':
 		#获取POST传过来的参数
@@ -57,33 +80,44 @@ def writeuser():
 	userlist = user_action.get_user()
 	for i in userlist:
 		if username == i['username']:
-			return render_template('adduser.html', error='user has regedited!!')
+			flash('user has regedited!!')
+			return render_template('adduser.html')
 	if  username == '' or  password == '':
-		return render_template('adduser.html', error='username or password cant be empty!!')
+		flash('username or password cant be empty!!')
+		return render_template('adduser.html')
 	else:
 		user_action.add_user(username, password, age, phone, email)
 		result = user_action.user_list(10)
-		return render_template('user_list.html', title='top 10 user', sucessinfo = 'user add sucessful!', content=result)
+		flash('user add sucessful!')
+		return render_template('user_list.html', title='top 10 user', content=result)
 
 
 @app.route('/deluser/', methods=['GET', 'POST'])
+@login_required
 def deluser():
+	# if session.get('user') is None:
+	# 	return redirect('/')
 	username = request.args.get('username', '')
 	user_action.delUser(username)
+	flash('用户{username}删除成功'.format(username=username))
 	return redirect('/users/')
 
 
 @app.route('/modifyuser/', methods=['POST', 'GET'])
+@login_required
 def modify_user():
+	# if session.get('user') is None:
+	# 	return redirect('/')
 	username = request.args.get('username', '')
 	userlist = user_action.get_user()
 	for i in range(0,len(userlist)):
 		if userlist[i]['username'] == username:
-			result = True
+			flash('修改用户%s' %username)
 			return render_template('modify.html', content=userlist[i])
 
 
 @app.route('/upuser/', methods=['GET', 'POST'])
+@login_required
 def upuser():
 	username = request.form.get('username', '')
 	password = request.form.get('password', '')
@@ -92,11 +126,17 @@ def upuser():
 	email = request.form.get('email', '')
 	if username == '' or password == '':
 		content = user_action.get_user()
-		return render_template('user_list.html', error='username or password can not be empty!', content = content)
+		flash('username or password can not be empty!')
+		return render_template('user_list.html', content = content)
 	user_action.modifyUser(username, password, age, phone, email)
+	flash('用户{username}修改成功'.format(username=username))
 	return redirect('/users/')
 
-
+@app.route('/logout/')
+def logout():
+	session.clear()
+	#del session['user']
+	return redirect('/')
 
 
 

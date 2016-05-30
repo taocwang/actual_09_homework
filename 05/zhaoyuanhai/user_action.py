@@ -12,6 +12,28 @@ def get_user():
 	except BaseException as e:
 		print e
 		return []
+
+def file_read(file):
+	try:
+		f = open(file, 'r')
+		content = f.read()
+		f.close()
+		return content
+	except Exception, e:
+		print e
+		return e
+
+def file_write(file, content):
+	try:
+		f = open(file, 'wb')
+		f.write(content)
+		f.close()
+		return 'sucess'
+	except Exception, e:
+		print e
+		return False
+
+
 def validate_login(username, password):
 
 	users = get_user()
@@ -32,9 +54,11 @@ def add_user(username, password, age, phone, email):
 	userlist = get_user()
 	userinfo = {'username': username, 'password': password, 'age': age, 'phone': phone, 'email': email}
 	userlist.append(userinfo)
-	f = open(gconfig.USER_FILE, 'wb')
-	f.write(json.dumps(userlist))
-	f.close()
+	result = file_write(gconfig.USER_FILE, json.dumps(userlist))
+	return result
+	# f = open(gconfig.USER_FILE, 'wb')
+	# f.write(json.dumps(userlist))
+	# f.close()
 
 def delUser(username):
 	users = get_user()
@@ -42,21 +66,17 @@ def delUser(username):
 		if users[i]['username'] == username:
 			users.pop(i)
 			break
-	print users
-	f = open(gconfig.USER_FILE, 'wb')
-	f.write(json.dumps(users))
-	f.close()
+	result = file_write(gconfig.USER_FILE, json.dumps(users))
+	return result
 
 def modifyUser(username, password, age, phone, email):
 	users = get_user()
-	print users
 	for i in range(0,len(users)):
 		if users[i]['username'] == username:
 			users[i].update({'password': password, 'age': age, 'phone': phone, 'email': email})
 
-	f = open(gconfig.USER_FILE, 'wb')
-	f.write(json.dumps(users))
-	f.close()
+	result = file_write(gconfig.USER_FILE, json.dumps(users))
+	return result
 
 if __name__ == '__main__':
 	delUser('user2')

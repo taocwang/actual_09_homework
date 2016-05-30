@@ -5,12 +5,12 @@
 		<title>修改用户信息</title>
 	</head>
 	<body>
-		{% if error %}
-			<div><h3 style="color: red">用户不存在</h3></div>
-		{% endif %}
+		{% for msg in get_flashed_messages() %}
+			<div align="center"><h3 style="color: red">{{ msg }}</h3></div>
+   		{% endfor%}
 		<form action="/upuser/" method="post">
 			<table>
-				<tr><td>用户名：</td><td><input type="text" name="username" value="{{content['username']}}"></td></tr>
+				<tr><td>用户名：</td><td><input type="text" name="username" readonly="readonly" value="{{content['username']}}"></td></tr>
 				<tr><td>密码：</td><td><input type="password" name="password" ></td></tr>
 				<tr><td>年龄：</td><td><input type="text" name="age" value="{{content['age']}}"></td></tr>
 				<tr><td>联系电话：</td><td><input type="text" name="phone" value="{{content['phone']}}"></td></tr>

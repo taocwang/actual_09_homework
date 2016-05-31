@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>用户信息</title>
+    </head>
+    <body>
+        欢迎{{session.get('user',{}).get('username','')}}
+        <table border=1>
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>年龄</th>
+                    <th>修改</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in user_list %}
+                <tr>
+                    <th>{{row['username']}}</th>
+                    <th>{{row['age']}}</th>
+                    <th><a href="/readytousermodify/?username={{row['username']}}"> 修改</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <a href="/logout/"> 注销
+        </table>
+    </body>
+</html>

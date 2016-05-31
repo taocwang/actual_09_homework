@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>用户登录</title>
+    </head>
+    <body>
+        {% if error %}
+            <span style="color:#ff594b">{{error}}</span>
+        {% endif %}
+        <form action="/login/" method="post">
+           <p>用户名<input type="text"  name="username" value="{{username}}" /></p>
+           <p>密码<input type='password' name ="password"/></p>
+           <p>登陆<input type='submit' value='login' /></p>
+        </form>
+        <form action="/readytoadduser/" method="post"><p>
+            <p>注册<input type="submit" value='register' /></p>
+        </form>
+        <a href="/readytoadduser/"> 注册 </a>
+    </body> 
+</html>

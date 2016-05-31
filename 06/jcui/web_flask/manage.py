@@ -4,7 +4,7 @@ import sys
 
 from flask import Flask,render_template,request,redirect,session, flash
 
-from modules import user
+from modules import user,logs
 
 #
 reload(sys)
@@ -12,8 +12,8 @@ sys.setdefaultencoding('utf8')
 #解决字符串默认为ASCII编码的问题,导致输出中文为乱码
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)
-# app.secret_key = 'asdasd2342tdasfdasfasdasds'
+# app.secret_key = os.urandom(32)
+app.secret_key = 'asdasd2342tdasfdasfasdasds'
 
 @app.route('/')
 def index():
@@ -90,14 +90,21 @@ def user_update():
         return redirect('/user/')
     return render_template('user_update.html',error='更新失败')
 
+#加载日志的页面
 @app.route('/logs/')
 @user.login_check
 def nginx_logs():
     params = request.args if request.method == 'GET' else request.form
-    print params
-    return render_template('logs_top.html')
+    top = params.get('numbers','10')
+    access_list = logs.log_access(top=int(top))
+    return render_template('logs_top.html',toplist=access_list)
 
-
+#触发后将日志导入到mysql中
+@app.route('/import_los/')
+@user.login_check
+def import_logs():
+    if logs.logs_import_sql():
+        return 'ok'
 '''
 登出用户
 '''

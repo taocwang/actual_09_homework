@@ -121,8 +121,8 @@ create table user(
 create table access_logs(
    id int primary key auto_increment,
    ip varchar(128),
-   url varchar(128),
-   code int ,
+   url text,
+   code varchar(8) ,
    nums int
 ) engine=innodb default charset=utf8;
 

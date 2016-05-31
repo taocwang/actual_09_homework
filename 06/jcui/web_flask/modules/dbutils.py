@@ -52,7 +52,7 @@ def excute_nginx_log_write(sql,loglist):
                                db=gconfig.mysql_db, charset=gconfig.mysql_charset)
         curs = conn.cursor()
         for i in range(0, len(loglist)):
-            args = (loglist[i][1], loglist[i][0][0], loglist[i][0][1], loglist[i][0][2])
+            args = (loglist[i][0][0], loglist[i][0][1], loglist[i][0][2],loglist[i][1])
             sql_count += curs.execute(sql, args)
         if sql_count:
             conn.commit()

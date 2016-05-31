@@ -1,13 +1,12 @@
 #encoding: utf-8
-import MySQLdb
-import json
-import base64
 #
-from gconfig import gconfig
 
 from functools import wraps
+
 from flask import session ,redirect
-from dbutils import excute_fetch_sql,excute_commit_sql,excute_update_sql,excute_delete_sql
+
+from dbutils import excute_fetch_sql,excute_commit_sql,excute_update_sql
+
 
 #定义装饰器函数,为了检查是否处于登陆状态
 def login_check(func):
@@ -81,5 +80,3 @@ def user_update(params):
     if _sql_count != 0:
         return True
     return False
-
-

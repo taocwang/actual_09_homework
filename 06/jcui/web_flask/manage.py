@@ -2,13 +2,9 @@
 import os
 import sys
 
-from flask import Flask,render_template,request,redirect,session,url_for,flash
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.moment import Moment
+from flask import Flask,render_template,request,redirect,session, flash
 
-from logs import cretae_log
 from modules import user
-from datetime import datetime
 
 #
 reload(sys)
@@ -93,6 +89,14 @@ def user_update():
         flash("用户更新成功")
         return redirect('/user/')
     return render_template('user_update.html',error='更新失败')
+
+@app.route('/logs/')
+@user.login_check
+def nginx_logs():
+    params = request.args if request.method == 'GET' else request.form
+    print params
+    return render_template('logs_top.html')
+
 
 '''
 登出用户

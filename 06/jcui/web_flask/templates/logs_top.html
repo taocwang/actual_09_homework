@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
+    <title>Nginx状态排序</title>
 </head>
 <body>
     <h2>
     <a href="/top/?top=10" >TOP10</a>
-    <a href="/top/?top=25" >TOP25</a>
-    <a href="/top/?top=50" >TOP50</a>
     </h2>
     <table border="1">
         <thead>
             <tr>
+                <td>ID</td>
                 <td>IP</td>
                 <td>URL</td>
                 <td>STATE</td>
@@ -20,12 +19,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for i in rtlist %}
+            {% for i in toplist %}
             <tr>
-                <td>{{ i[0][0] }}</td>
-                <td>{{ i[0][1] }}</td>
-                <td>{{ i[0][2] }}</td>
+                <td>{{ i[0] }}</td>
                 <td>{{ i[1] }}</td>
+                <td>{{ i[2] }}</td>
+                <td>{{ i[3] }}</td>
             </tr>
             {% endfor %}
         </tbody>

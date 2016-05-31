@@ -30,7 +30,7 @@ def top10():
     a = '/home/jcui/files/www_access_20140823.log'
     title = 'Top %s ' % topnum
     rtlist = cretae_log.log_anslysis(sfile=a, topnum=topnum)
-    return render_template('top.html',title=title,rtlist=rtlist)
+    return render_template('logs_top.html',title=title,rtlist=rtlist)
 #--------------------------------------------------------------------------------------
 
 @app.route('/tests/')
@@ -45,7 +45,7 @@ def topn():
     a = '/home/jcui/files/www_access_20140823.log'
     title = 'Top %s ' % topnum
     rtlist = cretae_log.log_anslysis(sfile=a, topnum=topnum)
-    return render_template('top.html', title=title, rtlist=rtlist)
+    return render_template('logs_top.html', title=title, rtlist=rtlist)
 
 @app.route('/login/',methods=['POST','GET'])
 def login():

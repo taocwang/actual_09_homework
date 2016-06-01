@@ -2,13 +2,9 @@
 import os
 import sys
 
-from flask import Flask,render_template,request,redirect,session,url_for,flash
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.moment import Moment
+from flask import Flask,render_template,request,redirect,session, flash
 
-from logs import cretae_log
-from modules import user
-from datetime import datetime
+from modules import user,logs
 
 #
 reload(sys)
@@ -68,9 +64,9 @@ def users_add():
 @user.login_check
 def user_del():
     params = request.args if request.method == 'GET' else request.form
-    username = params.get('username')
-    if user.user_del(username):
-        flash("用户%s删除成功" % username)
+    id = params.get('id')
+    if user.user_del(int(id)):
+        flash("用户删除成功")
         return redirect('/user/')
     return render_template('users.html',error='删除失败')
 
@@ -81,18 +77,34 @@ def user_del():
 @user.login_check
 def user_update():
     params = request.args if request.method == 'GET' else request.form
-    username = params.get('username')
-    if request.method == 'GET':
-        users = user.get_alone_user(username)
+    id = params.get('id')
+    if id:
+        users = user.get_alone_user(int(id))
+        username = users.get('username')
         age = users.get('age')
         telphone = users.get('telphone')
         email = users.get('email')
         return render_template('user_update.html', username=username, age=age, telphone=telphone, email=email)
     if user.user_update(params):
-        flash("用户%s更新成功" % username)
+        flash("用户更新成功")
         return redirect('/user/')
     return render_template('user_update.html',error='更新失败')
 
+#加载日志的页面
+@app.route('/logs/')
+@user.login_check
+def nginx_logs():
+    params = request.args if request.method == 'GET' else request.form
+    top = params.get('numbers','10')
+    access_list = logs.log_access(top=int(top))
+    return render_template('logs_top.html',toplist=access_list)
+
+#触发后将日志导入到mysql中
+@app.route('/import_los/')
+@user.login_check
+def import_logs():
+    if logs.logs_import_sql():
+        return 'ok'
 '''
 登出用户
 '''

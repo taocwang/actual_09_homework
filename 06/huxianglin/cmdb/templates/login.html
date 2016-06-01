@@ -7,8 +7,8 @@
 </head>
 <body background="http://7xsn7l.com1.z0.glb.clouddn.com/Backtrack_5_Black.jpg">
 	<form action="/login/" method="post"  style="margin:200px auto;width:500px;height: 300px;text-align: center;" class="form-horizontal">
-		{%if error %}
-		<span style ="color:red">&nbsp&nbsp*{{error}}</span>
+		{%if msg %}
+		<span style ="color:red">&nbsp&nbsp*{{msg}}</span>
 		{% endif %} 
 		<div class="form-group">
 			<label for="username" class="col-sm-2 control-label" style="color:green">用户名</label>

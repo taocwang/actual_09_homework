@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <a href="/logs/?topn=10">Top 10</a>
+        <a href="/logs/?topn=20">Top 20</a>
+        <a href="/logs/?topn=30">Top 30</a>&nbsp;
+        <a href="/users">返回</a>
+        <table border="1px">
+            <thead>
+                <tr>
+                    <th>UID</th>
+                    <th>IP地址</th>
+                    <th>URL</th>
+                    <th>Status</th>
+                    <th>访问次数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for node in rt_list %}
+                    <tr>
+                        <td>{{ node['id'] }}</td>
+                        <td>{{ node['ip'] }}</td>
+                        <td>{{ node['url'] }}</td>
+                        <td>{{ node['status'] }}</td>
+                        <td>{{ node['count'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

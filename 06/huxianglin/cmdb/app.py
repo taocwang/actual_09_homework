@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask,render_template,request,redirect,session,url_for,flash
 import loganalysis_v2
-#import user
 import userdb as user
-import time
 from functools import wraps
 import os
 from datetime import timedelta
@@ -20,7 +18,7 @@ def login_required(func):
     def wrapper(*args,**kwargs):
         if session.get('username') is None:
             print 'no session'
-            return redirect(url_for('login'))
+            return redirect(url_for('login',msg=u'请先登录'))
         rt=func(*args,**kwargs)
         return rt
     return wrapper
@@ -28,7 +26,7 @@ def login_required(func):
 @app.route('/')
 def index():
     if not 'username' in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('login',msg=u'请先登录'))
     else:
         return redirect(url_for('users'))
 
@@ -39,9 +37,6 @@ params = request.args if request.method == 'GET' else request.form
 @app.route('/log/',methods=['POST','GET'])
 @login_required
 def log():
-    # if not 'username' in session:
-    #     return render_template('login.html',error=u'请先登录！')
-    # else:
     params = request.args if request.method == 'GET' else request.form
     topn=params.get('topn',10)
     topn=int(topn) if str(topn).isdigit() else 10
@@ -60,13 +55,14 @@ def login():
     params = request.args if request.method == 'GET' else request.form
     username=params.get('username', '')
     password=params.get('password','')
+    msg=params.get('msg','')
     if user.validate_user(username, password):
         session.permanent = True
         app.permanent_session_lifetime = timedelta(minutes=10)
         session['username']=username
         return redirect('/users/')
     else:
-        return render_template('login.html',username=username,error=u'用户名或密码错误')
+        return render_template('login.html',username=username,msg=msg)
 '''
 session.clear()清除该session，也可以通过session.pop()清除session，但是要知道session里面存储了什么东西
 '''
@@ -78,16 +74,18 @@ def logout():
 @app.route('/users/')
 @login_required
 def users():
-    # if not 'username' in session:
-    #     return render_template('login.html',error=u'请先登录！')
-    # else:
-    UserList=user.GetUser()
-    return render_template('users.html',userlist=UserList)
+    params = request.args if request.method == 'GET' else request.form
+    color=params.get('color','')
+    Flag=params.get('Flag','')
+    UserList=user.GetUsers()
+    return render_template('users.html',color=color,Flag=Flag,userlist=UserList)
 
-@app.route('/user/create/')
+@app.route('/user/create/',methods=['POST','GET'])
 @login_required
 def usercreate():
-    return render_template('createuser.html')
+    params = request.args if request.method == 'GET' else request.form
+    msg=params.get('msg','')
+    return render_template('createuser.html',msg=msg)
 
 @app.route('/user/add/',methods=['POST','GET'])
 @login_required
@@ -96,48 +94,57 @@ def useradd():
     username,password,age=params.get('username',''),params.get('password',''),params.get('age','')
     Flag=user.JudgUser(username)
     if Flag:
-        return render_template('createuser.html',userexist= u'抱歉，用户%s已经存在' %(username))
+        return redirect(url_for('usercreate',msg= u'抱歉，用户%s已经存在' %(username)))
     else:
         Flag=user.AddUser(username, password, age)
         if Flag:
-            UserList=user.GetUser()
-            flash(u'用户添加成功')
+            flash(u'用户%s添加成功' %(username))
             return redirect(url_for('users'))
             #return render_template('users.html',userlist=UserList,color='green',Flag=u'恭喜，添加成功')
         else:
-            return render_template('createuser.html',userexist= u'抱歉，用户%s添加失败' %(username))
+            return redirect(url_for('usercreate',msg= u'抱歉，用户%s添加失败' %(username)))
 
 @app.route('/user/modify/',methods=['GET'])
 @login_required
 def usermodify():
-    username,password,age=request.args.get('username',''),request.args.get('password',''),request.args.get('age','')
-    return render_template('modifyuser.html',username=username,password=password,age=age)
+    id=request.args.get('id','')
+    rt_list=user.GetUser(id)
+    if rt_list:
+        id,username,password,age=rt_list
+        return render_template('modifyuser.html',id=id,username=username,password=password,age=age)
+    else:
+        return 'Error'
 
 @app.route('/user/change/',methods=['POST','GET'])
 @login_required
 def userchange():
     params = request.args if request.method == 'GET' else request.form
-    username,password,age=params.get('username',''),params.get('password',''),params.get('age','')
-    Flag=user.ChangeUser(username, password, age)
-    if Flag=='samepassword':
-        return render_template('modifyuser.html',username=username,password=password,age=age,samepassword=u'抱歉，用户%s修改后的密码不能和原密码相同' %(username))
+    id,username,password,age=params.get('id',''),params.get('username',''),params.get('password',''),params.get('age','')
+    Flag=user.ChangeUser(id,username, password, age)
+    if Flag=='sameusername':
+        rt_list=user.GetUser(id)
+        password=rt_list[2]
+        return render_template('modifyuser.html',id=id,username=username,password=password,age=age,msg=u'抱歉，用户%s已存在' %(username))
+    elif Flag=='samepassword':
+        rt_list=user.GetUser(id)
+        password=rt_list[2]
+        return render_template('modifyuser.html',id=id,username=username,password=password,age=age,msg=u'抱歉，用户%s修改后的密码不能和原密码相同' %(username))
     elif Flag:
-        UserList=user.GetUser()
-        return render_template('users.html',userlist=UserList,color='green',Flag=u'恭喜，修改成功')
+        return redirect(url_for('users',color='green',Flag=u'恭喜，用户%s修改成功' %(username)))
     else:
         return render_template('modifyuser.html',error=u'抱歉，用户%s修改失败' %(username))
 
 @app.route('/user/del/',methods=['GET'])
 @login_required
 def userdel():
-    username=request.args.get('username','')
-    Flag=user.DelUser(username)
+    id=request.args.get('id','')
+    rt_list=user.GetUser(id)
+    username=rt_list[1]
+    Flag=user.DelUser(id)
     if Flag:
-        UserList=user.GetUser()
-        return render_template('users.html',userlist=UserList,color='green',Flag=u'恭喜，用户%s删除成功' %(username))
+        return redirect(url_for('users',color='green',Flag=u'恭喜，用户%s删除成功' %(username)))
     else:
-        UserList=user.GetUser()
-        return render_template('users.html',userlist=UserList,color='red',Flag=u'抱歉，用户%s删除失败' %(username))
+        return redirect(url_for('users',color='red',Flag=u'抱歉，用户%s删除失败' %(username)))
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

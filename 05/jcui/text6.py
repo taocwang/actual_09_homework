@@ -118,6 +118,14 @@ create table user(
   email varchar(32)
 ) engine=innodb default charset=utf8;
 
+create table access_logs(
+   id int primary key auto_increment,
+   ip varchar(128),
+   url text,
+   code varchar(8) ,
+   nums int
+) engine=innodb default charset=utf8;
+
 #插入数据  insert
 insert into user(username,password,age,telphone,email) values ('jcui','jcui','30','15110138509','cui@163.com') ;
 insert into user(username,password,age,telphone,email) values ('admin',md5('admin'),'30','15110138508','admin@163.com') ;

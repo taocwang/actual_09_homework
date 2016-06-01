@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
+    <title>Nginx状态排序</title>
 </head>
 <body>
-    <h2>
-    <a href="/top/?top=10" >TOP10</a>
-    <a href="/top/?top=25" >TOP25</a>
-    <a href="/top/?top=50" >TOP50</a>
-    </h2>
+        <!--<a href="/import_los/">【日志导入】</a>&nbsp;-->
+        <form action="/logs/">
+            <p>请输入Top(n)<input type="number" name="numbers" value="10" ><input type="submit" value="提交"></p>
+        </form>
     <table border="1">
         <thead>
             <tr>
@@ -20,12 +19,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for i in rtlist %}
+            {% for i in toplist %}
             <tr>
-                <td>{{ i[0][0] }}</td>
-                <td>{{ i[0][1] }}</td>
-                <td>{{ i[0][2] }}</td>
-                <td>{{ i[1] }}</td>
+                <td>{{ i['ip'] }}</td>
+                <td>{{ i['url'] }}</td>
+                <td>{{ i['code'] }}</td>
+                <td>{{ i['nums'] }}</td>
             </tr>
             {% endfor %}
         </tbody>

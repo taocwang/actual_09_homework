@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>form test</title>
+</head>
+<body>
+	{% for msg in get_flashed_messages() %}
+		<span>{{msg}}</span>
+	{% endfor %} 
+	<table border="1">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>用户名</th>
+				<th>年龄</th>
+				<th>密码</th>
+				<th>操作</th>
+				<th>执行</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for user in user_list %}
+			<tr>
+				<td>{{user['id']}}</td>
+				<td>{{user['username']}}</td>
+				<td>{{user['age']}}</td>
+				<td>***</td>
+				<td><a href="/updateuser/?actid={{user['id']}}">更新</a></td>
+				<td><a href="/deluser/?act={{user['id']}}">删除</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<form action="/adduser/" method="get">
+		<input name="add" type="submit" value="添加用户信息"></input>
+	</form>
+	<form action="/logout/" method="get">
+		<input name="logout" type="submit" value="退出"></input>
+	</form>
+
+</body>
+</html>

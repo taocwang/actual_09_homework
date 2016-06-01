@@ -13,6 +13,8 @@ app.secret_key = 'jdlaksjdflsfjd;'
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
+
 def login_required(func):
 	@wraps(func)
 	def wrapper(*args, **kwargs):
@@ -26,6 +28,7 @@ def login_required(func):
 @app.route('/')
 def index():
     return render_template('user_login.html')
+
 
 @app.route('/users/')
 @login_required
@@ -117,6 +120,7 @@ def deluser():
 		flash('id{uid}删除失败'.format(uid=uid))
 		return redirect('/users/')
 
+
 @app.route('/modifyuser/', methods=['POST', 'GET'])
 @login_required
 def modify_user():
@@ -130,7 +134,6 @@ def modify_user():
 	else:
 		flash('用户不存在')
 		return redirect('/users/')
-
 
 
 @app.route('/upuser/', methods=['GET', 'POST'])

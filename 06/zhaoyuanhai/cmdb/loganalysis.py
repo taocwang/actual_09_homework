@@ -16,6 +16,7 @@ def time_wrapper(func):  #传入函数
 		return exec_time  #返回执行时间
 	return wrapper 
 
+
 @time_wrapper
 def log2Db(file):
 	_rt_list = []
@@ -25,6 +26,7 @@ def log2Db(file):
 		_rt_list.append((ilist[0], ilist[6], ilist[8]))
 	sql = 'insert into accesslog values(%s, %s, %s)'
 	dbutils.upLogToDb(sql, _rt_list)
+
 
 def logTop(number):
 	_rt = []

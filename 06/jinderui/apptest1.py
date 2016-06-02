@@ -93,14 +93,13 @@ def deluser():
 	user.del_user(delid)       #通过user.del_user函数调用sql删掉得到的用户
 	return redirect('/users/')
 
-#更新用户先要把用户的信息带过去，通过get到userid然后去user.get_user函数去获取用户信息。id唯一不让其显示
+#更新用户先要把用户的信息带过去，通过get拿到userid然后去user.get_user函数去获取用户信息。id唯一不让其显示
 @app.route('/updateuser/')
 @login_required
 def updateuser():
 	flash('更新用户成功')
 	userid = request.args.get('actid') 
 
-     #获取get actname的参数
 	_user = user.get_user(userid)
 
 	if _user is None:
@@ -114,8 +113,7 @@ def updateuser():
 
 '''
 通过updateuser函数获取原有的用户信息，id,用户名年龄。然后和要改的进行对比，
-重新赋值并写入（这个地方id是唯一的）所以说不能修改。更新的时候是通过id判断的，所以id还必须要有。
-通过updateuser定义的 全局变量拿到
+重新赋值并写入（这个地方id是唯一的）所以说不能修改。在html里面对其进行了隐藏不让其显示。
 '''
 @app.route('/changeuser/',methods=['POST','GET'])
 @login_required
@@ -131,7 +129,7 @@ def changeuser():
 	if _is_ok:
 		user.change_user(userid,updateuser,updateage,updatepassword) #如果是true修改
 		return redirect('/users/')
-	else:			
+	else:	#检查不通过提示错误信息
 		return render_template('updateuser.html',userid=userid,error=_error, updateuser=updateuser, updatepassword=updatepassword, updateage=updateage)
 
 #退出清理sssion
@@ -140,6 +138,7 @@ def logout():
 	session.clear()
 	return redirect('/')
 
+#从数据库获取日志信息
 @app.route('/logs/')
 def logs():
 	topn = request.args.get('topn',10)	#通过get请求获取topn。没有默认是10 

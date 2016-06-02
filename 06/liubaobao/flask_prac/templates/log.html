@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<link href="{{url_for('static',filename='H-ui.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{url_for('static',filename='H-ui.admin.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{url_for('static',filename='style.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{url_for('static',filename='iconfont.css')}}" rel="stylesheet" type="text/css" />
+<title>用户列表</title>
+</head>
+<body>
+
+<div class="pd-20">
+	<form action="/log/" method="post" class="form form-horizontal" id="form-admin-add">
+	<div class="text-c">
+		<input type="text" class="input-text" style="width:250px" placeholder="查询日志前多少" id="" name="id_c">
+		<button type="submit" class="btn btn-success" id="" name="">查次数</button>
+	</div>
+		</form>
+     <a href="/users/" onclick="admin_add('用户列表','admin-add.html','800','500')" class="btn btn-primary radius">返回列表页</a>
+    	{% if error %}
+		  <span style="color:darkred;font-weight: bold">{{error}}<span/>
+	    {% endif %}
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="/log/?id_c=10" onclick="admin_add('10','admin-add.html','800','500')" class="btn btn-primary radius"> TOP10</a>  <a href="/log/?id_c=50" onclick="admin_add('50','admin-add.html','800','500')" class="btn btn-primary radius"> TOP50</a> <a href="/log/?id_c=80" onclick="admin_add('80','admin-add.html','800','500')" class="btn btn-primary radius"> TOP80</a>  <a href="/logout/" onclick="admin_add('添加用户','admin-add.html','800','500')" class="btn btn-primary radius"> 退出</a>&nbsp;&nbsp;<span style="font-weight: bold;color: red">欢迎{{session.get('user',{}).get('username',{})}}!</span></span></div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr class="text-c">
+				<th width="150">id</th>
+				<th width="150">ip</th>
+				<th width="90">url</th>
+				<th width="90">code</th>
+				<th width="100">count</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for id in users %}
+			<tr class="text-c">
+				<td>{{id['id']}}</td>
+				<td>{{id['ip']}}</td>
+				<td>{{id['url']}}</td>
+				<td>{{id['code']}}</td>
+                <td>{{id['count']}}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>

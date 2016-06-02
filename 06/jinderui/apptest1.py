@@ -11,6 +11,7 @@ from flask import flash
 from functools import wraps
 import json
 import userdb as user
+import logan
 
 
 app = Flask(__name__)
@@ -94,9 +95,9 @@ def deluser():
 
 #更新用户先要把用户的信息带过去，通过get到userid然后去user.get_user函数去获取用户信息。id唯一不让其显示
 @app.route('/updateuser/')
+@login_required
 def updateuser():
 	flash('更新用户成功')
-	global userid                        #定义了一个全局变量为了让changuser函数获取用户id
 	userid = request.args.get('actid') 
 
      #获取get actname的参数
@@ -108,7 +109,7 @@ def updateuser():
 		updateuser = _user.get('username')
 		updateage = _user.get('age')
 		updatepassword = _user.get('password')
-	return render_template('updateuser.html',updateuser=updateuser,updateage=updateage,updatepassword=updatepassword)
+	return render_template('updateuser.html',updateuser=updateuser,updateage=updateage,updatepassword=updatepassword,userid=userid)
 
 
 '''
@@ -117,8 +118,10 @@ def updateuser():
 通过updateuser定义的 全局变量拿到
 '''
 @app.route('/changeuser/',methods=['POST','GET'])
+@login_required
 def changeuser():
 
+	userid = request.form.get('id')
 	updateuser = request.form.get('user')
 	updateage = request.form.get('age')
 	updatepassword = request.form.get('password')
@@ -131,12 +134,19 @@ def changeuser():
 	else:			
 		return render_template('updateuser.html',userid=userid,error=_error, updateuser=updateuser, updatepassword=updatepassword, updateage=updateage)
 
-
 #退出清理sssion
 @app.route('/logout/')
 def logout():
 	session.clear()
 	return redirect('/')
+
+@app.route('/logs/')
+def logs():
+	topn = request.args.get('topn',10)	#通过get请求获取topn。没有默认是10 
+	_rt_list = logan.fetch_accesslog(topn) 	#从数据库获取指定数据
+
+	return render_template('logs.html',rt_list=_rt_list)  #模板渲染展示界面
+
 	
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port=8888,debug=True)

@@ -1,18 +1,25 @@
+# encoding: utf-8
+import os,sys
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
 import gconf
 import MySQLdb
 
+#查询
 def execute_fetch_sql(sql,args=(),fetch=True):
 	return execute_sql(sql,args,fetch)
-
+#添加
 def execute_commit_sql(sql,args=(),fetch=False):
 	return execute_sql(sql,args,fetch)
-
+#删除
 def execute_del_sql(sql,args=(),fetch=False):
 	return execute_sql(sql,args,fetch)
-
+#更新
 def execute_update_sql(sql,args=(),fetch=False):
 	return execute_sql(sql,args,fetch)
 
+
+#连接数据库，执行增删改
 def execute_sql(sql,args=(),fetch=True):  
 	_conn =None
 	_cur = None

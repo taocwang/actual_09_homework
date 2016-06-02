@@ -6,13 +6,11 @@
 </head>
 <body>
 	<form action="/changeuser/" method="post">
-	<!--
-		ID：
+
 		{% if userid %}
-		<input  name="id" type="text" value="{{userid}}" />
+		<input  name="id" type="hidden" value="{{userid}}" />
 		{% endif %}
-		<br />
-         -->
+
 		姓名：
 		{% if updateuser %}
 		<input name="user" type="text" value="{{updateuser}}" />

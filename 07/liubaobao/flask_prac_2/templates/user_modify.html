@@ -1,0 +1,58 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+    <!--<head>-->
+        <!--<meta charset="UTF-8">-->
+        <!--<title>用户修改</title>-->
+    <!--</head>-->
+    <!--<body>-->
+        <!--{% if error %}-->
+                <!--<span style="color: red;font-weight: bold;">{{error}}</span>-->
+        <!--{% endif %}-->
+        <!--<form action="/user/update/" method="post">-->
+                <!--id:<input type="text" name="id" value="{{id}}" readonly="readonly" />-->
+                <!--用户名:<input type="text" name="username" value="{{username}}" />-->
+                <!--密码:<input type="password" name="password" value="" />-->
+                <!--年龄:<input type="text" name="age" value="{{age}}" />-->
+                <!--<input type="submit" value="修改"/>-->
+        <!--</form>-->
+    <!--</body>-->
+<!--</html>-->
+{% extends "users.html" %}
+    {% block body %}
+<form class="form-horizontal" action="/user/update/" method="post">
+  <div class="form-group">
+    <label for="inputId" class="col-sm-2 control-label">id</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="inputId" placeholder="" name='id' value="{{id}}" readonly="readonly">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="inputUsername" placeholder="用户名" name='username' value="{{username}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" id="inputPassword" placeholder="密码" name="password">
+    </div>
+  </div>
+   <div class="form-group">
+    <label for="inputAge" class="col-sm-2 control-label">年龄</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="inputAge" placeholder="年龄" name="age" value="{{age}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">修改</button>
+    </div>
+      <div class="col-sm-offset-2 col-sm-10">
+    {% if error %}
+        <span class="bg-danger">{{error}}</span>
+    {% endif %}
+    </div>
+  </div>
+</form>
+    {% endblock %}

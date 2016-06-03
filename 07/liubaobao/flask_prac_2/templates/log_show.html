@@ -1,0 +1,28 @@
+{% extends "users.html" %}
+    {% block body %}
+        <div style="margin-bottom: 10px;">
+            <a href="/log_show/?topn=30" class="btn btn-default">top30</a>
+            <a href="/log_show/?topn=50" class="btn btn-default">top50</a>
+            <a href="/log_show/?topn=100" class="btn btn-default">top100</a>
+        </div>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>IP地址</th>
+                    <th>URL</th>
+                    <th>CODE</th>
+                    <th>次数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for node in rt_list %}
+                    <tr>
+                        <td>{{ node[0] }}</td>
+                        <td>{{ node[1] }}</td>
+                        <td>{{ node[2] }}</td>
+                        <td>{{ node[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>用户列表</title>
+    </head>
+    <body>
+        {% if error %}
+        {{error}}
+        {% endif %}
+        {% for msg in get_flashed_messages() %}
+        <span>{{msg}}</span>
+        {% endfor %}
+        <form align="center" action="/user/customlogs/" method="POST">
+           <input type="TEXT" style="width:250px;height:30px;size=20px"  name="sql" value="{{sql}}"/>
+           <input type="SUBMIT" class="btn btn-default"  value="查询"/>
+           <input type="button" value="返回上一步" onclick="javascript:history.back();"/>
+           <a href="/user/find/">返回主页</a>
+       </form>
+       <br />
+       <br />
+        <table border="1px;" align="center">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>IP</th>
+                    <th>URL</th>
+                    <th>CODE</th>
+                    <th>次数</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if result %}
+                {% for log in result %}
+                <tr>
+                    <td>{{log['id']}}</td>
+                    <td>{{log['ip']}}</td>
+                    <td>{{log['url']}}</td>
+                    <td>{{log['code']}}</td>
+                    <td>{{log['cnt']}}</td>
+                    {% endfor %}
+                </tr>
+             {% else %}
+              <tr>
+                    <td>没</td>
+                    <td>有</td>
+                    <td>数</td>
+                    <td>据</td>
+                    <td>哦</td>
+                </tr>
+             {% endif%}
+            </tbody>
+        </table>
+
+    </body>
+</html>

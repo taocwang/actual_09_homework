@@ -5,24 +5,31 @@ def log2db(logfile):
 
     fhandler = open(logfile, 'r')
 
-    rt_list = []
+    rt_dict = {}
     # 统计
-    _sql = 'insert into accesslog(url, ip, code) values (%s, %s, %s)'
+
     while True:
         line = fhandler.readline()
         if line == '':
             break
 
         nodes = line.split()
-        rt_list.append((nodes[0], nodes[6], nodes[8]))
-        
-
+        ip, url, code = nodes[0], nodes[6], nodes[8]
+        key = (ip, url, code)
+        if key not in rt_dict:
+            rt_dict[key] = 1
+        else:
+            rt_dict[key] = rt_dict[key] + 1
     fhandler.close()
+    rt_list = []
 
+    for _key, _cnt in rt_dict.items():
+        rt_list.append(_key + (_cnt, ))
+
+    _sql = 'insert into accesslog(ip, url, code, cnt) values (%s, %s, %s, %s)'
     dbutils.bulker_commit_sql(_sql, rt_list)
 
 
 if __name__ == '__main__':
     logfile = '/home/share/www_access_20140823.log'
-
     log2db(logfile)

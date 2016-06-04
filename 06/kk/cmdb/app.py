@@ -16,7 +16,9 @@ from flask import flash
 
 import userdb as user
 #import user                                         #导入user模块
-import loganalysis
+#import loganalysis
+import loganalysisdb as loganalysis
+
 
 app = Flask(__name__)
 
@@ -154,12 +156,10 @@ def delete_user():
 @app.route('/logs/')
 @login_required
 def logs():
-    logfile = '/home/share/www_access_20140823.log'
-
     topn = request.args.get('topn', 10)
     topn = int(topn) if str(topn).isdigit() else 10
 
-    rt_list = loganalysis.get_topn(logfile=logfile, topn=topn)
+    rt_list = loganalysis.get_topn(topn=topn)
     return render_template('logs.html', rt_list=rt_list, title='topn log')
 
 @app.route('/logout/')

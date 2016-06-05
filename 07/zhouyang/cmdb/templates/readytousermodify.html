@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>用户信息修改</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='signin.css')}}" type="text/css"/>
+</head>
+<body>
+    <div class="container">
+        <form action="/usermodify/" class="form-signin" method="post">
+            <h2 class="form-signin-heading">用户信息修改</h2>
+            <input type="hidden" value="id" />
+            <label for="username" class="sr-only">用户名</label>
+            <input type='text' id="username" class="form-control" name="username" value="{{username}}" readonly="readonly"/>
+            <label for="password">密码</label>
+            <input id="password" type='password' class="form-control" name ="password" required autofocus/>
+            <label for="age">年龄</label>
+            <input id="age" type="number" class="form-control" name="age" required/>
+            <label for="sub" class="sr-only">修改</label>
+            <input id="sub" class="btn btn-lg btn-primary btn-block width=10%" type='submit' value='修改' />
+        </form>
+    </div>
+</body>
+</html>

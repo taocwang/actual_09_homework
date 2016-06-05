@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <form class="form-signin" action="/user/create/" method="POST">
+            <p>用户名<input type="text" class="form-control" name="username" value="{{user}}"/></p>
+            <p>密码<input type="password" class="form-control" name="password"/></p>
+            <p>年龄<input type="number" class="form-control" name="age"/></p>
+            <p>性别<input type="radio" class="form-control" name="sex" value="1" checked 男 </p>
+            <input type="radio" name="sex" value="0" 女</p>
+            <p>提交<input type="submit" name="SUBMIT"/></p>
+        </form>
+    </div>
+    {% for msg in get_flashed_messages() %}
+        {{msg}}
+    {% endfor %}
+    {% if res %}
+        <span style="color:#2023ff">{{res}}</span>
+    {% endif %}
+    {% if fres %}
+        <span style="color:#ff594b">{{fres}}</span>
+    {% endif %}
+</body>
+</html>

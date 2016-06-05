@@ -45,17 +45,29 @@ def users():
 @user.login_check
 def users_add():
     params = request.args if request.method == 'GET' else request.form
+    print params
     if not params:
         return render_template('user_add.html')
     username = params.get('username')
     password = params.get('password')
+    gender = params.get('gender')
+    hobby = params.getlist('hobby')
+    department = params.get('department')
+    filename = request.files.get('files')
+    if filename:
+        print filename.filename
+        filename.save('/tmp/aa.txt')
     age = params.get('age')
     telphone = params.get('telphone')
     email = params.get('email')
-    if user.user_add(params):
+    if not params.get('username'):
+        error='用户名不能为空'
+    elif user.user_add(params):
         flash("用户%s添加成功" % username)
         return redirect('/user/')
-    return render_template('user_add.html',error='用户名已存在',username=username,password=password,age=age,telphone=telphone,email=email)
+    else:
+        error='用户名已存在'
+    return render_template('user_add.html',error=error,username=username,password=password,age=age,telphone=telphone,email=email)
 
 '''
 用户删除
@@ -65,7 +77,8 @@ def users_add():
 def user_del():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
-    if user.user_del(int(id)):
+    username = params.get('username')
+    if user.user_del(int(id),username):
         flash("用户删除成功")
         return redirect('/user/')
     return render_template('users.html',error='删除失败')
@@ -78,13 +91,13 @@ def user_del():
 def user_update():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
-    if id:
+    if request.method == 'GET':
         users = user.get_alone_user(int(id))
         username = users.get('username')
         age = users.get('age')
         telphone = users.get('telphone')
         email = users.get('email')
-        return render_template('user_update.html', username=username, age=age, telphone=telphone, email=email)
+        return render_template('user_update.html', id=id,username=username, age=age, telphone=telphone, email=email)
     if user.user_update(params):
         flash("用户更新成功")
         return redirect('/user/')
@@ -95,7 +108,7 @@ def user_update():
 @user.login_check
 def nginx_logs():
     params = request.args if request.method == 'GET' else request.form
-    top = params.get('numbers','10')
+    top = params.get('numbers',int(10))
     access_list = logs.log_access(top=int(top))
     return render_template('logs_top.html',toplist=access_list)
 
@@ -105,6 +118,16 @@ def nginx_logs():
 def import_logs():
     if logs.logs_import_sql():
         return 'ok'
+
+
+#test
+@app.route('/test/',methods=['POST','GET'])
+def test():
+    print request.form
+    print request.args
+    print request.files
+    # print request.header
+    return render_template('test/test0.html')
 '''
 登出用户
 '''

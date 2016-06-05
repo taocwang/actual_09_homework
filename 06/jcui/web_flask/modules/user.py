@@ -60,9 +60,9 @@ def user_add(params):
     excute_commit_sql(_sql_insert,args2)
     return True
 
-def user_del(id):
-    _sql = 'delete from user where id=%s'
-    args = (id,)
+def user_del(id,username):
+    _sql = 'delete from user where id=%s and username=%s'
+    args = (id,username)
     _sql_count, rt_list = excute_update_sql(_sql, args)
     if _sql_count != 0:
         return True
@@ -70,12 +70,12 @@ def user_del(id):
 
 def user_update(params):
     username = params.get('username')
-    password = params.get('password')
+    id = params.get('id')
     age = params.get('age')
     telphone = params.get('telphone')
     email = params.get('email')
-    _sql = 'update user set password=md5(%s) ,age=%s ,telphone=%s ,email=%s where username=%s'
-    args = (password,age,telphone,email,username)
+    _sql = 'update user set age=%s ,telphone=%s ,email=%s where id=%s and username=%s'
+    args = (age,telphone,email,id,username)
     _sql_count, rt_list = excute_update_sql(_sql,args)
     if _sql_count != 0:
         return True

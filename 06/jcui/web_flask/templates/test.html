@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>添加用户</title>
+    <link rel="stylesheet" href="../static/css/css.css" type="text/css">
 </head>
 <body>
     <form action="/user/useradd/" method="post" enctype="multipart/form-data" >
@@ -26,10 +27,19 @@
         <p>年龄<input type="number" name="age" min="0" max="120" value="{{ age }}" > </p>
         <p>电话<input type="number" name="telphone" minlength="11" maxlength="11" value="{{ telphone }}" > </p>
         <p>邮件<input type="email" name="email" value="{{ email }}" > </p>
-        <p>文件上传<input type="file" name="files"></p>
+        <p>文件上传<input type="file" name="files"><br>
+            <div class="images"><img src="http://img.ugirls.com/uploads/magazine/content/ad619c3f753b494550d30a0cbc66ca0e_magazine_web_m.jpg"></div>
+        </p>
         <p>个人简介 <br>
             <textarea name="remake" ></textarea>
         </p>
+        <span style="border-radius: 1px;background-color: yellow">span1</span>
+        <span>span2</span>
+        <span>span3</span>
+        <div id="divs1">div1</div>
+        <div class="divs2">div2</div>
+        <p>段落1</p>
+        <p>段落2</p>
         <p><input type="submit" value="确认添加"> </p>
     </form>
 </body>

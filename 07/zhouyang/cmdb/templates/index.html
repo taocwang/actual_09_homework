@@ -44,7 +44,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="/">主页 <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="#">主页 <span class="sr-only">(current)</span></a></li>
             <li><a href="/userinfo/">用户管理</a></li>
             <li><a href="/upload/">日志上传</a></li>
             <li><a href="/logs/">日志查看</a></li>
@@ -61,19 +61,8 @@
               </ul>
             {% endif %}
           {% endwith %}
-          <h2 class="sub-header">用户信息修改</h2>
+          <h2 class="sub-header">来喝上一杯吧！</h2>
           <div class="table-responsive">
-            <form action="/usermodify/" class="form-signin" method="post">
-                <input type="hidden" value="id" />
-                <label for="username" class="sr-only">用户名</label>
-                <input type='text' id="username" class="form-control" name="username" value="{{username}}" readonly="readonly"/>
-                <label for="password">密码</label>
-                <input id="password" type='password' class="form-control" name ="password" required autofocus/>
-                <label for="age">年龄</label>
-                <input id="age" type="number" class="form-control" name="age" required/>
-                <label for="sub" class="sr-only">修改</label>
-                <input id="sub" class="btn btn-lg btn-primary btn-block width=10%" type='submit' value='修改' />
-            </form>
           </div>
         </div>
       </div>

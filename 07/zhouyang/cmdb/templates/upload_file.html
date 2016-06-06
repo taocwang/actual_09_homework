@@ -59,30 +59,16 @@
               </ul>
             {% endif %}
           {% endwith %}
-          <h2 class="sub-header">用户信息列表</h2>
+            <br \>
+          <h2 class="sub-header">请选择要上传的本地文件</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>用户名</th>
-                  <th>密码</th>
-                  <th>年龄</th>
-                  <th>修改</th>
-                  <th>删除</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in user_list %}
-                <tr>
-                  <td>{{row['username']}}</td>
-                  <td>{{row['password']}}</td>
-                  <td>{{row['age']}}</td>
-                  <td><a href="/readytousermodify/?username={{row['username']}}"> 修改</td>
-                  <td><a href="/userdel/?username={{row['username']}}"> 删除</td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
+            <form action="/upload_ok/" class="navbar-form navbar" method="POST" enctype="multipart/form-data">
+                文件<input class="form-control" type="file" name="re_file"/><br \>
+                <br \>
+                备注<textarea class="form-control" rows="" cols="" name="remark"></textarea><br \>
+                <br \>
+                <button type="submit" class="btn btn-default">上传</button>
+            </form>
           </div>
         </div>
       </div>

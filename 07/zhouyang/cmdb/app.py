@@ -21,15 +21,16 @@ def checkinfo(func):
     @wraps(func)
     def wrapper(*args,**kwargs):
         if not session.get('user'):
-            return redirect('/')
+            return render_template('login.html')
         rt=func()
         return rt
     return wrapper
 
 @app.route('/')
+@checkinfo
 def index():
     #return redirect('/login/')  不能这样转，这样会执行/login/的验证逻辑，所以会导致首页跳过去之后提示用户名错误信息。
-    return render_template('login.html')
+    return render_template('index.html')
 
 @app.route('/logs/')
 @checkinfo
@@ -51,7 +52,7 @@ def login():
     if login.check_user(username,password):
         session['user']={'username':username}  #用户信息验证通过后，将信息存储到session中
         flash('登陆成功')
-        return redirect('/userinfo/')
+        return redirect('/')
     else:
         return render_template('login.html',username=username,error='您输入的用户名或密码错误!')
 
@@ -62,13 +63,12 @@ def userinfo():
     import userdb as login
     import uconf
     user_list=login.get_users()
-    print user_list
     #return render_template('show_users.html',user_list=user_list)
     return render_template('show_users_v2.html',user_list=user_list)
 
-@app.route('/readytoadduser/',methods=['POST'])
+@app.route('/readytoadduser/',methods=['POST','GET'])
 def readytoadduser():
-    return render_template('readytoadduser.html')
+    return render_template('readytoadduser_v2.html')
 
 @app.route('/user/create/',methods=['GET','POST'])
 def adduser():
@@ -90,12 +90,15 @@ def adduser():
     if username and password and age:
         if adduser.adduser(username,password,age):
             flash('用户注册成功')  #消息闪现方式
-            return render_template('adduser.html',res='用户名注册成功')  #传参渲染方式
+            return render_template('readytoadduser_v2.html')
+            #return render_template('adduser.html',res='用户名注册成功')  #传参渲染方式
         else:
-            return render_template('adduser.html',fres='用户名已存在，请重新注册')
+            #return render_template('adduser.html',fres='用户名已存在，请重新注册')
+            flash('用户名已存在，请重新注册')
+            return render_template('readytoadduser_v2.html')
     else:
-        return '请写全注册信息!'
-        #return render_template('adduser.html',fres='注册信息不全，请重新注册',user=username)
+        flash('请写全注册信息!')
+        return render_template('readytoadduser_v2.html')
 
 @app.route('/userdel/',methods=['GET','POST'])
 @checkinfo
@@ -144,9 +147,25 @@ def logout():
     session.clear()
     return render_template('login.html')
 
-@app.route('/test_css/')
-def test_css():
-    return render_template('test_css.html')
+@app.route('/upload/')
+@checkinfo
+def upload_file():
+    '''文件上传'''
+    return render_template('upload_file.html')
+
+@app.route('/upload_ok/',methods=['GET','POST'])
+@checkinfo
+def upload_ok():
+    _file_name=''
+    save_path="d:\\tmp"
+    _file=request.files.get('re_file')
+    if _file:
+        _file_name = _file.filename
+        _file.save('%s\%s' % (save_path,_file_name))
+        flash('文件%s上传成功' % _file_name )
+    else:
+        flash('文件%s上传失败！'% _file_name)
+    return redirect('/upload/')
 
 if __name__=='__main__':
     app.run(host='192.168.0.102',port=8080,debug=True)

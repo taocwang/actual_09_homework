@@ -61,19 +61,34 @@
               </ul>
             {% endif %}
           {% endwith %}
-          <h2 class="sub-header">用户信息修改</h2>
+          <h2 class="sub-header">用户注册</h2>
           <div class="table-responsive">
-            <form action="/usermodify/" class="form-signin" method="post">
-                <input type="hidden" value="id" />
-                <label for="username" class="sr-only">用户名</label>
-                <input type='text' id="username" class="form-control" name="username" value="{{username}}" readonly="readonly"/>
-                <label for="password">密码</label>
-                <input id="password" type='password' class="form-control" name ="password" required autofocus/>
-                <label for="age">年龄</label>
-                <input id="age" type="number" class="form-control" name="age" required/>
-                <label for="sub" class="sr-only">修改</label>
-                <input id="sub" class="btn btn-lg btn-primary btn-block width=10%" type='submit' value='修改' />
-            </form>
+        <form action="/user/create/" class="navbar-form">
+            <p>用户名<input type="text" class="form-control" name="username" value="{{user}}" required autofocus/></p>
+            <p>密码<input type="password" class="form-control" name="password" required /></p>
+            <p>年龄<input type="number" class="form-control" name="age"/></p>
+            <p>性别<input type="radio" name="gender" value="1" checked </p>男
+                   <input type="radio" name="gender" value="0" </p>女
+            <p>爱好 <input type="checkbox" name="hobby" value="computer" checked </p>计算机
+                   <input type="checkbox" name="hobby" value="games" </p>游戏
+                   <input type="checkbox" name="hobby" value="music" </p>音乐
+                   <input type="checkbox" name="hobby" value="sport" </p>运动 <br \>
+            <br \>
+            部门<select name="department">
+                <option value="op_01">运维一部</option>
+                <option value="op_02"selected>运维二部</option>
+                <option value="dev_01">开发一部</option>
+                <option value="dev_02">开发二部</option>
+               </select><br \>
+            <br \>
+            头像<input type="file" name="img"/><br \>
+                <img src="http://tse1.mm.bing.net/th?&id=OIP.M5369f9faa0fd1f219363383c41f97a13H0&w=300&h=225&c=0&pid=1.9&rs=0&p=0"
+            <br \>
+            <br \>
+            备注<textarea rows="" cols="" name="remark"></textarea><br \>
+            <br \>
+            <p>提交<input type="submit" name="SUBMIT"/></p>
+        </form>
           </div>
         </div>
       </div>

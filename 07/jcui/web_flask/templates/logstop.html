@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,31 +54,38 @@
           </ul>
         </div>
         <div class="col-md-10 col-md-offset-2 main">
-            <form action="/upload/"  method="post" enctype="multipart/form-data" >
+            <form action="/upload/" class="col-md-6"  method="post" enctype="multipart/form-data" >
                 <p>
                     <input class="file" type="file" name="files" multiple data-min-file-count="1">
                 </p>
                 <p>
                     <button type="submit" class="btn btn-success">导入日志</button>
                     <button type="reset" class="btn btn-info">重新选择</button>
+
                     {% for msg in get_flashed_messages() %}{{ msg }}{% endfor %}
                 </p>
             </form>
-            <div class="table-responsive">
+            <form action="/logs/" class="col-md-4 col-md-offset-2" method="get" >
+                <p><br></p>
+                <input type="text" class="searchs" name="numbers" placeholder="检索 Default Num. 10">
+                <!--<button type="submit" class="btn btn-default">Submit</button>-->
+            </form>
+            <div class="col-md-12 table-responsive">
                 <table class="table table-bordered table-striped table-hover">
-                    <thead>
+                    <thead align="center">
                         <tr>
+                            <!--<td>ID</td>-->
                             <td>IP</td>
                             <td>URL</td>
                             <td>STATE</td>
                             <td>NUMS</td>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody align="center">
                     {% for i in toplist %}
                         <tr>
                             <td>{{ i['ip'] }}</td>
-                            <td>{{ i['url'] }}</td>
+                            <td align="left">{{ i['url'] }}</td>
                             <td>{{ i['code'] }}</td>
                             <td>{{ i['nums'] }}</td>
                         </tr>

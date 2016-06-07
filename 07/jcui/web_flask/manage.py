@@ -97,9 +97,7 @@ def user_update():
         telphone = users.get('telphone')
         email = users.get('email')
         return render_template('userupdate.html', id=id,username=username, age=age, telphone=telphone, email=email)
-    print params
     if user.user_update(params):
-        print params
         flash("用户更新成功")
         return redirect('/user/')
     return render_template('userupdate.html',error='更新失败')
@@ -109,9 +107,12 @@ def user_update():
 @user.login_check
 def nginx_logs():
     params = request.args if request.method == 'GET' else request.form
+    print params
     top = params.get('numbers',int(10))
     access_list = logs.log_access(top=int(top))
-    return render_template('logstop.html',toplist=access_list)
+    print top
+    print access_list
+    return render_template('logstop.html',toplist=access_list,numbers=top)
 
 #触发后将日志导入到mysql中
 @app.route('/import_los/')

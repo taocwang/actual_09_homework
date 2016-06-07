@@ -47,9 +47,8 @@ def users():
 @user.login_check
 def users_add():
     params = request.args if request.method == 'GET' else request.form
-    print params
     if not params:
-        return render_template('user_add.html')
+        return render_template('useradd.html')
     username = params.get('username')
     password = params.get('password')
     gender = params.get('gender')
@@ -62,13 +61,11 @@ def users_add():
     age = params.get('age')
     telphone = params.get('telphone')
     email = params.get('email')
-    if not params.get('username'):
-        error='用户名不能为空'
-    elif user.user_add(params):
+    if user.user_add(params):
         flash("用户%s添加成功" % username)
         return redirect('/user/')
     else:
-        error='用户名已存在'
+        error = '用户名已存在'
     return render_template('useradd.html',error=error,username=username,password=password,age=age,telphone=telphone,email=email)
 
 '''
@@ -83,7 +80,7 @@ def user_del():
     if user.user_del(int(id),username):
         flash("用户删除成功")
         return redirect('/user/')
-    return render_template('users.html',error='删除失败')
+    return render_template('user.html',error='删除失败')
 
 '''
 用户更新
@@ -99,11 +96,13 @@ def user_update():
         age = users.get('age')
         telphone = users.get('telphone')
         email = users.get('email')
-        return render_template('user_update.html', id=id,username=username, age=age, telphone=telphone, email=email)
+        return render_template('userupdate.html', id=id,username=username, age=age, telphone=telphone, email=email)
+    print params
     if user.user_update(params):
+        print params
         flash("用户更新成功")
         return redirect('/user/')
-    return render_template('user_update.html',error='更新失败')
+    return render_template('userupdate.html',error='更新失败')
 
 #加载日志的页面
 @app.route('/logs/')
@@ -128,7 +127,7 @@ def files_upload():
     files = request.files.get('files')
     if files:
         filename = ''.join(random.sample(string.ascii_letters + string.digits, 8))
-        filepath = '/home/op/test/%s.txt' % filename
+        filepath = '/home/op/test/%s.log' % filename
         files.save(filepath)
         if logs.logs_import_sql(filepath):
             flash("日志上传成功")

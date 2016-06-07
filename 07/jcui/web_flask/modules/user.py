@@ -69,6 +69,7 @@ def user_del(id,username):
     return False
 
 def user_update(params):
+    print params
     username = params.get('username')
     id = params.get('id')
     age = params.get('age')

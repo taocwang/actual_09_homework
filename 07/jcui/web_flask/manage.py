@@ -107,11 +107,8 @@ def user_update():
 @user.login_check
 def nginx_logs():
     params = request.args if request.method == 'GET' else request.form
-    print params
     top = params.get('numbers',int(10))
     access_list = logs.log_access(top=int(top))
-    print top
-    print access_list
     return render_template('logstop.html',toplist=access_list,numbers=top)
 
 #触发后将日志导入到mysql中

@@ -107,7 +107,10 @@ def user_update():
 @user.login_check
 def nginx_logs():
     params = request.args if request.method == 'GET' else request.form
-    top = params.get('numbers',int(10))
+    if params.get('numbers'):
+        top = params.get('numbers')
+    else:
+        top = 10
     access_list = logs.log_access(top=int(top))
     return render_template('logstop.html',toplist=access_list,numbers=top)
 

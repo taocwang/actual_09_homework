@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<title>用户管理</title>
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/users.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">CMDB</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a>
+							{% for msg in get_flashed_messages() %}
+								<span style="color:red">{{ msg }} </span>
+							{% endfor %}
+						</a>
+					</li>
+					<li><a>欢迎{{ session.get('user', {}).get('username') }}登陆系统!!!</a></li>
+					<li><a href="/logout">退出登陆</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">用户管理</a></li>
+            <li><a href="/logs/">日志统计</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+
+		<h5><a href="/useradd/index/" class="sub-header">添加用户</a></h5>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>用户名</th>
+                  <th>密码</th>
+                  <th>年龄</th>
+				  <th>性别</th>
+				  <th>邮箱</th>
+                  <th colspan="2" align="center">操 作</th>
+                </tr>
+              </thead>
+              <tbody>
+				{% for user in user_list %}
+					<tr>
+						<td>{{ user_list.index(user)+1}}</td>
+						<td>{{ user['username'] }}</td>
+						<td>{{ user['password'] }}</td>
+						<td>{{ user['age'] }}</td>
+						<td>{{ user['gender'] }}</td>
+						<td>{{ user['email'] }}</td>
+						<td><a href="/useredit/index/?user_id={{ user['id'] }}">修改</a></td>
+						<td><a href="/userdel/index/?user_id={{ user['id'] }}">删除</a></td>
+					</tr>
+				{% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

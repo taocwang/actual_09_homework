@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>用户信息</title>
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/users.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">CMDB</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a>欢迎{{session.get('user', {})}}</a></li>
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="#">用户管理</a></li>
+            <li><a href="/upfile/">日志上传</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          {% for msg in get_flashed_messages() %}
+                  <span>{{msg}}</span>
+          {% endfor %}
+          <span>{{msg}}</span>
+              <table class="table table-bordered table-striped table-hover">
+                <thead>
+                  <tr>
+                   <!-- <th>ID</th> -->
+                    <th>用户名</th>
+                    <th>年龄</th>
+                    <th>密码</th>
+                    <th>操作</th>
+                    <th>执行</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in user_list %}
+                  <tr>
+                    <!--<td>{{user['id']}}</td> -->
+                    <td>{{user['username']}}</td>
+                    <td>{{user['age']}}</td>
+                    <td>***</td>
+                    <td><a href="/updateuser/?actid={{user['id']}}">更新</a></td>
+                    <td><a href="/deluser/?act={{user['id']}}">删除</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+ 
+                <form action="/adduser/" method="get">
+                  <input class="btn btn-primary btn-sm" name="add" type="submit" value="添加用户信息"></input>
+                </form>
+
+          </div>
+        </div>
+      </div>
+  </body>
+</html>

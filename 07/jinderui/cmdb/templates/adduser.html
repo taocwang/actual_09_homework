@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>用户信息</title>
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/users.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">CMDB</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a>欢迎{{session.get('user', {})}}</a></li>
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <form action="/commituser/" method="post">
+
+          用户名：
+          <input name="adduser" type='text'></input>
+          <br />
+
+          年龄：
+          <input name="addage" type='text'></input>
+
+          <br />
+          密码：
+          <input name="password" type='password'></input>
+
+          <br />
+          <input class="btn btn-primary btn-sm" name="submituser" type='submit' value="提交"></input>
+
+          <br />
+          <span style="color:red"> {{info}} </span>
+          <span style="color:red"> {{error}} </span>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>密码修改</title>
+    </head>
+    <body>
+        <form action="/user/update/" method="post">
+            {% if error %}
+            <span style="color:red;">{{error}}</span>
+            {% endif %}
+            用户名: <input type="text" name="username" value="{{username}}" disabled="disabled" />
+            原密码: <input type="password" name="password" value="{{password}}"/>
+            新密码: <input type="password" name="password" value="{{password}}"/>
+            <input type="hidden" name="id" value="{{id}}" />
+            <input type="submit" value="修改"/>
+        </form>
+    </body>
+</html>

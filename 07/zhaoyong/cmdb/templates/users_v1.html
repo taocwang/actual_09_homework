@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>用户列表</title>
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-xs-12 col-md-10">
+                {% for msg in get_flashed_messages() %}
+                    <span>{{msg}}</span>
+                {% endfor %}</div>
+                <a href="/user/create/">添加用户</a>
+                欢迎{{session.get('user',{}).get('username','')}},<a href="/logout/" type="submit" class="btn btn-primary">退出登录</a>
+          </div>
+        </div>
+        <div class="container-fluid">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                  <tr>
+                      <td>{{user['username']}}</td>
+                      <td>{{user['password']}}</td>
+                      <td>{{user['age']}}</td>
+                      <td>
+                          <!--<a href="/user/modify/?username={{user['username']}}">修改</a>-->
+                          <a href="/user/modify/?id={{user['id']}}">修改</a>
+                          <a href="/user/delete/?id={{user['id']}}">删除</a>
+                      </td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </body>
+</html>

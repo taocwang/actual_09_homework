@@ -141,7 +141,7 @@ def changeuser():
 		user.change_user(userid,updateuser,updateage,updatepassword) #如果是true修改
 		return redirect('/users/')
 	else:			
-		return render_template('updateuser.html',error=_error,updateage=updateage)
+		return render_template('updateuser.html',error=_error,updateage=updateage,userid=userid,updateuser=updateuser)
 
 #退出清理sssion
 @app.route('/logout/')

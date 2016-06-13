@@ -138,7 +138,18 @@ def files_upload():
         flash("日志上传失败")
     return redirect('/logs/')
 
-
+@app.route('/user/reset/',methods=['POST','GET'])
+@user.login_check
+def user_reset():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id')
+    username = params.get('username')
+    reset_stat,newpasswd = user.user_reset(id,username)
+    if reset_stat:
+        flash('用户%s密码初始化完毕,请牢记: %s' % (username,newpasswd))
+    else:
+        flash('用户%s密码初始化失败' % username)
+    return redirect('/user/')
 #test
 # @app.route('/test/',methods=['POST','GET'])
 # def test():

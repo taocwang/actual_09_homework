@@ -80,3 +80,12 @@ def user_update(params):
     if _sql_count != 0:
         return True
     return False
+
+def user_reset(id,username):
+    _sql = 'update user set password = md5(%s) where id=%s and username=%s'
+    newpassword = 'a'
+    args = (newpassword,id,username)
+    _sql_count, rt_list = excute_update_sql(_sql,args)
+    if _sql_count != 0:
+        return True,newpassword
+    return False,newpassword

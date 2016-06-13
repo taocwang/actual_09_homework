@@ -1,6 +1,7 @@
 #encoding:utf-8
 
-
+import os
+# print os.getcwd()
 #数据库
 mysql_host = 'localhost'
 mysql_port = 3306

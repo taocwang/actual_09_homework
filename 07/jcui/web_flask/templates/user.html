@@ -123,7 +123,10 @@
                         <td>{{ user['age'] }}</td>
                         <td>{{ user['telphone'] }}</td>
                         <td>{{ user['email'] }}</td>
-                        <td><a href="/user/userupdate/?id={{ user['id'] }}" ><button type="button" class="btn btn-success">更新</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/userdel/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">删除</button></a></td>
+                        <td><a href="/user/userupdate/?id={{ user['id'] }}" ><button type="button" class="btn btn-success">更新</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/user/userdel/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">删除</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/user/reset/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">重置密码</button></a>
+                        </td>
                     </tr>
                 {% endfor %}
               </tbody>

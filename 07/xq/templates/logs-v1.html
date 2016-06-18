@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>日志查询</title>
+      <link rel="icon" href="/static/favicon.ico">
+      <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}"  type="text/css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">某某系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+            <li class="active"><a href="/users/">用户管理<span class="sr-only"></span></a></li>
+
+
+            <li class="active"><a href="/user/logs/">日志查询<span class="sr-only">(current)</span></a></li>
+            <li class="inactive"><a href="/user/customlogs/">SQL语句查询<span class="sr-only"></span></a></li>
+
+           <li class="active"><a href="/user/upload/">文件上传<span class="sr-only"></span></a> </li>
+
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+              {% if username %}
+        欢迎{{username}}
+        {% endif %}
+        {% for msg in get_flashed_messages() %}
+        <span>{{msg}}</span>
+        {% endfor %}
+        <form align="center" action="/user/logs/" method="POST">
+           <input type="TEXT" style="width:250px;height:30px;size=20px"  name="count" value="{{count}}"/>
+           <input type="SUBMIT" class="btn btn-info"  value="查询"/>
+       </form>
+        <div class="container-fluid">
+        <table class="table  table-bordered table-striped table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>IP</th>
+                    <th>URL</th>
+                    <th>CODE</th>
+                    <th>次数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{log['id']}}</td>
+                    <td>{{log['ip']}}</td>
+                    <td>{{log['url']}}</td>
+                    <td>{{log['code']}}</td>
+                    <td>{{log['cnt']}}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+     </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

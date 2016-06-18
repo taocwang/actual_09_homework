@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>用户创建</title>
+      <link rel="icon" href="/static/favicon.ico">
+      <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}"  type="text/css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">某某系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+          <li class="active"><a href="/users/">用户管理<span class="sr-only">(current)</span></a></li>
+
+              <li class="inactive"><a href="/user/create/">添加用户<span class="sr-only"></span></a></li>
+              <li class="inactive"><a href="/user/modifypasswd/">修改密码<span class="sr-only"></span></a></li>
+             <li class="active"><a href="/user/logs/">日志查询<span class="sr-only"></span></a></li>
+             <li class="active"><a href="/user/upload/">文件上传<span class="sr-only"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+             <form action="/user/add/" method="post" ENCTYPE="multipart/form-data">
+             <div style='text-align:center;color:red;font-size:20px' class="bg-danger">{{error}}</div>
+            用户名: <input type="text" name="username" value="{{username}}" />
+            密码: <input type="text" name="password" value="{{password}}" />
+            年龄: <input type="text" name="age" value="{{age}}" />
+            <input type="submit" class="btn btn-info" value="添加" />
+            <input type="button" class="btn btn-info" value="返回" onclick="javascript:history.back();"/>
+        </form>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

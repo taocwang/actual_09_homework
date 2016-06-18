@@ -1,0 +1,33 @@
+ ./guard
+./gatherclient
+./gatherclient_network
+knose: master process /home/xmission/knose/knose -s
+knose: worker process
+
+
+1/3/24区收费版 paysys用的1.0(志勇)
+100区 105区 102区免费版 paysys用的免费版1.0(志勇)
+  Jx2010免费版paysys用的免费版2.0(蔡皓负责)
+114.255.44.180测试paysys
+(rake monitor:restart)
+周二维护记得修改relay_config配置文件
+[VirtualizeAgent]
+Ip=10.20.72.88(内网relay地址)
+   Port=7463
+tu7266592327966
+
+1.DB备机是测试用的
+2.6097 海慧
+3.收费版需配relayroot
+2010是新服 是2010以后开的区服 用的是paysys2.0
+
+
+roleiterator.ini 干嘛用的？ssh -lroot 121.14.30.76
+
+
+剑1(李然)
+剑世(范新飞)
+剑2(汪旭辉,赵亚杰)
+剑3(尹新华)
+月影(张凯凯)
+九天(刘博闻)

@@ -1,0 +1,16 @@
+.mid {
+            border:1px solid red;
+            color:red;
+            width:200px;
+
+        }
+#mid {
+            position:absolute;
+            margin:10px 20px 30px 40px;
+            padding:20px;
+            border:10px dashed red;
+            width:200px;
+            height:200px;
+            top:100px;
+            left:500px;
+        }

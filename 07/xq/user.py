@@ -1,7 +1,7 @@
 #encoding: utf-8
 import json
+
 import gconf
-from dbutils import execute_sql
 
 '''获取所有用户的信息
 返回值: [
@@ -10,23 +10,34 @@ from dbutils import execute_sql
         ]
 '''
 def get_users():
-    _sql = 'select * from user;'
-    _columns = ('id','username','password','age')
-    _rt = []
-    _count, _rt_list = execute_sql(_sql,fetch=True)
-    for _line in _rt_list:
-        _rt.append(dict(zip(_columns, _line)))
-    return _rt
+    try:
+        fhandler = open(gconf.USER_FILE, 'rb')
+        cxt = fhandler.read()
+        fhandler.close()
+        return json.loads(cxt)
+    except BaseException as e:
+        print e
+        return []
+
+
+'''保存用户数据到文件中
+'''
+def save_users(users):
+    fhandler = open(gconf.USER_FILE, 'wb')
+    fhandler.write(json.dumps(users))
+    fhandler.close()
 
 
 '''验证用户名，密码是否正确
 返回值: True/False
 '''
 def validate_login(username, password):
-    _sql = 'select * from user where username=%s and password=md5(%s)'
-    _count, _rt_list = execute_sql(_sql, (username, password),fetch=True)
-    if _count:
-        return True
+    _users = get_users()
+    for _user in _users:
+        # 验证比较用户名和密码信息
+        if username == _user.get('username') and password == _user.get('password'):
+            return True
+    return False
 
 
 '''检查新建用户信息
@@ -55,15 +66,14 @@ def validate_add_user(username, password, age):
 '''添加用户信息
 '''
 def add_user(username, password, age):
-    _sql = 'insert into user(username, password, age) values(%s, md5(%s), %s)'
-    _args = (username, password, age)
-    execute_sql(_sql, _args,fetch=False)
+    _user = {'username' : username, 'password' : password, 'age' : age}
+    _users = get_users()
+    _users.append(_user)
+    save_users(_users)
 
 
+'''获取用户信息
 '''
-获取用户信息
-'''
-
 def get_user(username):
     _users = get_users()
     for _user in _users:
@@ -72,24 +82,6 @@ def get_user(username):
 
     return None
 
-'''
-获取用户信息
-'''
-
-def find_user(username):
-    _users = get_users()
-    print "1111111111111"
-    print _users
-    new_users=[]
-    flag = 0
-    for _user in _users:
-        if username.strip() in _user.get('username'):
-            new_users.append(_user)
-            flag +=1
-    if flag>0:
-        return new_users
-    else:
-        return []
 
 '''检查更新用户信息
 返回值: True/False, 错误信息
@@ -111,20 +103,25 @@ def validate_update_user(username, password, age):
 '''更新用户信息
 '''
 def update_user(username, password, age):
-    _sql = 'update  user set password=md5(%s),age=%s where username=%s;'
-    _args = (password,int(age),username)
-    print type(age)
-    print _args
-    execute_sql(_sql, _args,fetch=False)
-
+    _users = get_users()
+    for _user in _users:
+        if _user.get('username') == username:
+            _user['password'] = password
+            _user['age'] = age
+            save_users(_users)
+            break
 
 '''删除用户信息
 '''
 def delete_user(username):
-    _sql = 'delete  from user where username=%s;'
-    _args = (username,)
-    execute_sql(_sql, _args,fetch=False)
-
+    _users = get_users()
+    _idx = -1
+    for _user in _users:
+        _idx += 1
+        if _user.get('username') == username:
+            del _users[_idx]
+            save_users(_users)
+            break
 
 if __name__ == '__main__':
     # _is_ok, _error = validate_add_user('ada', 'ada23', 26)

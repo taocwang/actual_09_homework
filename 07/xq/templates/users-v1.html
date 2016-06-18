@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>用户列表</title>
+         <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <style type="text/css">
+            th {
+                width:100px;
+                text-align:center;
+            }
+            td {
+                text-align:center;
+            }
+
+        </style>
+        <script type="text/javascript">
+            function del(){
+                if(!confirm("确认要删除？")){
+                    window.event.returnValue = false;
+                }
+
+            }
+
+           function logout(){
+            if(!confirm("确定要退出？"))
+            { window.event.returnValue = false; }
+            }
+        </script>
+    </head>
+    <body>
+            {% if username %}
+            {{username}}欢迎回来！
+            {% endif %}
+            {% for msg in get_flashed_messages() %}
+            <span>{{msg}}</span>
+            {% endfor %}
+        <div>
+            <form align="center" action="/user/find/" method="POST">
+               <input type="TEXT" style="width:250px;height:30px;size=20px"  name="username" value="{{username}}"/>
+               <input type="SUBMIT" class="btn btn-info"  value="查询"/>
+               <br />
+               <br />
+            <a href="/user/create/" class="btn btn-info">添加用户</a>
+            <a href="/user/logs/" class="btn btn-info">查询日志</a>
+            <a href="/user/customlogs/"  class="btn btn-info">自定义查询日志</a>
+            <a href="/user/modifypasswd/" class="btn btn-warning">修改密码</a>
+            <a href="/logout/" onclick="return logout()" class="btn btn-danger">用户退出</a>
+           </form>
+        </div>
+        <br />
+       <div class="container-fluid">
+            <table  class="table  table-bordered table-striped table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>用户名</th>
+                        <th>密码</th>
+                        <th>年龄</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user['id']}}</td>
+                        <td>{{user['username']}}</td>
+                        <td>{{user['password']}}</td>
+                        <td>{{user['age']}}</td>
+                        <td>
+                            <a href="/user/modify/?id={{user['id']}}" class="btn btn-info" >修改</a>
+                            <a href="/user/delete/?id={{user['id']}}" class="btn btn-info" onclick="return del()">删除</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

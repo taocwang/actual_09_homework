@@ -33,8 +33,9 @@ def get_alone_user(id):
     users = get_user()
     for i in users:
         if i.get('id') == id:
+            print id
             return i
-    return None
+    return False
 
 
 def validate_login(username,password):
@@ -89,3 +90,21 @@ def user_reset(id,username):
     if _sql_count != 0:
         return True,newpassword
     return False,newpassword
+
+def valid_change_passwd(uid,upass,muser,mpass):
+    if not validate_login(muser,mpass):
+        return False,'管理用密码错误'
+    if get_alone_user(uid):
+        print get_alone_user(uid)
+        return False,'用户不存在'
+    if len(upass) < 6:
+        return False,'密码长度小于6个字符'
+    return True,'验证成功'
+
+def change_passwd(uid,upass):
+    _sql = 'update user set password = md5(%s) where id = %s'
+    _args = (upass,uid)
+    _sql_count,rt_list = excute_update_sql(_sql,_args)
+    if _sql_count:
+        return True,'修改成功'
+    return False,'修改失败'

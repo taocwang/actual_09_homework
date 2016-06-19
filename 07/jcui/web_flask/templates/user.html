@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/static/image/favicon.ico">
-    <title>Jcui's CMDB</title>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/base.css" rel="stylesheet">
-    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="/static/image/favicon.ico">
+        <title>Jcui's CMDB</title>
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/css/base.css" rel="stylesheet">
+        <!--<script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
+        <!--<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>-->
+
   </head>
 
   <body>
@@ -53,56 +54,9 @@
           </ul>
         </div>
         <div class="col-md-10 col-md-offset-2 main">
-          <p><a href="/user/useradd/"><button type="button" class="btn btn-success" data-toggle="modal">添加用户</button><span>{% for msg in get_flashed_messages() %}{{ msg }}{% endfor %}</span> </a></p>
-          <!--<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">添加用户</button></a></p>-->
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">新建用户</h4>
-                </div>
-                <div class="modal-body">
-                   <form action="/user/useradd/" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="form-group">
-                            <label for="inputUsername" class="col-sm-2 control-label">用户</label>
-                            <div class="col-sm-6">
-                                 <input type="text" name="username" value="{{ username }}" class="form-control" id="inputUsername" placeholder="Username" required autofocus>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword" class="col-sm-2 control-label">密码</label>
-                            <div class="col-sm-6">
-                                <input type="password" name="password" value="{{ username }}" class="form-control" id="inputPassword" placeholder="Password" required>
-                            </div>
-                        </div>
-                            <div class="form-group">
-                            <label for="inputAge" class="col-sm-2 control-label">年龄</label>
-                            <div class="col-sm-6">
-                                <input type="number" name="age" value="{{ age }}" class="form-control" id="inputAge" placeholder="Age" required>
-                            </div>
-                        </div>
-                            <div class="form-group">
-                            <label for="inputTel" class="col-sm-2 control-label">手机</label>
-                            <div class="col-sm-6">
-                                <input type="tel" name="telphone" value="{{ telphone }}" class="form-control" id="inputTel" placeholder="Tel" required>
-                            </div>
-                        </div>
-                            <div class="form-group">
-                            <label for="inputEmail" class="col-sm-2 control-label">邮件</label>
-                            <div class="col-sm-6">
-                                <input type="email" name="email" value="{{ email }}" class="form-control" id="inputEmail" placeholder="Email" required>
-                            </div>
-                        </div>
-                   </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭退出</button>
-                  <button type="button" class="btn btn-primary">提交保存</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <!--<p><a href="/user/useradd/"><button type="button" class="btn btn-success" data-toggle="modal">添加用户</button><span>{% for msg in get_flashed_messages() %}{{ msg }}{% endfor %}</span> </a></p>-->
+          <p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-users">添加用户</button></a></p>
+
           <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover info">
               <thead align="center">
@@ -125,6 +79,7 @@
                         <td>{{ user['email'] }}</td>
                         <td><a href="/user/userupdate/?id={{ user['id'] }}" ><button type="button" class="btn btn-success">更新</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="/user/userdel/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">删除</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-passwd" data-username="{{ user['username'] }}" data-uid="{{ user['id'] }}">修改密码</button>&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="/user/reset/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">重置密码</button></a>
                         </td>
                     </tr>
@@ -135,7 +90,119 @@
         </div>
       </div>
     </div>
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!--新加用户的弹出框-->
+    <div class="modal fade" id="create-users" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">新建用户</h4>
+            </div>
+            <div class="modal-body">
+               <form action="/user/useradd/" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputUsername" class="col-sm-2 control-label">用户</label>
+                        <div class="col-sm-6">
+                             <input type="text" name="username" value="{{ username }}" class="form-control" id="inputUsername" placeholder="Username" required autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-6">
+                            <input type="password" name="password" value="{{ username }}" class="form-control" id="inputPassword" placeholder="Password" required>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                        <label for="inputAge" class="col-sm-2 control-label">年龄</label>
+                        <div class="col-sm-6">
+                            <input type="number" name="age" value="{{ age }}" class="form-control" id="inputAge" placeholder="Age" required>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                        <label for="inputTel" class="col-sm-2 control-label">手机</label>
+                        <div class="col-sm-6">
+                            <input type="tel" name="telphone" value="{{ telphone }}" class="form-control" id="inputTel" placeholder="Tel" required>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                        <label for="inputEmail" class="col-sm-2 control-label">邮件</label>
+                        <div class="col-sm-6">
+                            <input type="email" name="email" value="{{ email }}" class="form-control" id="inputEmail" placeholder="Email" required>
+                        </div>
+                    </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭退出</button>
+              <button type="button" class="btn btn-primary">提交保存</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!--修改密码的弹出框-->
+    <div class="modal fade" id="change-passwd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">修改密码</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+                <input type="hidden" id="password-id" >
+              <div class="form-group">
+                <label for="password-username" class="control-label">用户名</label>
+                <input type="text" class="form-control" id="password-username" readonly="readonly">
+              </div>
+              <div class="form-group">
+                <label for="password-manger-password" class="control-label">管理员密码</label>
+                <input type="password" class="form-control" id="password-manger-password">
+              </div>
+              <div class="form-group">
+                <label for="password-user-password" class="control-label">用户新密码</label>
+                <input type="password" class="form-control" id="password-user-password">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭退出</button>
+            <button id="password-commit" type="button" class="btn btn-primary">保存提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/js/jquery-1.12.4.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+         jQuery(document).ready(function () {
+             jQuery('#change-passwd').on('show.bs.modal',function (event) {
+                 var button = jQuery(event.relatedTarget)
+                 var username = button.data('username')   // 不理解
+                 var userid = button.data('uid')     // 不理解
+//                 console.log(username)
+//                 console.log(userid)
+                 jQuery('#password-id').val(userid)
+                 jQuery('#password-username').val(username)
+
+             })
+             jQuery('#password-commit').bind('click',function () {
+                 var params = {}
+                 params['userid'] = jQuery('#password-id').val();
+                 params['manager-password'] = jQuery('#password-manger-password').val();
+                 params['user-password'] = jQuery('#password-user-password').val();
+//                 console.log(params)
+                 jQuery.post('/user/passwd-change/',params,function (data) {
+                     if (data['is_ok']){
+                         alert('更新成功')
+                         jQuery('#change-passwd').modal('hide')
+                     }else{
+                         alert(data['error'])
+                     }
+                 })
+             })
+
+         })
+    </script>
   </body>
 </html>

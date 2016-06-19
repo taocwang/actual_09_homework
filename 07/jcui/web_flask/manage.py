@@ -1,10 +1,11 @@
 #encoding:utf-8
+import json
 import os
 import sys
 import random
 import string
 
-from flask import Flask,render_template,request,redirect,session, flash
+from flask import Flask,render_template,request,redirect,session, flash ,jsonify
 
 from modules import user,logs
 
@@ -158,6 +159,20 @@ def user_reset():
 #     print request.files
 #     # print request.header
 #     return render_template('user.html',user_list=user.get_user())
+
+
+@app.route('/user/passwd-change/',methods=['POST'])
+@user.login_check
+def change_passwd():
+    params = request.args if request.method == 'GET' else request.form
+    uid = params.get('userid')
+    upass = params.get('user-password')
+    muser = session['username']['username']
+    mpass = params.get('manager-password')
+    _is_ok,_error = user.valid_change_passwd(uid,upass,muser,mpass)
+    if _is_ok:
+        _is_ok,_error = user.change_passwd(uid,upass)
+    return jsonify({'is_ok':_is_ok,'error':_error})
 '''
 登出用户
 '''

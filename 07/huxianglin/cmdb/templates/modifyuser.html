@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}用户信息列表{% endblock %}
+
+{% block main %}
+    {% if msg %}
+	<div class="alert alert-warning" role="alert">{{msg}}</div>
+	{% endif %}
+	{% if error %}
+	<div class="alert alert-danger" role="alert">{{error}}</div>
+	{% endif %}
+    <h3 class="page-header" style="margin: auto">{{ pageheader }}</h3>
+    <p style="width: 100%; text-align: center;" class="btn btn-primary">ID：{{ modifyid }}
+        &nbsp&nbsp用户名：{{ modifyusername }}&nbsp&nbsp密码：{{ modifypassword }}
+        &nbsp&nbsp年龄：{{ modifyage }}&nbsp&nbsp权限：{{ modifyprivilege }}</p>
+
+    <form action="/user/change/" method="post" style="width: 100%; text-align: center;">
+		<input type="text" name="id" value="{{ modifyid }}" style="display:none" >
+        <span>&nbsp&nbsp新用户名</span>
+		<input type="text" name="username" >
+		<span>&nbsp&nbsp新密码</span>
+		<input type="password" name="password" >
+		<span>&nbsp&nbsp年龄</span>
+		<input type="text" name="age" >
+        <span>&nbsp&nbsp权限</span>
+        <select name='privilege'>
+          <option value="admin">admin</option>
+          <option value="user" selected="selected">user</option>
+        </select>
+		<input type="submit" value="修改" class="btn btn-success">
+	</form>
+{% endblock %}

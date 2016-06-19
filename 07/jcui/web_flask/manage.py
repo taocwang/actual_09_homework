@@ -160,7 +160,9 @@ def user_reset():
 #     # print request.header
 #     return render_template('user.html',user_list=user.get_user())
 
-
+'''
+dialog 修改密码
+'''
 @app.route('/user/passwd-change/',methods=['POST'])
 @user.login_check
 def change_passwd():

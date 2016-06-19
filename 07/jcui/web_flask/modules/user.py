@@ -94,7 +94,7 @@ def user_reset(id,username):
 def valid_change_passwd(uid,upass,muser,mpass):
     if not validate_login(muser,mpass):
         return False,'管理用密码错误'
-    if get_alone_user(uid):
+    if get_alone_user(uid):               #逻辑有问题,需要看
         print get_alone_user(uid)
         return False,'用户不存在'
     if len(upass) < 6:

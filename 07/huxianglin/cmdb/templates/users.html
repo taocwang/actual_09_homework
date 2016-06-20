@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}用户信息列表{% endblock %}
+
+{% block main %}
+    {% for msg in get_flashed_messages() %}
+    <div class="alert alert-success" role="alert">{{ msg }}</div>
+    {% endfor %}
+    {% if Flag %}
+        <div class="alert {{ color }}" role="alert">{{ Flag }}</div>
+    {% endif %}
+    <h3 class="page-header" style="margin: auto">{{ pageheader }}</h3>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr class="info">
+                <th>ID</th>
+                <th>用户名</th>
+                <th>密码</th>
+                <th>年龄</th>
+                <th>权限</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+			{% for node in UserList %}
+			<tr class="info">
+                <td>{{ node['id'] }}</td>
+				<td>{{ node['username'] }}</td>
+				<td>{{ node['password'] }}</td>
+				<td>{{ node['age'] }}</td>
+                <td>{{ node['privilege'] }}</td>
+				<td><a href="/user/modify/?id={{ node['id'] }}"><button type="submit" class="btn btn-primary">修改</button></a>
+                    <a href="/user/del/?id={{ node['id'] }}">
+                        <button type="submit" class="btn btn-primary">删除</button></a></td>
+			</tr>
+			{% endfor %}
+	</table>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Nginx访问日志{% endblock %}
+
+{% block main %}
+    <h3 class="page-header" style="margin: auto">{{ pageheader }}</h3>
+    <form action="/log/" method="post" class="form-inline"/>
+		<span class="label label-success">请输入显示行数</span>
+		<label class="sr-only" for="TopNumber">TopNumber (in dollars)</label>
+		<div class="input-group">
+      		<div class="input-group-addon">TOP</div>
+				<input type="text" name='topn' class="form-control" id="TopNumber" placeholder="TopNumber">
+            <!--placeholder内容设置输入框中内容-->
+  		</div>
+		<button type="submit" class="btn btn-primary">提交</button>
+	</form>
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr class="info">
+				<th>IP</th>
+				<th>URL</th>
+				<th>状态</th>
+				<th>次数</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for node in rt_list %}
+			<tr>
+				<td class="info">{{ node[0][0] }}</td>
+				<td class="info">{{ node[0][1] }}</td>
+				<td class="info">{{ node[0][2] }}</td>
+				<td class="info">{{ node[1] }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

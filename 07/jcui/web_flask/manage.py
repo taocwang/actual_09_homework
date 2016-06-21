@@ -90,18 +90,25 @@ def user_del():
 @user.login_check
 def user_update():
     params = request.args if request.method == 'GET' else request.form
-    id = params.get('id')
-    if request.method == 'GET':
-        users = user.get_alone_user(int(id))
-        username = users.get('username')
-        age = users.get('age')
-        telphone = users.get('telphone')
-        email = users.get('email')
-        return render_template('userupdate.html', id=id,username=username, age=age, telphone=telphone, email=email)
-    if user.user_update(params):
-        flash("用户更新成功")
-        return redirect('/user/')
-    return render_template('userupdate.html',error='更新失败')
+    _is_ok, _error = user.user_update(params)
+    return jsonify({'is_ok': _is_ok, 'error': _error})
+
+# @app.route('/user/userupdate/',methods=['POST','GET'])
+# @user.login_check
+# def user_update():
+#     params = request.args if request.method == 'GET' else request.form
+#     id = params.get('id')
+#     if request.method == 'GET':
+#         users = user.get_alone_user(int(id))
+#         username = users.get('username')
+#         age = users.get('age')
+#         telphone = users.get('telphone')
+#         email = users.get('email')
+#         return render_template('userupdate.html', id=id,username=username, age=age, telphone=telphone, email=email)
+#     if user.user_update(params):
+#         flash("用户更新成功")
+#         return redirect('/user/')
+#     return render_template('userupdate.html',error='更新失败')
 
 #加载日志的页面
 @app.route('/logs/')
@@ -175,6 +182,13 @@ def change_passwd():
     if _is_ok:
         _is_ok,_error = user.change_passwd(uid,upass)
     return jsonify({'is_ok':_is_ok,'error':_error})
+
+@app.route('/user/newuser/',methods=['POST'])
+def newuser():
+    params = request.args if request.method == 'GET' else request.form
+    _is_ok,_error = user.user_add(params)
+    return jsonify({'is_ok':_is_ok,'error':_error})
+
 '''
 登出用户
 '''

@@ -56,10 +56,26 @@ def user_add(params):
     agrs1 = (username,)
     _sql_count,rt_list = excute_fetch_sql(_sql_select,agrs1)
     if _sql_count != 0:
-        return False
+        return False,username+'已存在,请尝试其他的名字'
     args2 = (username,password,age,telphone,email)
     excute_commit_sql(_sql_insert,args2)
-    return True
+    return True,'添加成功'
+
+# def user_add(params):
+#     username = params.get('username')
+#     password = params.get('password')
+#     age = params.get('age')
+#     telphone = params.get('telphone')
+#     email = params.get('email')
+#     _sql_select = 'select * from user where username = %s'
+#     _sql_insert = 'insert into user(username,password,age,telphone,email) values(%s,md5(%s),%s,%s,%s)'
+#     agrs1 = (username,)
+#     _sql_count,rt_list = excute_fetch_sql(_sql_select,agrs1)
+#     if _sql_count != 0:
+#         return False
+#     args2 = (username,password,age,telphone,email)
+#     excute_commit_sql(_sql_insert,args2)
+#     return True
 
 def user_del(id,username):
     _sql = 'delete from user where id=%s and username=%s'
@@ -79,8 +95,21 @@ def user_update(params):
     args = (age,telphone,email,id,username)
     _sql_count, rt_list = excute_update_sql(_sql,args)
     if _sql_count != 0:
-        return True
-    return False
+        return True,'更新成功'
+    return False,'更新失败'
+
+# def user_update(params):
+#     username = params.get('username')
+#     id = params.get('id')
+#     age = params.get('age')
+#     telphone = params.get('telphone')
+#     email = params.get('email')
+#     _sql = 'update user set age=%s ,telphone=%s ,email=%s where id=%s and username=%s'
+#     args = (age,telphone,email,id,username)
+#     _sql_count, rt_list = excute_update_sql(_sql,args)
+#     if _sql_count != 0:
+#         return True
+#     return False
 
 def user_reset(id,username):
     _sql = 'update user set password = md5(%s) where id=%s and username=%s'

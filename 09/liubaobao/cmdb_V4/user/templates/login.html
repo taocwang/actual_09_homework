@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>用户登录</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static',filename='css/login.css')}}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <form class="form-signin" action="/login/" method="post">
+        <h2 class="form-signin-heading">用户登录</h2>
+        <label for="inputUsername" class="sr-only">用户名</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="用户名" name="username" autofocus />
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control"  name="password" placeholder="密码" />
+          {% if error %}
+            <p class="bg-danger">{{error}}</p>
+          {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+      </form>
+  </body>
+</html>

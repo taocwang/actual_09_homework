@@ -1,0 +1,140 @@
+<form class="form-horizontal" action_add="/assets/add/" action_update="/assets/modify/">
+     <div class="form-group">
+        <label class="col-md-3 control-label"></label>
+        <div class="col-md-5">
+            <input type="hidden" class="form-control" name="id" id="id"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">SN编号:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="sn" id="sn"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">IP:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="ip" id="ip"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">主机名</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="hostname" id="hostname"/>
+        </div>
+    </div>
+        <div class="form-group">
+        <label class="col-md-3 control-label">操作系统</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="os" id="os"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">CPU(核数)</label>
+        <div class="col-md-5">
+            <input class="form-control" id="cpu" name="cpu"  data-slider-id='ex1Slider' type="text" data-slider-min="2" data-slider-max="16" data-slider-step="2" data-slider-value="4"  />
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <label class="col-md-3 control-label">内存(G):</label>
+        <div class="col-md-5">
+            <input class="form-control" id="ram" name="ram" data-slider-id='ex1Slider' type="text" data-slider-min="512" data-slider-max="4096" data-slider-step="100" data-slider-value="512"/>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <label class="col-md-3 control-label">硬盘(G):</label>
+        <div class="col-md-5">
+            <input class="form-control" id="disk" name="disk" data-slider-id='ex1Slider' type="text" data-slider-min="300" data-slider-max="2048" data-slider-step="100" data-slider-value="500"/>
+        </div>
+    </div>
+        <div class="form-group">
+        <label class="col-md-3 control-label">机房:</label>
+        <div class="col-md-5">
+            <select name="idc_id" id="idc_id">
+                {% for _id,_value in idcs %}
+                    <option value="{{_id}}">{{_value}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">使用人:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="admin" id="admin"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">业务:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="business" id="business"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">采购日期:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="purchase_date" id="purchase_date"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">保修日期</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="warranty" id="warranty"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">供应商:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="vendor" id="vendor"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">型号:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="model" id="model"/>
+        </div>
+    </div>
+</form>
+    <script type="text/javascript">
+        cpu = $('#cpu').slider({
+            formatter: function (value) {
+                   return 'CPU核数:' + value;
+            }
+        });
+        ram = $('#ram').slider({
+            formatter: function (value) {
+                return '内存(M):' + value;
+            }
+        });
+        disk = $('#disk').slider({
+            formatter: function (value) {
+                return '硬盘(G):' + value;
+            }
+        });
+        $('#purchase_date').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            minView: 2,
+            autoclose: true
+        });
+        $('#warranty').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            minView: 2,
+            autoclose: true
+        });
+//        $('#cpu').attr('data-tage',"1")
+//        console.log($('#cpu').attr('data-tage'))
+//        if($('#cpu').attr('data-t') == 0){
+//            cpu.slider('setValue',10)
+//        }
+//          var cpus = $('#cpu').attr('value')
+//          console.log(cpus)
+//          $('#cpu').slide()
+        {% if dic %}
+           cpu.slider('setValue',{{dic['_cpu']}})           //更新资产的时候更改滑块cpu的默认值
+           ram.slider('setValue',{{dic['_ram']}})           //更新资产的时候更改滑块ram的默认值
+           disk.slider('setValue',{{dic['_disk']}})         //更新资产的时候更改滑块disk的默认值
+        {% endif %}
+    </script>

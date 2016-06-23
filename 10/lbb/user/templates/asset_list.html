@@ -1,0 +1,18 @@
+ {% for asset in assets %}
+        <tr>
+            <td>{{asset['sn']}}</td>
+            <td>{{asset['ip']}}({{asset['hostname']}})</td>
+            <td>{{asset['os']}}</td>
+            <td>
+                   cpu:{{asset['cpu']}}核/内存:{{asset['ram']}}G/硬盘:{{asset['disk']}}G
+            </td>
+            <td>{{asset['idc_id']}}</td>
+            <td>{{asset['admin']}}({{asset['business']}})</td>
+            <td>{{asset['purchase_date']}}({{asset['warranty']}})</td>
+            <td>{{asset['model']}}({{asset['vendor']}})</td>
+            <td>
+                <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#dialog" data-url="/asset/modify/?id={{asset['id']}}" >修改</button>
+                <button type="button" class="btn btn-xs btn-danger btn-delete" data-toggle="modal" data-id="{{asset['id']}}" data-url="/asset/delete/" data-text="{{asset['hostname']}}">删除</button>
+            </td>
+        </tr>
+ {% endfor %}

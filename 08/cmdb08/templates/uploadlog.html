@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}日志上传{% endblock %}
+
+{% block main %}
+    <h3 class="page-header" style="margin: auto">{{ pageheader }}</h3>
+    {% if Flag %}
+        <div class="alert {{ color }}" role="alert">{{ Flag }}</div>
+    {% endif %}
+    <form action="/updatelog/" method="post" enctype="multipart/form-data">
+        <div class="input-group container col-sm-3">
+                  <input type="file" name="logfile" class="form-control" >
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">上传文件</button>
+                  </span>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>test JS</title>
+</head>
+<>
+    <input type="input" id="num1" value="12"/>
+    <input type="input" id="num2" value="12"/>
+    <input type="input" id="result"/>
+    <input type="button" id="bnt" onclick="nu_add()" value="相加">
+
+    <div>
+        id='content'
+    </div>
+
+    <script type="text/javascript">
+        var name='kk';
+        var age=16;
+        var num1= 2,num2=3
+        var sex=true,hoby=['sport',2,3,2,3,123,23];
+        var score={'math':92, 'english':82};
+        console.log(name);
+        console.log(score);
+        var num_total=num1 + num2
+        console.log(num_total)
+        do{var u_name=prompt("Pleas input your name:") //prompt用户输入 使用do可以在循环判断之前先执行一次
+            if(u_name != 'zh'){
+           alert('请重新输入')
+        }
+        }while(u_name != 'zh')
+        alert('ok')
+
+        for(i=0;i < 10;i+=1){console.log(i)}
+
+        hoby.push('game')   //列表增加
+        len_ho=hoby.length   //列表长度
+        for(i=0;i<len_ho;i++){   //列表遍历
+            console.log(hoby[i])
+        }
+
+        score['yuwen']=88  //字典增加
+        for(key in score){console.log(score[key])}  //字典value遍历
+
+        function nu_add(numa,numb){     //函数（注意不可设置默认值）
+            numa= document.getElementById('num1').value
+            numb= document.getElementById('num2').vaule
+            rt=parseInt(numa) + parseInt(numb)
+            document.getElementById('result').value=rt
+            document.getElementById('content').innerHTML=rt
+        }
+        num_a=prompt("insert number1:") //parseInt强制类型转换为int
+        num_b=prompt('insert number2: ')
+        res=nu_add(num_a,num_b)
+        alert(res)
+        document.write(res)
+    </script>
+</body>
+</html>

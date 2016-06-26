@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>test jQery</title>
+</head>
+<body>
+    <input type="input" id="num1" value="12"/>
+    <input type="input" id="num2" value="22"/>
+    <input type="input" id="result"/>
+    <input type="button" id="bnt" value="相加">
+    <input type="button" class="bnt2" value="隐藏内容">
+
+
+    <div id='content'>
+    </div>
+
+    <div id='content2'>
+        真是2
+    </div>
+
+    <script type="text/javascript" src="jquery-1.12.4.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#bnt').bind('click', function () {
+            var num_1=jQuery('#num1').val();
+            var num_2=jQuery('#num2').val();
+            var rt = parseInt(num_1) + parseInt(num_2);
+            jQuery('#result').val(rt);
+            jQuery('#content').html(rt);
+            })
+
+            jQuery('.bnt2').bind('click', function () {
+            jQuery('#content2').hide()
+            })
+        })
+    </script>
+</body>
+</html>

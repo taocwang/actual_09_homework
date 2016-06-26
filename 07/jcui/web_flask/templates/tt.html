@@ -135,15 +135,27 @@
 
             })
             jQuery('.hidden-btn').bind('click',function () {
-                jQuery('#content').hide(1,function () {
-                       jQuery('.hidden-btn').val('显示')
-                })
+                var tt = jQuery('.hidden-btn').val()
+                if (tt == '隐藏'){
+                    jQuery('#content').hide(1,function () {
+                        jQuery('.hidden-btn').val('显示')
+                    })
+                }else{
+                    jQuery('#content').show(1,function () {
+                       jQuery('.hidden-btn').val('隐藏')
+                    })
+                }
+            })
+            jQuery('#bububu').click(function () {
+                console.log('clock')
+//                window.alert(5 + 6);
+                var uid = $(this).attr('ll')
+                console.log(uid)
+                jQuery('#mybutton').html(Date())
+                
             })
 
-            
         })
-
-
     </script>
         <input type="input" id="num1">
         <input type="input" id="num2">
@@ -152,6 +164,8 @@
         <input type="button" class="hidden-btn" value="隐藏">
         <input type="text" id="result" readonly="readonly">
         <div id = "content"></div>
+        <div id="mybutton"></div>
+        <button id="bububu" type="button" ll="dddd" >点击我</button>
 
 </body>
 </html>

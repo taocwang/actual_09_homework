@@ -152,12 +152,8 @@ def user_reset():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
     username = params.get('username')
-    reset_stat,newpasswd = user.user_reset(id,username)
-    if reset_stat:
-        flash('用户%s密码初始化完毕,请牢记: %s' % (username,newpasswd))
-    else:
-        flash('用户%s密码初始化失败' % username)
-    return redirect('/user/')
+    _is_ok,_error,newpasswd = user.user_reset(id,username)
+    return jsonify({'is_ok':_is_ok,'error':_error,'newpass':newpasswd})
 #test
 # @app.route('/test/',methods=['POST','GET'])
 # def test():
@@ -188,6 +184,15 @@ def newuser():
     params = request.args if request.method == 'GET' else request.form
     _is_ok,_error = user.user_add(params)
     return jsonify({'is_ok':_is_ok,'error':_error})
+
+
+'''
+测试页面
+'''
+@app.route('/test/',methods=['POST','GET'])
+def test():
+    params = request.args if request.method == 'GET' else request.form
+    return render_template('tt.html')
 
 '''
 登出用户

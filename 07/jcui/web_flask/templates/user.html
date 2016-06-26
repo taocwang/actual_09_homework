@@ -82,7 +82,8 @@
                                     data-uid="{{ user['id'] }}" data-age="{{ user['age'] }}" data-tel="{{ user['telphone'] }}" data-email="{{ user['email'] }}" >更新信息</button>&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="/user/userdel/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" onclick="return confirm('确定删除么?')"  class="btn btn-success">删除用户</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-passwd" data-username="{{ user['username'] }}" data-uid="{{ user['id'] }}">修改密码</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/user/reset/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">重置密码</button></a>
+                            <button type="button" class="btn btn-success reset-password" username="{{ user['username'] }}" uid="{{ user['id'] }}" mgrname="{{ session.get('username',{}).get('username','') }}">重置密码</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <!--<a href="/user/reset/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">重置密码</button></a>-->
                         </td>
                     </tr>
                 {% endfor %}
@@ -305,6 +306,39 @@
                          alert(data['error']);
                      }
                  })
+             })
+
+             //重置密码(写法一)
+//             jQuery(document).on('click','.reset-password',function () {
+//                 var username = jQuery(this).attr('username');
+//                 var uid = jQuery(this).attr('uid');
+//                 console.log(username)
+//                 console.log(uid)
+//
+//
+//             })
+             jQuery('.reset-password').bind('click',function () {
+                 params = {}
+                 var username = jQuery(this).attr('username');
+                 var uid = jQuery(this).attr('uid');
+                 var mgrname = jQuery(this).attr('mgrname');
+//                 console.log(username)
+//                 console.log(uid)
+                 console.log(mgrname)
+                 params['username'] = username;
+                 params['id'] = uid;
+                 if (mgrname != 'admin'){
+                     alert('对不起,您不是管理员')
+                 }else{
+                     jQuery.post('/user/reset/',params,function (data) {
+                         if(data['is_ok']){
+                             alert(username+'重置成功,新的密码 : '+data['newpass']);
+                             window.location.reload() ;
+                         }else{
+                             alert(username+'重置失败');
+                         }
+                     })
+                 }
              })
 
          })

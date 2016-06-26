@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+
+    <title>CMDB</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{url_for('static',filename='dashboard.css')}}" type="text/css"/>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">资产管理系统</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">个人中心</a></li>
+                <li><a href="/readytoadduser/">账号注册</a></li>
+                <li><a href="/logout/">登出</a></li>
+                <li><a href="#">帮助</a></li>
+              </ul>
+            </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="/">主页 <span class="sr-only">(current)</span></a></li>
+            <li><a href="/userinfo/">用户管理</a></li>
+            <li><a href="/upload/">日志上传</a></li>
+            <li><a href="/logs/">日志查看</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">欢迎{{session.get('user',{}).get('username','')}}</h1>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+                <li class="text-danger"> {{ message }}</li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+          <h2 class="sub-header">用户信息列表</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>用户名</th>
+                  <th>密码</th>
+                  <th>年龄</th>
+                  <th>修改</th>
+                  <th>删除</th>
+                  <th>修改密码</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in user_list %}
+                <tr>
+                  <td>{{row['username']}}</td>
+                  <td>{{row['password']}}</td>
+                  <td>{{row['age']}}</td>
+                  <td><a href="/readytousermodify/?username={{row['username']}}"> 修改</td>
+                  <td><a href="/userdel/?username={{row['username']}}" onclick="return confirm('确定删除吗？')"> 删除</td>  <!--confirm为前端选择框，返回false时不提交请求给后台-->
+                  <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#update-password" data-user="{{row['username']}}">修改密码</button></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 用户密码修改 -->
+    <div class="modal fade" id="update-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">用户密码修改</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="name-username" class="control-label">用户名</label>
+                <input type="text" class="form-control" id="name-username" readonly="readonly">
+              </div>
+              <div class="form-group">
+                <label for="password-admin" class="control-label">管理员密码</label>
+                <input type="password" class="form-control" id="password-admin">
+              </div>
+              <div class="form-group">
+                <label for="password-user" class="control-label">新密码</label>
+                <input type="password" class="form-control" id="password-user"></input>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="password-commit">更新</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--注意！jquery必须引用在bootstrap的js之前，否则会告警-->
+    <script type="text/javascript" src="{{url_for('static',filename='jquery-1.12.4.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='bootstrap-3.3.5-dist/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function(){
+        jQuery('#update-password').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var username = button.data('user')
+          jQuery("#name-username").val(username)
+        jQuery('#password-commit').bind('click', function () {
+          var user_info={};
+          user_info['username']=$("#name-username").val()
+          user_info['admin_passwd']=$("#password-admin").val()
+          user_info['password']=$('#password-user').val()
+          console.log(user_info)
+          jQuery.post('/user/chargpasswd/',
+                  user_info,   //发送内容
+                  function(data){    //返回内容给data
+                    if(data['is_ok']){
+                      alert('修改成功')
+                      jQuery('#update-password').modal('hide') //隐藏当前窗口
+                      //window.location.reload()  刷新页面
+                      window.location.replace('/logs/') //跳转到其他页面
+                    }
+                    else{
+                        alert(data['error'])
+                      }
+                  },
+                  'json'  //返回内容格式
+          );
+        })
+        })
+      })
+    </script>
+  </body>
+</html>

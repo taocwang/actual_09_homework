@@ -1,7 +1,8 @@
 #encoding: utf-8
 #
-
+import string
 from functools import wraps
+from random import choice
 
 from flask import session ,redirect
 
@@ -113,12 +114,14 @@ def user_update(params):
 
 def user_reset(id,username):
     _sql = 'update user set password = md5(%s) where id=%s and username=%s'
-    newpassword = 'abcABC123'
+    newpassword = ''.join([choice(string.ascii_letters+string.digits) for i in range(8)])
     args = (newpassword,id,username)
     _sql_count, rt_list = excute_update_sql(_sql,args)
+    print _sql_count
+    print rt_list
     if _sql_count != 0:
-        return True,newpassword
-    return False,newpassword
+        return True,'重置成功',newpassword
+    return False,'重置失败',newpassword
 
 def valid_change_passwd(uid,upass,muser,mpass):
     if not validate_login(muser,mpass):

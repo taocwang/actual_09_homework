@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>JS学习</title>
+    <script>
+function myFunction()
+{
+document.getElementById("test").innerHTML="My First JavaScript Function";
+}
+</script>
+</head>
+<body>
+    <input type="input" id="num1" value="6"/>
+    <input type="input" id="num2" value="3"/>
+    <input type="button" id="btn" onclick="add_click();" value="相加"/>
+    <input type="button" class="hiddent-btn" value="隐藏"/>
+    <input type="button" class="show-btn" value="显示"/>
+    <input type="button" id="btn2" value="相加2"/>
+    <input type="input" id="result" />
+    <div id="content">content</div>
+    <button type="button" onclick="alert('hello，谭帥！')">点击这里1</button>
+    <button type="button" id="test" onclick="myFunction()" >123123</button>
+
+
+    <script src="../static/js/test.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function(){
+        //页面加载完成执行该部分代码
+        //获取标签元素
+        /*
+        tag => jQuery('tag')
+        id => jQuery('#id')
+        class => jQuery('.class')
+        */
+
+
+        function myFunction(){
+        x = document.getElementById("test")
+        x.innerHTML="Hello JavaScript";
+        }
+
+
+        jQuery('#btn2').bind('click', function(){
+            //动作响应
+            var num1 = jQuery('#num1').val(); //获取值
+            var num2 = jQuery('#num2').val();
+            var rt = add(parseInt(num1),parseInt(num2))
+
+            jQuery('#result').val(rt);
+            jQuery('#content').html(rt);
+         });
+         jQuery('.hiddent-btn').bind('click', function(){
+            jQuery('#content').hide();
+         });
+         jQuery('.show-btn').bind('click', function(){
+            jQuery('#content').show();
+         });
+    });
+
+    function add(num1, num2){
+        return num1 + num2;
+    }
+
+    function add_click(){
+        var input1 = document.getElementById('num1').value;
+        var input2 = document.getElementById('num2').value;
+        var rt = add(parseInt(input1),parseInt(input2));
+        document.getElementById('result').value = rt;
+        document.getElementById('content').innerHTML = rt;
+    }
+    </script>
+
+
+
+</body>
+</html>

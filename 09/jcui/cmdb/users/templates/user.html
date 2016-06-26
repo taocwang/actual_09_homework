@@ -112,7 +112,7 @@
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">密码</label>
                         <div class="col-sm-6">
-                            <input type="password" name="password" value="{{ password }}" class="form-control" id="inputPassword" placeholder="Password" required>
+                            <input type="password" name="password" value="{{ username }}" class="form-control" id="inputPassword" placeholder="Password" required>
                         </div>
                     </div>
                         <div class="form-group">
@@ -279,25 +279,16 @@
                  jQuery.post('/user/userupdate/',params,function (data) {
                      if (data['is_ok']){
                          alert('信息修改成功')
-                         jQuery('#change-users-info').modal('hide') ;//关闭黑屏界面
+                         jQuery('#create-users').modal('hide') ;//关闭黑屏界面
                          window.location.reload() ;
                      }else{
                          alert(data['error']);
                      }
                  })
              })
-             //新建用户弹出框
-             jQuery('#create-users').on('show.bs.mdal',function (event) {
-                 jQuery('inputUsername').val('')
-                 jQuery('inputPassword').val('')
-                 jQuery('inputAge').val('')
-                 jQuery('inputTel').val('')
-                 jQuery('inputEmail').val('')
-
-             })
 
              //新建用户提交保存
-             jQuery('#useradd-commit').on('click',function () {
+             jQuery('#useradd-commit').bind('click',function () {
                  var params = {}
                  params['username'] = jQuery('#inputUsername').val();
                  params['password'] = jQuery('#inputPassword').val();

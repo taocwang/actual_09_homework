@@ -6,17 +6,15 @@ import random
 import string
 
 from flask import Flask,render_template,request,redirect,session, flash ,jsonify
-
+from . import app         #user模块下的变量,在__init__.py  中定义
 from modules import user,logs
+
 
 #
 reload(sys)
 sys.setdefaultencoding('utf8')
 #解决字符串默认为ASCII编码的问题,导致输出中文为乱码
 
-app = Flask(__name__)
-# app.secret_key = os.urandom(32)
-app.secret_key = 'asdasd2342tdasfdasfasdasds'
 
 @app.route('/')
 def index():
@@ -34,6 +32,7 @@ def login():
         return render_template('login.html',username=username,error='用户名或密码错误')
 
 '''
+a
 用户列表
 '''
 @app.route('/user/')
@@ -78,7 +77,7 @@ def user_del():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
     username = params.get('username')
-    if user.user_del(int(id),username):
+    if user.user_del(int(id), username):
         flash("用户删除成功")
         return redirect('/user/')
     return render_template('user.html',error='删除失败')
@@ -152,7 +151,7 @@ def user_reset():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
     username = params.get('username')
-    _is_ok,_error,newpasswd = user.user_reset(id,username)
+    _is_ok,_error,newpasswd = user.user_reset(id, username)
     return jsonify({'is_ok':_is_ok,'error':_error,'newpass':newpasswd})
 #test
 # @app.route('/test/',methods=['POST','GET'])
@@ -174,9 +173,9 @@ def change_passwd():
     upass = params.get('user-password')
     muser = session['username']['username']
     mpass = params.get('manager-password')
-    _is_ok,_error = user.valid_change_passwd(uid,upass,muser,mpass)
+    _is_ok,_error = user.valid_change_passwd(uid, upass, muser, mpass)
     if _is_ok:
-        _is_ok,_error = user.change_passwd(uid,upass)
+        _is_ok,_error = user.change_passwd(uid, upass)
     return jsonify({'is_ok':_is_ok,'error':_error})
 
 @app.route('/user/newuser/',methods=['POST'])
@@ -202,6 +201,4 @@ def logout():
     session.clear()
     return redirect('/')
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=9000,debug=True)
 

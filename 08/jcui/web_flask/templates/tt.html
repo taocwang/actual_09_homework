@@ -131,6 +131,7 @@
                 var y = jQuery('#num2').val()     //取第二个值
                 var z = add(x,y)                  //将两个值相加
                 jQuery('#result').val(z)          //将结果返回给对应的input标签
+                jQuery('#result').html()          //获取值
                 jQuery('#content').html('jQuery结果为'+z)    //将结果返回给页面
 
             })

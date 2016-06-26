@@ -19,6 +19,7 @@ from flask import flash
 
 import userdb as user
 from user import app
+import asset
 # import user                                         #导入user模块
 # import loganalysis
 import loganalysisdb as loganalysis
@@ -237,3 +238,8 @@ def test():
     print request.headers
     return render_template('test.html')
 
+@app.route('/assets/')
+@login_required
+def assets():
+    _assets = asset.get_list()
+    return render_template('asset.html',assets=_assets)

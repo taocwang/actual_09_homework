@@ -5,12 +5,12 @@ import MySQLdb
 import gconf
 
 
-def execute_fetch_sql(sql, args=(), fetch=True):
-    return execute_sql(sql, args, fetch)
+def execute_fetch_sql(sql, args=()):
+    return execute_sql(sql, args, True)
 
 
-def execute_commit_sql(sql, args=(), fetch=False):
-    return execute_sql(sql, args, fetch)
+def execute_commit_sql(sql, args=()):
+    return execute_sql(sql, args, False)
 
 
 def execute_sql(sql, args=(), fetch=True):

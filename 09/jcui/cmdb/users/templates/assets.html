@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+{% block title %}资产管理页面{% endblock %}
+{% block css %}
+    <link href="/static/css/bootstrap-slider.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-datetimepicker.css" rel="stylesheet">
+{% endblock %}
+{% block status_assets %}active{% endblock %}
+{% block main %}
+<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog" data-title="新建资产" data-url="/assets/create/" data-btn-txt="添加">添加资产</button></a></p>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover info">
+      <thead align="center">
+        <tr >
+            <td>SN</td>
+            <td>IP(主机名)</td>
+            <td>操作系统</td>
+            <td>CPU/内存/硬盘</td>
+            <td>机房</td>
+            <td>使用者(业务)</td>
+            <td>采购时间(保修)</td>
+            <td>型号(供应商)</td>
+            <td>操作</td>
+        </tr>
+      </thead>
+        <tbody align="center">
+            {% for x in assets %}
+                <tr>
+                    <td>{{ x['sn'] }}</td>
+                    <td>{{ x['ip'] }}({{x['hostname']}})</td>
+                    <td>{{ x['os'] }}</td>
+                    <td>
+                        <ul>
+                            <li>CPU:{{x['cpu']}}</li>
+                            <li>内存:{{x['ram']}}</li>
+                            <li>磁盘:{{x['disk']}}</li>
+                        </ul>
+                    </td>
+                    <td>{{x['idc_id']}}</td>
+                    <td>{{x['admin']}}({{x['business']}})</td>
+                    <td>{{x['purchase_date']}}({{x['warranty']}})</td>
+                    <td>{{x['model']}}({{x['vendor']}})</td>
+                    <td width="500">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-assets-info">更新资产</button>
+                        <a href="#" ><button type="button" onclick="return confirm('确定删除么?')"  class="btn btn-success">删除资产</button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block dialog %}
+<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary dialog-commit"></button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script type="application/javascript" src="/static/js/bootstrap-slider.js"></script>
+    <script type="application/javascript" src="/static/js/bootstrap-datetimepicker.js"></script>
+    <script type="application/javascript" src="/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+{% endblock %}
+{% block javascipt %}
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+         //修改密码加载数据
+         jQuery('#dialog').on('show.bs.modal',function (event) {
+             var button = jQuery(event.relatedTarget);
+             var title = button.data('title');
+             var btn_txt = button.data('btn-txt');
+             var url = button.data('url');
+             console.log(url)
+             var that = this;
+             jQuery(that).find('.modal-title').text(title);
+             jQuery(that).find('.dialog-commit').text(btn_txt) ;
+             jQuery(that).find('.modal-body').load(url)
+//             jQuery.get(url,{},function (data) {
+//                 jQuery(that).find('.modal-body') .html(data);
+//             })
+
+         })
+        jQuery('.dialog-commit').on('click',function () {
+            var _form = jQuery('#dialog').find('form');
+            console.log(_form)
+            var url = _form.attr('action')
+            var params = _form.serialize()
+            console.log(url)
+            console.log(params)
+            jQuery.post(url,params,function (data) {
+                if (data['is_ok']){
+                    alert(data['success'])
+                }else{
+                    alert(data['error'])
+                }
+            })
+        })
+    })
+</script>
+{% endblock %}
+
+
+

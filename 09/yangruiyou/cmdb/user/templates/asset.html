@@ -1,0 +1,47 @@
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#create-user">添加用户</button>
+<br/><br/>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+        <th>SN</th>
+        <th>IPADDR</th>
+        <th>操作系统</th>
+        <th>CPU/内存/硬盘</th>
+        <th>机房</th>
+        <th>使用者(业务)</th>
+        <th>采购时间(保修时长)</th>
+        <th>型号</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for asset  in assets %}
+        <tr>
+            <td>{{ asset['sn'] }}</td>
+            <td>{{ asset['ipddr'] }}({{ asset['hostname'] }})</td>
+            <td>{{ asset['os'] }}</td>
+            <td>
+                <ul>
+                    <li>cpu:{{ asset['cpu'] }}核</li>
+                    <li>内存:{{ asset['ram'] }}G</li>
+                    <li>硬盘:{{ asset['disk'] }}G</li>
+                </ul>
+
+            </td>
+            <td>{{ asset['idc_id'] }}</td>
+            <td>{{ asset['admin'] }}({{ asset['business'] }})</td>
+            <td>{{ asset['purchase_date'] }}({{ asset['warranty_date'] }})</td>
+            <td>{{ asset['model'] }}({{ asset['vendor'] }})</td>
+            <td>
+
+                <button type="button" class="btn btn-xs btn-primary" data-toggle="modal"
+                        data-target="#update-user" data-userid="{{ user['id'] }}"
+                        data-username="{{ user['username'] }}" data-age="{{ user['age'] }}">修改
+                </button>
+                <a class="btn btn-xs btn-danger" href="/user/delete/?id={{ user['id'] }}"
+                   onclick="return confirm('确定删除吗?');">删除</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

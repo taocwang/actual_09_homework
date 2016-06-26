@@ -5,9 +5,11 @@ import sys
 import random
 import string
 
+import time
 from flask import Flask,render_template,request,redirect,session, flash ,jsonify
 from . import app         #user模块下的变量,在__init__.py  中定义
 from modules import user,logs
+from modules import assets
 
 
 #
@@ -192,6 +194,27 @@ def newuser():
 def test():
     params = request.args if request.method == 'GET' else request.form
     return render_template('tt.html')
+
+@app.route('/assets/')
+def assets_list():
+    _assets = assets.get_list()
+    return render_template('assets.html',assets=_assets)
+
+@app.route('/assets/create/',methods=['POST','GET'])
+def assets_create():
+    params = request.args if request.method == 'GET' else request.form
+    _idcs = [('1', '北京-亦庄'), ('2', '北京-酒仙桥'), ('3', '北京-西单'), ('4', '北京-东单')]
+    return render_template('assets_create.html',idcs=_idcs)
+
+@app.route('/assets/add/',methods=['POST','GET'])
+def assets_add():
+    params = request.args if request.method == 'GET' else request.form
+    print params
+    _is_ok = True
+    _error = 'error'
+    success = '添加成功'
+    return 'ok'
+    # return jsonify({'is_ok':_is_ok,'error':_error,'success':success})
 
 '''
 登出用户

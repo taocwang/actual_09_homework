@@ -1,7 +1,9 @@
 #encoding:utf-8
 
-
-from users.gconfig import gconfig
+try:
+    from users.gconfig import gconfig
+except:
+    from gconfig import gconfig
 import MySQLdb
 
 

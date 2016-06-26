@@ -1,49 +1,96 @@
 {% extends "layout.html" %}
-{% block title %} 资产管理页面 {% endblock %}
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#create-user">添加用户</button>
-<br/><br/>
-<table class="table table-bordered table-striped table-hover">
-    <thead>
-    <tr>
-        <th>SN</th>
-        <th>IPADDR</th>
-        <th>操作系统</th>
-        <th>CPU/内存/硬盘</th>
-        <th>机房</th>
-        <th>使用者(业务)</th>
-        <th>采购时间(保修时长)</th>
-        <th>型号</th>
-        <th>操作</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for asset  in assets %}
+{% block title %}资产管理{% endblock %}
+{% block nav_asset %}active{% endblock %}
+{% block main %}
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#dialog" data-title="添加资产"
+            data-btn-txt="添加" data-url="/assets/create/">添加资产
+    </button>
+    <br/><br/>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
         <tr>
-            <td>{{ asset['sn'] }}</td>
-            <td>{{ asset['ipddr'] }}({{ asset['hostname'] }})</td>
-            <td>{{ asset['os'] }}</td>
-            <td>
-                <ul>
-                    <li>cpu:{{ asset['cpu'] }}核</li>
-                    <li>内存:{{ asset['ram'] }}G</li>
-                    <li>硬盘:{{ asset['disk'] }}G</li>
-                </ul>
-
-            </td>
-            <td>{{ asset['idc_id'] }}</td>
-            <td>{{ asset['admin'] }}({{ asset['business'] }})</td>
-            <td>{{ asset['purchase_date'] }}({{ asset['warranty_date'] }})</td>
-            <td>{{ asset['model'] }}({{ asset['vendor'] }})</td>
-            <td>
-
-                <button type="button" class="btn btn-xs btn-primary" data-toggle="modal"
-                        data-target="#update-user" data-userid="{{ user['id'] }}"
-                        data-username="{{ user['username'] }}" data-age="{{ user['age'] }}">修改
-                </button>
-                <a class="btn btn-xs btn-danger" href="/user/delete/?id={{ user['id'] }}"
-                   onclick="return confirm('确定删除吗?');">删除</a>
-            </td>
+            <th>SN</th>
+            <th>IP(主机名)</th>
+            <th>操作系统</th>
+            <th>CPU/内存/硬盘</th>
+            <th>机房</th>
+            <th>使用者(业务)</th>
+            <th>采购时间(保修时长)</th>
+            <th>型号(供应商)</th>
+            <th>操作</th>
         </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for asset in assets %}
+            <tr>
+                <td>{{ asset['sn'] }}</td>
+                <td>{{ asset['ipaddr'] }}({{ asset['hostname'] }})</td>
+                <td>{{ asset['os'] }}</td>
+                <td>
+                    <ul>
+                        <li>cpu:{{ asset['cpu'] }}核</li>
+                        <li>内存:{{ asset['ram'] }}G</li>
+                        <li>硬盘:{{ asset['disk'] }}G</li>
+                    </ul>
+                </td>
+                <td>{{ asset['idc_id'] }}</td>
+                <td>{{ asset['admin'] }}({{ asset['business'] }})</td>
+                <td>{{ asset['purchase_date'] }}({{ asset['warranty_date'] }})</td>
+                <td>{{ asset['model'] }}({{ asset['verdor'] }})</td>
+                <td>
+                    <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#update-user">
+                        修改
+                    </button>
+                    <a class="btn btn-xs btn-danger" href="" onclick="return confirm('确定删除吗?');">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block dialog %}
+    <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">添加资产</h4>
+                </div>
+                <div class="modal-body">
+
+                    新建资产
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="create-commit">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript">src = "{{ url_for('static',filename='bootstrap-slider/js/bootstrap-slider.min.js') }}"</script>
+    <script type="text/javascript">src = "{{ url_for('static',filename='bootstrap-datetimepicker-mastet/js/locales/bootstrap-datetimepicker.min.js') }}"</script>
+    <script type="text/javascript">src = "{{ url_for('static',filename='bootstrap-datetimepicker-mastet/js/locales/bootstrap-datetimepicker.js') }}"</script>
+
+
+{% endblock %}
+
+{% block js %}
+    jQuery(document).ready(function () {
+    jQuery('#dialog').on('show.bs.modal', function (event) {
+    var button = jQuery(event.relatedTarget);
+    var title = button.data('title');
+    var btn-txt = button.data('btn-txt');
+    var url = button.data('url')
+    jQuery(this).find('.modal-title').text(title);
+    jQuery(this).find('.btn-form-submit').text(btn-txt);
+    jQuery.post(url,{},function(result) {
+    jQuery(that).find('.modal-body').html(result)
+    });
+
+    });
+    });
+{% endblock %}

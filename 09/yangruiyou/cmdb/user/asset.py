@@ -3,7 +3,7 @@ from dbutils import execute_fetch_sql, execute_commit_sql
 
 
 def get_list():
-    _column = 'asset_id,sn,ipaddr,hostname,os,cpu,ram,disk,idc_id,admin,puchase_date,warranty_date,verdor,model,status'
+    _column = 'asset_id,sn,ipaddr,hostname,os,cpu,ram,disk,idc_id,admin,purchase_date,warranty_date,verdor,model,status'
     _columns = _column.split(',')
     _sql = 'select {column}  from assets where status=0 '.format(column=_column)
     _cnt, _rt_list = execute_fetch_sql(_sql)
@@ -20,6 +20,7 @@ def validate_create():
 
 def create():
     pass
+
 
 
 def update():

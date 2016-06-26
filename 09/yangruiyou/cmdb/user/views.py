@@ -241,5 +241,12 @@ def test():
 @app.route('/assets/')
 @login_required
 def assets():
-    _assets = asset.get_list()
-    return render_template('asset.html',assets=_assets)
+    _idcs=[('1','北京-亦庄'),('2','北京-酒仙桥'),('3','北京-西单')]
+    return render_template('asset_create.html',assets=_assets)
+
+
+@app.route('/asset/create/',methods=['POST','GET'])
+@login_required
+def create_assset():
+    _idcs = []
+    return render_template('asset_create.html',idcs=_idcs)

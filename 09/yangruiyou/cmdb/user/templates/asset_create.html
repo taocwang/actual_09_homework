@@ -1,0 +1,133 @@
+{% extends "layout.html" %}
+{% block title %}资产管理{% endblock %}
+{% block link %}
+    <link href="{{ url_for('static', filename='bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css') }}"
+          rel="stylesheet"/>
+
+{% endblock %}
+
+<form class="form-horizontal" action="/asset/add/" method="post">
+    <div class="form-group">
+        <label class="col-md-3 control-label">SN编号:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="sn"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">IP:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="ip"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">主机名:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="hostname"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">主机名:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="hostname"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">主机名:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="hostname"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">操作系统:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="os"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">CPU(核数):</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="cpu"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">内存(G):</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="ram"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">硬盘(G):</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="disk"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">机房:</label>
+        <div class="col-md-5">
+            <select name="idc_id">
+                {% for _id, _value in idcs %}
+                    <option value="{{ _id }}">{{ _value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">使用人:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="admin"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">业务:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="business"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">采购日期:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="purchase_date"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">保修时间:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="warranty"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">供应商:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="vendor"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">型号:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="model"/>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    jQuery('#cpu').slider({
+        formatter: function (value) {
+            return 'CPU核数:' + value;
+        }
+    });
+    jQuery('#ram').slider({
+        formatter: function (value) {
+            return '内存:' + value;
+        }
+    });
+
+    jQuery('#disk').slider({
+        formatter: function (value) {
+            return '硬盘:' + value;
+        }
+        $('#purchase_date').datetimepicker({
+        language:'zh-CN',
+        format: 'yyyy-mm-dd'
+        minView:2
+    });
+    });
+</script>

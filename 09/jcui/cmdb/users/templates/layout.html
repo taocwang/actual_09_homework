@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" href="/static/image/favicon.ico">
-        <title>{% block title%}{% endblock %}</title>
-        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/static/css/base.css" rel="stylesheet">
-        {% block css %}{% endblock %}
-  </head>
-
-  <body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/image/favicon.ico">
+    <title>{% block title%}{% endblock %}</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/base.css" rel="stylesheet">
+    {% block css %}{% endblock %}
+</head>
+<body>
     <nav class="navbar navbar-inverse navbar-fixed-top "style="background-color:darkslategray">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -27,7 +26,6 @@
         </div>
       </div>
     </nav>
-
     <div class="container-fluid">
       <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
@@ -42,12 +40,10 @@
           </div>
       </div>
     </div>
-
-    <!--新加用户的弹出框-->
-    {% block dialog %}{% endblock%}
+{% block dialog %}{% endblock%}
     <script type="application/javascript" src="/static/js/jquery-1.12.4.js"></script>
     <script type="application/javascript" src="/static/js/bootstrap.min.js"></script>
-        {% block script %}{% endblock %}
-        {% block javascipt %}{% endblock %}
-  </body>
+    {% block script %}{% endblock %}
+    {% block javascipt %}{% endblock %}
+</body>
 </html>

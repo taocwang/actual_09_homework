@@ -1,42 +1,42 @@
 {% extends "layout.html" %}
-{% block title %}用户管理页面{% endblock %}
+{% block title %}用户管理{% endblock %}
 {% block status_user %}active{% endblock %}
 {% block main %}
-      <p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-users">添加用户</button></a></p>
-      <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover info">
-          <thead align="center">
-            <tr >
-                <td>用户</td>
-                <td>密码</td>
-                <td>年龄</td>
-                <td>手机</td>
-                <td>邮件</td>
-                <td>操作</td>
-            </tr>
-          </thead>
-          <tbody align="center">
-            {% for user in user_list %}
-                <tr>
-                    <td>{{ user['username'] }}</td>
-                    <td>***********</td>
-                    <td>{{ user['age'] }}</td>
-                    <td>{{ user['telphone'] }}</td>
-                    <td>{{ user['email'] }}</td>
-                    <td width="500">
-                        <!--<a href="/user/userupdate/?id={{ user['id'] }}" ><button type="button" class="btn btn-success">更新</button></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-users-info" data-username="{{ user['username'] }}"
-                                data-uid="{{ user['id'] }}" data-age="{{ user['age'] }}" data-tel="{{ user['telphone'] }}" data-email="{{ user['email'] }}" >更新信息</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="/user/userdel/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" onclick="return confirm('确定删除么?')"  class="btn btn-success">删除用户</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-passwd" data-username="{{ user['username'] }}" data-uid="{{ user['id'] }}">修改密码</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success reset-password" username="{{ user['username'] }}" uid="{{ user['id'] }}" mgrname="{{ session.get('username',{}).get('username','') }}">重置密码</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <!--<a href="/user/reset/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">重置密码</button></a>-->
-                    </td>
-                </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-users">添加用户</button></a></p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped table-hover info">
+  <thead align="center">
+    <tr >
+        <td>用户</td>
+        <td>密码</td>
+        <td>年龄</td>
+        <td>手机</td>
+        <td>邮件</td>
+        <td>操作</td>
+    </tr>
+  </thead>
+  <tbody align="center">
+    {% for user in user_list %}
+        <tr>
+            <td>{{ user['username'] }}</td>
+            <td>***********</td>
+            <td>{{ user['age'] }}</td>
+            <td>{{ user['telphone'] }}</td>
+            <td>{{ user['email'] }}</td>
+            <td width="500">
+                <!--<a href="/user/userupdate/?id={{ user['id'] }}" ><button type="button" class="btn btn-success">更新</button></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-users-info" data-username="{{ user['username'] }}"
+                        data-uid="{{ user['id'] }}" data-age="{{ user['age'] }}" data-tel="{{ user['telphone'] }}" data-email="{{ user['email'] }}" >更新信息</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/user/userdel/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" onclick="return confirm('确定删除么?')"  class="btn btn-success">删除用户</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-passwd" data-username="{{ user['username'] }}" data-uid="{{ user['id'] }}">修改密码</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-success reset-password" username="{{ user['username'] }}" uid="{{ user['id'] }}" mgrname="{{ session.get('username',{}).get('username','') }}">重置密码</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<a href="/user/reset/?id={{ user['id'] }}&username={{ user['username'] }}" ><button type="button" class="btn btn-success">重置密码</button></a>-->
+            </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
 {% endblock %}
 {% block dialog %}
 <!--新加用户的弹出框-->

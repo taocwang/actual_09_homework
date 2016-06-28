@@ -97,13 +97,14 @@
             console.log(_form)
             var url = _form.attr('action')
             var params = _form.serialize()
-            console.log(url)
-            console.log(params)
+//            console.log(url)
+//            console.log(params)
             jQuery.post(url,params,function (data) {
                 if (data['is_ok']){
                     alert(data['success'])
                 }else{
                     alert(data['error'])
+                    console.log(data['error'])
                 }
             })
         })

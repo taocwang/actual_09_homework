@@ -210,11 +210,14 @@ def assets_create():
 def assets_add():
     params = request.args if request.method == 'GET' else request.form
     print params
-    _is_ok = True
-    _error = 'error'
-    success = '添加成功'
-    return 'ok'
-    # return jsonify({'is_ok':_is_ok,'error':_error,'success':success})
+    _is_ok,_error = assets.validate_create(params)
+    print _is_ok
+    print _error
+    if _is_ok:
+        success = '添加成功'
+    else:
+        success = ''
+    return jsonify({'is_ok':_is_ok,'error':_error,'success':success})
 
 '''
 登出用户

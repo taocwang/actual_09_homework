@@ -30,16 +30,16 @@
                     <td>{{ x['os'] }}</td>
                     <td>
                         <ul>
-                            <li>CPU:{{x['cpu']}}</li>
-                            <li>内存:{{x['ram']}}</li>
-                            <li>磁盘:{{x['disk']}}</li>
+                            <li>CPU : {{x['cpu']}}核</li>
+                            <li>内存 : {{x['ram']}}GB</li>
+                            <li>磁盘 : {{x['disk']}}GB</li>
                         </ul>
                     </td>
                     <td>{{x['idc_id']}}</td>
                     <td>{{x['admin']}}({{x['business']}})</td>
-                    <td>{{x['purchase_date']}}({{x['warranty']}})</td>
+                    <td>{{x['purchase_date']}}({{x['warranty']}}年)</td>
                     <td>{{x['model']}}({{x['vendor']}})</td>
-                    <td width="500">
+                    <td width="200">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-assets-info">更新资产</button>
                         <a href="#" ><button type="button" onclick="return confirm('确定删除么?')"  class="btn btn-success">删除资产</button></a>
                     </td>
@@ -102,6 +102,8 @@
             jQuery.post(url,params,function (data) {
                 if (data['is_ok']){
                     alert(data['success'])
+                    jQuery('.dialog-commit').hide()
+                    window.location.reload()
                 }else{
                     alert(data['error'])
                     console.log(data['error'])

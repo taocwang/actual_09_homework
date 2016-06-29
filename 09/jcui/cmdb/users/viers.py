@@ -209,10 +209,7 @@ def assets_create():
 @app.route('/assets/add/',methods=['POST','GET'])
 def assets_add():
     params = request.args if request.method == 'GET' else request.form
-    print params
     _is_ok,_error = assets.validate_create(params)
-    print _is_ok
-    print _error
     if _is_ok:
         success = '添加成功'
     else:

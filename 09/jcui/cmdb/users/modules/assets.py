@@ -9,9 +9,10 @@ from dbutils import excute_fetch_sql,excute_commit_sql
 
 '''
 def get_list():
-    _column = 'id,sn,ip,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty,vendor,model,status'
+    _column = 'id,sn,ip,hostname,os,cpu,ram,disk,idc_name,admin,business,purchase_date,warranty,vendor,model,status'
     _columns = _column.split(',')
-    _sql = 'select {column} from assets where status=0'.format(column=_column)
+    _sql = 'select {column} from assets,idc_name where assets.status=0 and assets.idc_id = idc_name.idc_id;'.format(column=_column)
+    # _sql = 'select {column} from assets where status=0'.format(column=_column)
     _cnt,_rt_list = excute_fetch_sql(_sql)
     rt_list = [dict(zip(_columns,i)) for i in _rt_list]
     return [dict(zip(_columns,i)) for i in _rt_list]
@@ -80,11 +81,23 @@ def create(params):
         _values.append(v)
     _sql = 'insert into assets({coll}) values%s'.format(coll=','.join(_collent))
     _args = (tuple(_values),)
-    print tuple(_values)
+    # print tuple(_values)
     _cnt,_rtlist = excute_commit_sql(_sql,_args)
     if _cnt != 0:
         return True,'添加成功'
     return False,'入库失败'
+
+'''
+获取机房名称
+'''
+def get_idc_name():
+    _sql  = 'select idc_id,idc_name from idc_name'
+    rt = []
+    _cnt, _rt_list = excute_fetch_sql(_sql)
+    for i in _rt_list:
+        rt.append(i)
+    return rt
+
 
 '''
 修改资产时对输入信息检查

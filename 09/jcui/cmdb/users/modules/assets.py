@@ -22,7 +22,7 @@ def get_list():
 None/{}
 '''
 def get_by_id(aid):
-    return None
+    return {'hostname':'fps1.bd'}
 
 '''
 创建资产时对输入信息检查
@@ -121,6 +121,9 @@ def delete():
     pass
 
 
+'''
+IP地址检查
+'''
 def ip_check(ip):
     q = ip.split('.')
     return len(q) == 4 and len(filter(lambda x: x >= 0 and x <= 255, \

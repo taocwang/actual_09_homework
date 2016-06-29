@@ -6,7 +6,7 @@
 {% endblock %}
 {% block status_assets %}active{% endblock %}
 {% block main %}
-<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog" data-title="新建资产" data-url="/assets/create/" data-btn-txt="添加">添加资产</button></a></p>
+<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog" data-title="新建资产" data-url="/assets/create/" data-btn-txt="添加">添加资产</button></p>
 <div class="table-responsive">
     <table class="table table-bordered table-striped table-hover info">
       <thead align="center">
@@ -40,7 +40,8 @@
                     <td>{{x['purchase_date']}}({{x['warranty']}}年)</td>
                     <td>{{x['model']}}({{x['vendor']}})</td>
                     <td width="200">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-assets-info">更新资产</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog" data-title="更新资产"
+                                data-url="/assets/modify/?id={{ x['id'] }}" data-btn-txt="更新">更新资产</button>
                         <a href="#" ><button type="button" onclick="return confirm('确定删除么?')"  class="btn btn-success">删除资产</button></a>
                     </td>
                 </tr>
@@ -86,7 +87,15 @@
              var that = this;
              jQuery(that).find('.modal-title').text(title);
              jQuery(that).find('.dialog-commit').text(btn_txt) ;
-             jQuery(that).find('.modal-body').load(url)
+             if (btn_txt == '更新'){
+                 jQuery(that).find('.modal-body').load(url,{'id':5},function (data) {
+                    console.log(data)
+                    jQuery('#assets-sn').val('asdasdasd')
+                })
+             }else{
+                 jQuery(that).find('.modal-body').load(url)
+             }
+
 //             jQuery.get(url,{},function (data) {
 //                 jQuery(that).find('.modal-body') .html(data);
 //             })

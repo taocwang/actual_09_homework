@@ -2,52 +2,52 @@
     <div class="form-group">
         <label class="col-md-3 control-label">SN编号:</label>
         <div class="col-md-5">
-            <input type="text" class="form-control" name="sn"/>
+            <input type="text" id="assets-sn" class="form-control" name="sn"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">IP:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="ip"/>
+            <input class="form-control" id="assets-ip" type="text" name="ip"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">主机名:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="hostname"/>
+            <input class="form-control" id="assets-hostname" type="text" name="hostname"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">操作系统:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="os"/>
+            <input class="form-control" id="assets-os" type="text" name="os"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">CPU(核数):</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="cpu" id="cpu" data-slider-id='ex1Slider' type="text"
+            <input class="form-control" id="assets-cpu" type="text" name="cpu" id="cpu" data-slider-id='ex1Slider' type="text"
                    data-slider-min="2" data-slider-max="64" data-slider-step="2" data-slider-value="8"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">内存(G):</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="ram" id="ram" data-slider-id='ex1Slider' type="text"
+            <input class="form-control" id="assets-raw" type="text" name="ram" id="ram" data-slider-id='ex1Slider' type="text"
                    data-slider-min="4" data-slider-max="512" data-slider-step="4" data-slider-value="32"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">硬盘(G):</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="disk" id="disk" data-slider-id='ex1Slider' type="text"
+            <input class="form-control" id="assets-disk" type="text" name="disk" id="disk" data-slider-id='ex1Slider' type="text"
                    data-slider-min="20" data-slider-max="3000" data-slider-step="100" data-slider-value="300"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">机房:</label>
         <div class="col-md-5">
-            <select class="form-control" name="idc_id">
+            <select class="form-control" id="assets-idc_id" name="idc_id">
                 {% for _id, _value in idcs %}
                     <option value="{{_id}}">{{_value}}</option>
                 {% endfor %}
@@ -57,37 +57,37 @@
     <div class="form-group">
         <label class="col-md-3 control-label">使用人:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="admin"/>
+            <input class="form-control" id="assets-admin" type="text" name="admin"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">业务:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="business"/>
+            <input class="form-control" id="assets-business" type="text" name="business"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">采购日期:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" id="purchase_date" name="purchase_date"/>
+            <input class="form-control" id="assets-purchase_date" type="text" id="purchase_date" name="purchase_date"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">保修时间:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="warranty"/>
+            <input class="form-control" id="assets-warranty" type="text" name="warranty"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">供应商:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="vendor"/>
+            <input class="form-control" id="assets-vendor" type="text" name="vendor"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">型号:</label>
         <div class="col-md-5">
-            <input class="form-control" type="text" name="model"/>
+            <input class="form-control" id="assets-model" type="text" name="model"/>
         </div>
     </div>
 </form>

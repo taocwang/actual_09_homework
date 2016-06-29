@@ -116,7 +116,7 @@ body {
   border-radius: 4px;
 }
 
-
+/*锁定高度,增加滑动条*/
 .modal-body {
   max-height:600px;
   overflow-y:auto;

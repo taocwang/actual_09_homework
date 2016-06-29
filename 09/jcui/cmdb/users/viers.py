@@ -202,8 +202,6 @@ def assets_list():
 
 @app.route('/assets/create/',methods=['POST','GET'])
 def assets_create():
-    params = request.args if request.method == 'GET' else request.form
-    # _idcs = [('1', '北京-亦庄'), ('2', '北京-酒仙桥'), ('3', '北京-西单'), ('4', '北京-东单')]
     _idcs = assets.get_idc_name()
     return render_template('assets_create.html',idcs=_idcs)
 
@@ -216,6 +214,22 @@ def assets_add():
     else:
         success = ''
     return jsonify({'is_ok':_is_ok,'error':_error,'success':success})
+
+@app.route('/assets/modify/',methods=['POST','GET'])
+def assets_modify():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id')
+    print id
+    result = assets.get_by_id(id)
+    print result
+
+    return render_template('assets_create.html',result=result)
+
+
+@app.route('/assets/update/',methods=['POST','GET'])
+def assets_update():
+    pass
+
 
 '''
 登出用户

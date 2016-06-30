@@ -1,0 +1,126 @@
+<form action="/assets/create/">
+  <div class="form-group">
+    <label for="add-assets-sn" class="control-label">SN号:</label>
+    <input type="text" class="form-control" id="add-assets-sn" name="sn" value="">
+    <div class="alert alert-danger" role="alert" id="add-assets-sn-info" style="display:none"></div>
+  </div>
+  
+  <div class="form-group">
+    <label for="add-assets-ip" class="control-label">IP:</label>
+    <input type="text" class="form-control" id="add-assets-ip" name="ip" value="">
+  </div>
+  <div class="form-group">
+    <label for="add-assets-hostname" class="control-label">主机名:</label>
+    <input type="text" class="form-control" id="add-assets-hostname" name="hostname" value="">
+  </div>
+  <div class="form-group">
+    <label for="add-assets-os" class="control-label">操作系统:</label>
+    <input type="text" class="form-control" id="add-assets-os" name="os" value="">
+  </div>
+  <div class="form-group">
+    <label for="add-assets-purchase_date" class="control-label">采购日期:</label>
+    <input type="text" class="form-control" id="add-assets-purchase_date" name="purchase_date" value="">
+  </div>
+  <div class="form-group">
+    <label for="add-assets-warranty" class="control-label">保修时长(年):</label>
+    <input type="text" class="form-control" id="add-assets-warranty" name="warranty" value="">
+  </div>
+  <div class="form-group">
+    <label for="add-assets-vendor" class="control-label">供应商:</label>
+    <input type="text" class="form-control" id="add-assets-vendor" name="vendor" value="">
+  </div>
+  <div class="form-group">
+    <label for="add-assets-model" class="col-md-3 control-label">型号:</label>
+    <input type="text" class="form-control" id="add-assets-model" name="model" value="">
+  </div>
+  <div class="form-group">
+    <label for="add-assets-idc_id" class="control-label">机房ID:</label>
+    <select name="idc">
+      {% for id, value in idcs %}
+      <option value="{{id}}">{{value}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="add-assets-admin" class="control-label">使用人:</label>
+    <input type="text" class="form-control" id="add-assets-admin" name="admin" value="">
+  </div>
+  <div class="form-group">
+    <label for="add-assets-business" class="control-label">业务线:</label>
+    <input type="text" class="form-control" id="add-assets-business" name="business" value="">
+  </div>
+  <div>
+    <label for="add-assets-cpu" class="col-md-3 control-label">cpu核数:</label>
+    <input class="form-control" id="add-assets-cpu" name="cpu" data-slider-id='ex1Slider' type="text" data-slider-min="2" data-slider-max="48" data-slider-step="2" data-slider-value="2" /><br>
+    <span id="add-assets-cpuLabel">当前所选CPU为：<span id="add-assets-cpuVal">2核</span></span>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="add-assets-mem" class="col-md-3 control-label">内存容量(G):</label>
+    <input class="form-control" id="add-assets-mem" name="mem" data-slider-id='ex2Slider' type="text" data-slider-min="2" data-slider-max="64" data-slider-step="2" data-slider-value="4" /><br>
+    当前所选内存为：<span id="add-assets-memVal">4G</span>
+  </div>
+  <div class="form-group">
+    <label for="add-assets-disk" class="col-md-3 control-label">硬盘容量(G):</label>
+    <input class="form-control" id="add-assets-disk" name="disk" data-slider-id='ex3Slider' type="text" data-slider-min="100" data-slider-max="1000" data-slider-step="10" data-slider-value="2" /><br>
+    当前所选磁盘为：<span id="add-assets-diskVal">100G</span>
+  </div>
+</form>
+<script type="text/javascript" >
+   // jQuery('#add-assets-cpu').slider({
+   //          formatter: function(value) {
+   //              return 'CPU核数: ' + value;
+   //          }
+   //      });
+   jQuery('#add-assets-cpu').slider();
+   jQuery('#add-assets-cpu').on('slide', function(slideEvt){
+      jQuery('#add-assets-cpuVal').text(slideEvt.value + '核')
+   })
+   // jQuery('#add-assets-mem').slider({
+   //          formatter: function(value) {
+   //              return '内存容量: ' + value + 'G';
+   //          }
+   //      });
+   jQuery('#add-assets-mem').slider();
+   jQuery('#add-assets-mem').on('slide', function(slideEvt){
+      jQuery('#add-assets-memVal').text(slideEvt.value + 'G')
+   })
+   // jQuery('#add-assets-disk').slider({
+   //          formatter: function(value) {
+   //              return '磁盘容量: ' + value + 'G';
+   //          }
+   //      });
+   jQuery('#add-assets-disk').slider();
+   jQuery('#add-assets-disk').on('slide', function(slideEvt){
+      jQuery('#add-assets-diskVal').text(slideEvt.value + 'G')
+   })
+    jQuery('#add-assets-purchase_date').datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        minView: 2,
+        autoclose: true
+    });
+</script> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

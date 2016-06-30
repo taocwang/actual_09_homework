@@ -1,0 +1,199 @@
+
+{% extends "layout.html" %}
+{% block title %}用户管理{% endblock %}
+{% block nav_user %}active{% endblock %}
+{% block main %}
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>年龄</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{user['username']}}</td>
+            <td>{{user['password']}}</td>
+            <td>{{user['age']}}</td>
+            <td>{{user['phone']}}</td>
+            <td>{{user['email']}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="用户信息修改" data-btn="更新" data-url="/user/modify/?id={{user['id']}}">编辑</button>
+                <a class="btn btn-primary btn-danger" href="/user/delete/?userid={{user['id']}}" onclick="return confirm('确定删除吗?');">删除</a>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="修改密码" data-btn="更新"  data-url="/user/changepass/?userid={{user['id']}}">修改密码</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="创建用户" data-btn="创建" data-url="/user/create/">添加用户</button>
+{% endblock %}
+    <script type="text/javascript" src="/static/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+{% block js %}
+<script type="text/javascript">
+//    jQuery(document).ready(function () {
+//        jQuery('#update-passwd').on('show.bs.modal', function (event) {
+//            var button = jQuery(event.relatedTarget);
+//            var userid = button.data('userid');
+//            var username = button.data('username');
+//            jQuery('#update-passwd-name').val(username);
+//            jQuery('#update-passwd-uid').val(userid);
+//
+//        });
+//        jQuery('#delete-user').on('show.bs.modal', function (event) {
+//            var button = jQuery(event.relatedTarget);
+//            var userid = button.data('userid');
+//            var username = button.data('username');
+//            jQuery('#delete-user-name').html('确认删除用户'+username+'吗?');
+//            jQuery('#delete-user-uid').val(userid);
+//
+//        });
+//        jQuery('#commit-delete-user').on('click', function(){
+//          var params = {};
+//          params['userid'] = jQuery('#delete-user-uid').val();
+//          console.log(params)
+//          jQuery.post('/user/delete/', params, function (data) {
+//                if(data['is_ok']){
+//                    alert('删除成功');
+//                    jQuery('#delete-user').modal('hide');
+//                    window.location.reload();
+//                }else{
+//                    alert(data['error'])
+//                }
+//            },
+//            'json'
+//            )
+//        })
+//        // jQuery('#delete-user').on('show.bs.modal', function (event) {
+//        //     var button = jQuery(event.relatedTarget);
+//        //     var userid = button.data('userid');
+//        //     var username = button.data('username');
+//        //     jQuery('#delete-user-id').html('确定删除用户'+username+'吗?')
+//
+//        // });
+//        jQuery('#modify-user').on('show.bs.modal', function(event){
+//            var button = jQuery(event.relatedTarget);
+//            var userid = button.data('userid');
+//            var username = button.data('username');
+//            var password = button.data('password');
+//            var age = button.data('age');
+//            var phone = button.data('phone');
+//            var email = button.data('email');
+//            jQuery('#modify-user-name').val(username);
+//            jQuery('#modify-user-uid').val(userid);
+//            jQuery('#modify-user-age').val(age);
+//            jQuery('#modify-user-phone').val(phone);
+//            jQuery('#modify-user-email').val(email);
+//        });
+//
+//        jQuery('#commit-passwd').on('click', function () {
+//            var params = {};
+//            params['userid'] = jQuery('#update-passwd-uid').val();
+//            params['mgr-passwd'] = jQuery('#mgr-passwd').val();
+//            params['user-passwd-new'] = jQuery('#update-passwd-new').val();
+//            console.log(params)
+//            jQuery.post('/user/change-passwd', params, function (data) {
+//                if(data['is_ok']){
+//                    alert('更新成功');
+//                    jQuery('#update-passwd').modal('hide');
+//                }else{
+//                    alert(data['error'])
+//                }
+//            },
+//            'json'
+//            )
+//        });
+//        jQuery('#commit-modifyuser').on('click', function () {
+//            var params = {};
+//            params['userid'] = jQuery('#modify-user-uid').val();
+//            params['password'] = jQuery('#modify-user-passwd').val();
+//            params['age'] = jQuery('#modify-user-age').val();
+//            params['phone'] = jQuery('#modify-user-phone').val();
+//            params['email'] = jQuery('#modify-user-email').val();
+//            console.log(params)
+//            jQuery.post('/user/update/', params, function (data) {
+//                if(data['is_ok']){
+//                    alert('更新成功');
+//                    jQuery('#modify-user').modal('hide');
+//                    window.location.reload();
+//                }else{
+//                    alert(data['error'])
+//                }
+//            },
+//            'json'
+//            )
+//        });
+//        jQuery('#commit-modifyuser').on('click', function () {
+//            var params = {};
+//            params['userid'] = jQuery('#modify-user-uid').val();
+//            console.log(params)
+//            jQuery.post('/user/update/', params, function (data) {
+//                if(data['is_ok']){
+//                    alert();
+//                    jQuery('#modify-user').modal('hide');
+//                    window.location.reload();
+//                }else{
+//                    alert(data['error'])
+//                }
+//            },
+//            'json'
+//            )
+//        });
+//        jQuery('#add-user').on('show.bs.modal', function(event) {
+//            jQuery('#add-user-name').val('');
+//            jQuery('#add-user-passwd').val('');
+//            jQuery('#add-user-passwd-rep').val('');
+//            jQuery('#add-user-age').val('');
+//            jQuery('#add-user-phone').val('');
+//            jQuery('#add-user-email').val('');
+//        });
+//
+//        jQuery('#commit-add-user').on('click', function () {
+//            var params = {};
+//            username = $.trim(jQuery('#add-user-name').val());
+//            password = $.trim(jQuery('#add-user-passwd').val());
+//            reppassword = $.trim(jQuery('#add-user-passwd-rep').val());
+//            age = jQuery('#add-user-age').val();
+//            phone = jQuery('#add-user-phone').val();
+//            email = jQuery('#add-user-email').val();
+//
+//            if (username == '' || password == ''){
+//                jQuery('#add-user-username-info').html('用户名或密码不能为空')
+//                jQuery('#add-user-username-info').show()
+//                return
+//
+//            }else if (password != reppassword) {
+//                jQuery('#add-user-passwd-info').html('两次输入密码不一致')
+//                jQuery('#add-user-passwd-info').show()
+//                return
+//            }else{
+//
+//              params['username'] = username;
+//              params['password'] = password;
+//              params['age'] = age;
+//              params['phone'] = phone;
+//              params['email'] = email;
+//              console.log(params)
+//              jQuery.post('/user/add/', params, function (data) {
+//                if(data['is_ok']){
+//                    alert('用户创建成功');
+//                    jQuery('#add-user').modal('hide');
+//                    window.location.reload();
+//                }else{
+//                    alert(data['error'])
+//                }
+//            },
+//            'json'
+//            )
+//          }
+//
+//        });
+//    })
+</script>
+{% endblock %}

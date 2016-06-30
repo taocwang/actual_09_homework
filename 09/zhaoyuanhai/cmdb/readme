@@ -1,0 +1,102 @@
+课程:
+    flask-包
+    controllor ==>views
+    m ==> models
+    v ==> templates
+资产管理
+1. 开发流程
+    a. 需求收集
+    b. 设计 表,代码的设计
+    c. 写代码
+    d. 测试
+    e. 上线
+2. 资产管理需求收集、设计、表创建
+    a. 需求收集
+        idcs
+            id
+            name
+            status 0正常, 1删除
+
+        users
+            id
+            username
+        oses
+            id
+            osname
+        assets
+            id  自增  int
+            sn   资产编号  varchar(128)
+            ip   IP地址   varchar(128)
+            hostname 主机名 varchar(64)
+            os        操作系统  varchar(32)
+
+
+            purchase_date 采购日常  datetime
+            warranty 保修时间 int
+            vendor   供应商   varchar(64)
+            model    型号 varchar(64)
+
+            idc_id  机房id  int
+            admin    使用人 varchar(32)
+            business  业务    varchar(32)
+
+            cpu       核数(个)   int
+            ram       内存(G)   int
+            disk      磁盘大小(G)   int
+
+
+            status   状态0正常, 状态1,异常
+
+    sql如下:
+    create table assets(
+	create table assets(
+    id int primary key auto_increment,
+    sn varchar(128) default '' unique key comment 'sn编码',
+    ip varchar(128) default '',
+    hostname varchar(64),
+    os varchar(32),
+    purchase_date datetime,
+    warranty int not null,
+    vendor varchar(64),
+    model varchar(64),
+    idc_id int,
+    admin varchar(32) default '',
+    business varchar(32),
+    cpu int  not null,
+    mem int not null,
+    disk int not null,
+    status int default 0
+)engine=innodb default charset=utf8;
+
+create table idcs(
+    id int primary key auto_increment,
+    name varchar(64) default '',
+    status int default 0
+)engine=innodb default charset=utf8;
+
+create table users(
+    id int primary key auto_increment,
+    username varchar(64)
+)engine=innodb default charset=utf8;
+
+create table oses(
+    id int primary key auto_increment,
+    osname varchar(64)
+)engine=innodb default charset=utf8;
+
+
+insert into assets(1,'12334','10.13.5.11', 'inner01','centos6.5','2016-06-26',2,'ibm','aaaa',1,'yhzhao','p2p',8,32,500,0)
+
+
+    b.
+3. 列表展示
+    模板继承
+4. 添加资产
+    dialog
+    jquery.get
+        html
+    js 滑块
+        时间控件
+        sweetalert
+
+5.作业:

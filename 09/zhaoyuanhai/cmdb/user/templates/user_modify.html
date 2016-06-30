@@ -1,0 +1,23 @@
+<form action="/user/update/" method="post">
+  <input type="hidden" id="modify-user-uid" name="userid" value="{{user['id']}}">
+  <div class="form-group">
+    <label for="modify-user-name" class="control-label">用户名:</label>
+    <input type="text" class="form-control" id="modify-user-name" readonly="readonly" value="{{user['username']}}" name="username">
+  </div>
+  <div class="form-group">
+    <label for="modify-user-passwd" class="control-label">密码:</label>
+    <input type="password" class="form-control" id="modify-user-passwd" name="password">
+  </div>
+  <div class="form-group">
+    <label for="modify-user-age" class="control-label">年龄:</label>
+    <input type="text" class="form-control" id="modify-user-age" value="{{user['age']}}" name="age">
+  </div>
+  <div class="form-group">
+    <label for="modify-user-phone" class="control-label">电话:</label>
+    <input type="text" class="form-control" id="modify-user-phone" value="{{user['phone']}}" name="phone">
+  </div>
+  <div class="form-group">
+    <label for="modify-user-email" class="control-label">邮箱:</label>
+    <input type="text" class="form-control" id="modify-user-email" value="{{user['email']}}" name="email">
+  </div>
+</form>

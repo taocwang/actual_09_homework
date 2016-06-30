@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="../static/t1.css" rel="stylesheet">
+</head>
+<body>
+  <div>
+    <label for="add-assets-cpu" class="col-md-3 control-label">cpu核数:</label>
+    <input class="form-control" id="add-assets-cpu" name="cpu" data-slider-id='ex1Slider' type="text" data-slider-min="2" data-slider-max="48" data-slider-step="2" data-slider-value="2" /><br>
+    <span id="add-assets-cpuLabel">当前所选CPU为：<span id="add-assets-cpuVal">2核</span></span>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="add-assets-mem" class="col-md-3 control-label">内存容量(G):</label>
+    <input class="form-control" id="add-assets-mem" name="mem" data-slider-id='ex2Slider' type="text" data-slider-min="2" data-slider-max="64" data-slider-step="2" data-slider-value="4" /><br>
+    当前所选内存为：<span id="add-assets-memVal">4G</span>
+  </div>
+<script type="text/javascript" src="../static/jquery-2.2.4.min.js"></script>
+  <script type="text/javascript" src="../static/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap-time-sider/js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript">
+    jQuery('#add-assets-cpu').slider();
+   jQuery('#add-assets-cpu').on('slide', function(slideEvt){
+      jQuery('#add-assets-cpuVal').text(slideEvt.value + '核')
+   })
+
+   // jQuery('#add-assets-mem').slider({
+   //          formatter: function(value) {
+   //              return '内存容量: ' + value + 'G';
+   //          }
+   //      });
+   jQuery('#add-assets-mem').slider();
+   jQuery('#add-assets-mem').on('slide', function(slideEvt){
+      jQuery('#add-assets-memVal').text(slideEvt.value + 'G')
+   })
+</script>
+</body>
+</html>

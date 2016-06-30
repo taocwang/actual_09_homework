@@ -219,9 +219,6 @@
             jQuery('#update-passwd-uid').val(userid);
 
         });
-        jQuery('#add-user').on('show.bs.modal', function(event){
-
-        })
         jQuery('#delete-user').on('show.bs.modal', function (event) {
             var button = jQuery(event.relatedTarget);
             var userid = button.data('userid');
@@ -321,6 +318,15 @@
             'json'
             )
         });
+        jQuery('#add-user').on('show.bs.modal', function(event) {
+            jQuery('#add-user-name').val('');
+            jQuery('#add-user-passwd').val('');
+            jQuery('#add-user-passwd-rep').val('');
+            jQuery('#add-user-age').val('');
+            jQuery('#add-user-phone').val('');
+            jQuery('#add-user-email').val('');
+        });
+
         jQuery('#commit-add-user').on('click', function () {
             var params = {};
             username = $.trim(jQuery('#add-user-name').val());

@@ -219,11 +219,17 @@ def assets_add():
 def assets_modify():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
-    print id
     result = assets.get_by_id(id)
-    print result
+    print json.dumps(result)
 
     return render_template('assets_create.html',result=result)
+
+@app.route('/assets/get_data/',methods=['POST','GET'])
+def get_data():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id')
+    result = assets.get_by_id(id)
+    return jsonify(result=result)
 
 
 @app.route('/assets/update/',methods=['POST','GET'])

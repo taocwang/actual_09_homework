@@ -6,7 +6,7 @@ import random
 import string
 
 import time
-from flask import Flask,render_template,request,redirect,session, flash ,jsonify
+from flask import Flask,render_template,request,redirect,session, flash ,jsonify,url_for
 from . import app         #user模块下的变量,在__init__.py  中定义
 from modules import user,logs
 from modules import assets
@@ -220,21 +220,29 @@ def assets_modify():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
     result = assets.get_by_id(id)
-    print json.dumps(result)
-
-    return render_template('assets_create.html',result=result)
-
-@app.route('/assets/get_data/',methods=['POST','GET'])
-def get_data():
-    params = request.args if request.method == 'GET' else request.form
-    id = params.get('id')
-    result = assets.get_by_id(id)
-    return jsonify(result=result)
-
+    _idcs = assets.get_idc_name()
+    return render_template('assets_modify.html',result=result,idcs=_idcs)
 
 @app.route('/assets/update/',methods=['POST','GET'])
 def assets_update():
-    pass
+    params = request.args if request.method == 'GET' else request.form
+    _is_ok,_error = assets.validate_update(params)
+    if _is_ok:
+        success = '更新成功'
+    else:
+        success = ''
+    return jsonify({'is_ok':_is_ok,'error':_error,'success':success})
+
+@app.route('/assets/delete/',methods=['POST','GET'])
+def assets_delete():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id')
+    _is_ok,_error = assets.delete(int(id))
+    if _is_ok:
+        return redirect('/assets/')
+    return render_template('assets.html')
+    # return redirect(url_for('assets',color='alert-danger',msg=u'删除失败'))
+
 
 
 '''

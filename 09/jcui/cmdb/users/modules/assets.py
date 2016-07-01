@@ -1,4 +1,6 @@
 #encoding:utf-8
+import json
+
 from dbutils import excute_fetch_sql,excute_commit_sql
 
 
@@ -22,7 +24,18 @@ def get_list():
 None/{}
 '''
 def get_by_id(aid):
-    return {'hostname':'fps1.bd'}
+    _column = 'id,sn,ip,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty,vendor,model,status'
+    # _sql = 'select {coll} from assets,idc_name where assets.status=0 and assets.idc_id = idc_name.idc_id and id = %s'.format(coll=_column)
+    _sql = 'select {coll} from assets where id = %s'.format(coll=_column)
+    _args = (aid,)
+    _cnt,_rt_list = excute_fetch_sql(_sql,_args)
+    rt = []
+    if _cnt != 0:
+        for x in range(len(_column.split(','))):
+            # print _column.split(',')[x],_rt_list[0][x]
+            rt.append((_column.split(',')[x],_rt_list[0][x]))
+        return dict(rt)
+    return ''
 
 '''
 创建资产时对输入信息检查
@@ -103,23 +116,44 @@ def get_idc_name():
 修改资产时对输入信息检查
 True/False,error_msg{}
 '''
-def validate_update():
-    return True,{}
+def validate_update(params):
+    collent = params.keys()
+    result = {}
+    for i in collent:
+        if params[i] == '':
+            result[i] = '%s 不能为空' % i
+    if not result:
+        return update(params)
+    return False, result.values()
 
 '''
 修改资产,操作数据库
 返回True/False
 '''
-def update():
-    pass
+def update(params):
+    _column = 'sn,ip,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty,vendor,model'
+    id = params.get('id')
+    rt_set = []
+    for i in _column.split(','):
+        rt_set.append(i+'='+'\'%s\'' % params[i])
+    _sql = 'update assets set {coll} where id = %s'.format(coll=','.join(rt_set))
+    _args = (id,)
+    _cnt, _rtlist = excute_commit_sql(_sql, _args)
+    if _cnt != 0:
+        return True,'更新成功'
+    return False, '更新失败'
 
 '''
 删除资产,操作数据库
 True/False
 '''
-def delete():
-    pass
-
+def delete(id):
+    _sql = 'update assets set status = 1 where id=%s'
+    _args = (id,)
+    _cnt, _rtlist = excute_commit_sql(_sql, _args)
+    if _cnt != 0:
+        return True,'删除成功'
+    return False,'删除失败'
 
 '''
 IP地址检查

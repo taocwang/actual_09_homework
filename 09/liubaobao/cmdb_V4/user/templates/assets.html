@@ -1,0 +1,216 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+用户管理
+{% endblock %}
+
+{% block style %}
+.modal-body{
+    max-height:250px;
+    overflow-y: auto;
+}
+{% endblock %}
+
+
+{% block link %}
+<link href="{{url_for('static',filename='bootstrap-slider/css/bootstrap-slider.min.css')}}" rel="stylesheet">
+<link href="{{ url_for('static', filename='bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block nav_asset %}active{% endblock %}
+    {% block main %}
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#dialog" data-title="添加资产" data-url="/assets/create_update/" data-btn-txt="添加">添加资产</button>
+            <br><br>
+            <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>sn编号</th>
+                    <th>IP(主机名)</th>
+                    <th>操作系统</th>
+                    <th>CPU/内存/硬盘</th>
+                    <th>机房</th>
+                    <th>使用者(业务)</th>
+                    <th>采购日期(保修时长)</th>
+                    <th>型号(供应商)</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="content-body">
+
+
+            </tbody>
+        </table>
+    {% endblock %}
+
+
+    {% block dialog %}
+        <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">修改密码</h4>
+                  </div>
+                  <div class="modal-body">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary btn-form-submit" id="bnt-s">添加</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+    {% endblock %}
+
+
+    {% block scripts %}
+         <script type="text/javascript" src="{{url_for('static',filename='bootstrap-slider/js/bootstrap-slider.min.js')}}"></script>
+         <script type="text/javascript"
+         src="{{ url_for('static', filename='bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js') }}"></script>
+         <script type="text/javascript"
+         src="{{ url_for('static', filename='bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js') }}"></script>
+    {% endblock %}
+
+
+    {% block js %}
+
+        //异步请求资产list不再刷新页面
+        function getlist(){
+                    $.post('/assets/list/',{},function(result){          // ajax返回数据修改页面
+                       $('#content-body').html(result)
+                    })
+                }
+        getlist()
+
+
+        //dialog弹窗弹出添加和更新
+        $('#dialog').on('show.bs.modal', function (event) {
+              if(!event.relatedTarget){                                   // datetimepicker这个库在bootstrap有一些bug例如:method not allowed的解决办法
+                  return;
+              }
+              var button = $(event.relatedTarget)                         // 获取button上的属性值
+              var title = button.data('title')
+              var url = button.data('url')
+              var btn_txt = button.data('btn-txt')
+              var id = button.data('id')
+              var sn = button.data('asset-sn')
+              var ip = button.data('asset-ip')
+              var os = button.data('asset-os')
+              var hostname = button.data('asset-hostname')
+              var cpu = button.data('asset-cpu')
+              var ram = button.data('asset-ram')
+              var disk = button.data('asset-disk')
+              var idc_id = button.data('asset-idc_id')
+              var admin = button.data('asset-admin')
+              var business = button.data('asset-business')
+              var purchase_date = button.data('asset-purchase_date')
+              var warranty = button.data('asset-warranty')
+              var vendor   = button.data('asset-vendor')
+              var model    = button.data('asset-model')
+              if(!url){                                                    // datetimepicker这个库在bootstrap有一些bug例如:method not allowed的解决办法
+                    return;
+              };
+              var th = this
+              $(th).find('.modal-title').text(title)                       // 更改title的值在弹窗的modal-title
+              $(th).find('.btn-form-submit').text(btn_txt)                 // 更改按钮的值在弹窗的
+              $(th).find('.btn-form-submit').val(btn_txt)                  // 更改按钮的默认值和按钮的名字是相同的
+              params = {}
+              params['_cpu'] = cpu
+              params['_ram'] = ram
+              params['_disk'] = disk
+              $.post(url,params,function(result){                              // post ajax异步请求
+                $(th).find('.modal-body').html(result)                     // 更改dialog的body里面的页面内容
+                if(title == "更新资产"){                                     // 当更新资产的时候修改body页面里面的默认值显示的值,添加的时候不执行
+                     var _form = $('#dialog').find('form');
+                        _form.find('#id').val(id)
+                        _form.find('#sn').val(sn)
+                        _form.find('#ip').val(ip)
+                        _form.find('#hostname').val(hostname)
+                        _form.find('#os').val(os)
+                        _form.find('#cpu').attr('value',cpu)
+                        _form.find('#ram').attr('value',ram)
+                        _form.find('#disk').attr('value',disk)
+                        _form.find('#idc_id').val(idc_id[1])
+                        _form.find('#admin').val(admin)
+                        _form.find('#business').val(business)
+                        _form.find('#purchase_date').val(purchase_date)
+                        _form.find('#warranty').val(warranty)
+                        _form.find('#model').val(model)
+                        _form.find('#vendor').val(vendor)
+                }
+              })
+        });
+
+
+
+        //点击提交dialog form表单
+        $('.btn-form-submit').on('click',function(){
+               var _form = $('#dialog').find('form');
+               var _sub = $(this).val()
+               var url_add = _form.attr('action_add');
+               var url_update = _form.attr('action_update');
+               var params = _form.serializeArray();
+               console.log(params)
+               if(_sub == "添加"){                                      // 如果添加的时候请求url给后端添加模块进行处理
+                   $.post(url_add,params,function(data){
+                       if(data['_is_ok']){
+                        $('#dialog').modal('hide')
+                        swal("添加成功!", "成功在于失败之后", "success")    // sweetalert弹窗成功弹窗
+                        getlist()
+                        }else{
+                        _data = data['error']
+                        _data_rt = _data.join("\n")
+                        swal("添加资产失败!",_data_rt, "error")          // sweetalert弹窗成功弹窗
+                        }
+                    },'json')
+                }else if(_sub == "修改"){                              // 如果修改的时候请求url给后端修改进行处理
+                      $.post(url_update,params,function(data){
+                       if(data['_is_ok']){
+                        $('#dialog').modal('hide')
+                        swal("更新成功!", "成功在于失败之后", "success")
+                        getlist()
+                        }else{
+                        _data = data['error']
+                        _data_rt = _data.join("\n")
+                        swal("更新失败!",_data_rt, "error")
+                        }
+                    },'json')
+               }
+        });
+
+
+
+
+        // 点击删除按钮进行提交表单
+        $(document).on('click','.btn-asset-delete',function(){
+            params = {}
+            var id = $(this).attr('data-id')
+            var url = $(this).attr('data-url')
+            params['id'] = id
+            console.log(params)
+            console.log(id)
+            console.log(url)
+            swal({   title: "你确定删除吗?",                              // swal删除的功能和confirm很像
+                     text: "删除之后不能恢复喽!",
+                     type: "warning",
+                     showCancelButton: true,
+                     confirmButtonColor: "#DD6B55",
+                     confirmButtonText: "Yes",
+                     closeOnConfirm: false,
+                     html:false},
+            function(){
+               $.post(url,params,function(result){                      // ajax删除操作提交表单
+                   if(result['_is_ok']){
+                        swal("删除成功!", "恭喜你!", "success")
+                        getlist()
+                   }else{
+                        swal("删除失败!",'抱歉', "error")
+                   }
+
+                },'json'
+                )
+            });
+        })
+    {% endblock %}

@@ -41,7 +41,7 @@
                     <td>{{x['model']}}({{x['vendor']}})</td>
                     <td width="200">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog" data-title="更新资产"
-                                data-url="/assets/modify/?id={{ x['id'] }}" data-btn-txt="更新">更新资产</button>
+                                data-url="/assets/modify/" data-form-data="{{ x }}" data-btn-txt="更新">更新资产</button>
                         <a href="#" ><button type="button" onclick="return confirm('确定删除么?')"  class="btn btn-success">删除资产</button></a>
                     </td>
                 </tr>
@@ -77,21 +77,38 @@
 <script type="text/javascript">
     jQuery(document).ready(function () {
 
+        //获取数据
+        function get_id_data(id) {
+            var params = {}
+            var id = id
+            params['id'] = id
+            jQuery.get('/assets/get_data/',params,function (data) {
+                console.log(data['result'])
+//                return data['result']
+                return data['result']
+            })
+
+        }
+
          //修改密码加载数据
          jQuery('#dialog').on('show.bs.modal',function (event) {
              var button = jQuery(event.relatedTarget);
              var title = button.data('title');
              var btn_txt = button.data('btn-txt');
              var url = button.data('url');
-             console.log(url)
+             var new_params = button.data('form-data')
+//             console.log(url)
              var that = this;
              jQuery(that).find('.modal-title').text(title);
              jQuery(that).find('.dialog-commit').text(btn_txt) ;
              if (btn_txt == '更新'){
-                 jQuery(that).find('.modal-body').load(url,{'id':5},function (data) {
-                    console.log(data)
-                    jQuery('#assets-sn').val('asdasdasd')
-                })
+                 console.log(new_params)
+                 console.log(typeof(new_params))
+                 var obj = eval('(' + new_params + ')');
+
+
+
+
              }else{
                  jQuery(that).find('.modal-body').load(url)
              }
@@ -101,6 +118,7 @@
 //             })
 
          })
+
         jQuery('.dialog-commit').on('click',function () {
             var _form = jQuery('#dialog').find('form');
             console.log(_form)

@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+{% block title %}资产管理{% endblock %}
+{% block link %}
+<link href="{{ url_for('static', filename='bootstrap-slider/css/bootstrap-slider.min.css') }}" rel="stylesheet"/>
+<link href="{{ url_for('static', filename='bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+
+{% endblock %}
+{% block nav_asset%}active{% endblock %}
+{% block main%}
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#dialog" data-title="添加资产" data-btn-txt="添加" data-url='/asset/create/'>添加资产</button>
+<br/><br/>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>SN</th>
+            <th>IP(主机名)</th>
+            <th>操作系统</th>
+            <th>CPU/内存/硬盘</th>
+            <th>机房</th>
+            <th>使用者(业务)</th>
+            <th>采购时间(保修时长)</th>
+            <th>型号(供应商)</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asset in assets %}
+        <tr>
+            <td>{{asset['sn']}}</td>
+            <td>{{asset['ip']}}({{asset['hostname']}})</td>
+            <td>{{asset['os']}}</td>
+            <td>
+                <ul>
+                    <li>cpu:{{asset['cpu']}}核</li>
+                    <li>内存:{{asset['ram']}}G</li>
+                    <li>硬盘:{{asset['disk']}}G</li>
+                </ul>
+            </td>
+            <td>{{asset['idc_id']}}</td>
+            <td>{{asset['admin']}}({{asset['business']}})</td>
+            <td>{{asset['purchase_date']}}({{asset['warranty']}})</td>
+            <td>{{asset['model']}}({{asset['vendor']}})</td>
+            <td>
+                <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#dialog" data-title="更新资产" data-btn-txt="更新" data-url='/asset/update/' data-sn="{{asset['sn']}}" data-cpu="{{asset['cpu']}}" data-ram="{{asset['ram']}}" data-disk={{asset['disk']}} data-warranty="{{asset['warranty']}}">修改</button>
+                <a class="btn btn-xs btn-danger" href="/asset/delete/?sn={{asset['sn']}}" onclick="return confirm('确定删除吗?');">删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block dialog %}
+<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">修改用户</h4>
+      </div>
+      <div class="modal-body">
+        新建资产
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary btn-form-submit">更新</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript"
+        src="{{ url_for('static', filename='bootstrap-slider/js/bootstrap-slider.min.js') }}">
+</script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js') }}">
+</script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js') }}">
+</script>
+{% endblock %}
+
+
+{% block js %}
+jQuery(document).ready( function() {
+    jQuery('#dialog').on('show.bs.modal', function (event) {
+        var button = jQuery(event.relatedTarget);
+        var sn = button.data('sn');
+        var cpu = button.data('cpu');
+        var ram = button.data('ram');
+        var disk = button.data('disk');
+        var warranty = button.data('warranty')
+
+        
+        var title = button.data('title');
+        var btn_txt = button.data('btn-txt');
+        var url = button.data('url');
+        var that = this;
+        jQuery(that).find('.modal-title').text(title);
+        jQuery(that).find('.btn-form-submit').text(btn_txt);
+        jQuery(that).find('.modal-body').load(url,function(){
+
+            jQuery('#sn').val(sn); 
+            $('#cpu').slider('setValue', cpu);
+            $('#ram').slider('setValue', ram);
+            $('#disk').slider('setValue', disk);
+            jQuery('#warranty').val(warranty); 
+        });
+        
+        /*jQuery.get(url, {}, function(result) {
+            jQuery(that).find('.modal-body').html(result);
+        });
+        */ 
+    });
+    jQuery('.btn-form-submit').on('click', function() {
+        var _form = jQuery('#dialog').find('form');
+        console.log(_form.attr('action'));
+        console.log(_form.serialize());
+        console.log(_form.serializeArray());
+        //return;
+        jQuery.post(_form.attr('action'), _form.serializeArray(), function(result) {
+            if (result['is_ok']){
+                alert('添加成功')
+                jQuery('#dialog').modal('hide');
+                window.location.reload();
+            }else{
+                alert(result['error'])
+            }
+
+        }, 'json')
+    });
+
+});
+{% endblock %}

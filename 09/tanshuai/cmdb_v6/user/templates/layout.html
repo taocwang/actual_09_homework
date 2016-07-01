@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+    {% block link %}{% endblock %}
+  </head>
+  <body>
+    <!--title和侧边栏-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">CMDB资产平台</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">欢迎 {{session.get('user', {}).get('username', '')}}</a></li>
+              <li><a href="/user/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--页面主题内容-->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="{% block nav_users %}{% endblock %}" ><a href="/users/">用户管理</a></li>
+            <li class="{% block nav_logs %}{% endblock %}" ><a href="/logs/">日志显示</a></li>
+            <li class="{% block nav_server %}{% endblock %}" ><a href="/services/">服务管理</a></li>
+            <li class="{% block nav_asset %}{% endblock %}" ><a href="/assets/">资产管理</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {% block main %}{% endblock %}
+        </div>
+      </div>
+    </div>
+    <!--通用的dialog页面-->
+    <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">被填充的title内容</h4>
+          </div>
+          <div class="modal-body">{% block modal_body %}{% endblock %}</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary btn-form-submit">被填充的button内容</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--{% block dialog %}{% endblock %}-->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="/static/js/jquery.min.js" ></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    {% block script %}{% endblock %}
+    <script type="text/javascript" >
+        jQuery(document).ready(function(){
+            $('#dialog').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var title = button.data('title');
+                var btn_txt = button.data('btn-txt');
+                var url = button.data('url');
+                var that = this;
+                $(that).find('.modal-title').text(title);
+                $(that).find('.btn-form-submit').text(btn_txt);
+                $(that).find('.modal-body').load(url);
+            });
+            $('.btn-form-submit').on('click', function(){
+                var _from = $('#dialog').find('form');
+                //console.log(_from.attr('action'));
+                //console.log(_from.serialize());
+                //console.log(_from.serializeArray());
+                $.post(_from.attr('action'),
+                    _from.serializeArray(),
+                    function(result){
+                        if (result['is_ok']){
+                            alert(result['status']);
+                            $('#dialog').modal('hide');
+                            window.location.reload();
+                        }else{
+                            alert(result['error']);
+                        }
+                }, 'json')
+            });
+        });
+        {% block js %}{% endblock %}
+     </script>
+  </body>
+</html>

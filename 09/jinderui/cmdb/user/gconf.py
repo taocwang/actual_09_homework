@@ -1,0 +1,6 @@
+MYSQL_HOST = "localhost"
+MYSQL_PORT = 3306
+MYSQL_DB = "jinderui"
+MYSQL_USER="root"
+MYSQL_PASSWORD="123456"
+MYSQL_CHARSET="utf8"

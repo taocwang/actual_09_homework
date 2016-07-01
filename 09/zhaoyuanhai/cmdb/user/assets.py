@@ -40,12 +40,17 @@ def validate_create(sn, ip, hostname, os, purchase_date, warranty, vendor, model
         rt = False
         return Flase, error
     iplist = ip.split(',')
-    for i in iplist:
-        if 0<i<255 and i != '':
-            pass
-        else:
-            rt = False
-            error['error'].append('ip地址不符合规范')
+    if len(iplist) == 4:
+        for i in iplist:
+            if 0<i<255 and i != '':
+                pass
+            else:
+                rt = False
+                error['error'].append('ip地址不符合规范')
+    else:
+        rt = False
+        error['error'].append('ip地址不符合规范')
+
     if hostname == '' or os == '' or admin == '':
         rt = False
         error['error'].append('ip或主机或操作系统或使用人不能为空')

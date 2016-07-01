@@ -1,0 +1,31 @@
+{% extends "layout2.html" %}
+
+{% block commit %}action="/commituser/" method="post"{% endblock %}
+
+{% block readuser %}{% endblock %}
+{% block type %}{% endblock%} 
+{% block readpass %}{% endblock %}
+
+
+ {% block password %}
+  <div class="form-group">
+    <label for="password" class="control-label">密码:</label>
+    <input type="password" class="form-control" id="password" name="password"></input>
+  </div>
+ {% endblock %}
+
+ {% block age %}
+
+  <div class="form-group">
+    <label for="age" class="control-label">年龄:</label>
+    <input type="age" class="form-control" id="age" name="age" ></input>
+  </div>
+
+ {% endblock %}
+
+{% block managepassword %}{% endblock %}
+{% block userpassword %}{% endblock %}
+
+
+
+

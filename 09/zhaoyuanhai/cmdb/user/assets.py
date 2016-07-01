@@ -38,7 +38,7 @@ def validate_create(sn, ip, hostname, os, purchase_date, warranty, vendor, model
     if _cnt:
         error['error'].append('SN号已存在')
         rt = False
-        return Flase, error
+        return rt, error
     iplist = ip.split(',')
     if len(iplist) == 4:
         for i in iplist:

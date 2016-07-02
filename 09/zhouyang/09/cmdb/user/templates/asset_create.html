@@ -1,0 +1,126 @@
+<form class="form-horizontal" action="/asset/add/" method="post">
+    <div class="form-group">
+        <label class="col-md-3 control-label">SN编号:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="sn"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">IP:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="ip"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">主机名:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="hostname"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">操作系统:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="os"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">CPU(核数):</label>
+        <div class="col-md-5">
+            <input class="form-control" id="cpu" type="text" name="cpu" data-slider-id='ex1Slider' type="text" data-slider-min="4" data-slider-max="64" data-slider-step="4" data-slider-value="32"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">内存(G):</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="ram" id="ram" data-slider-id='ex1Slider' type="text" data-slider-min="2" data-slider-max="64" data-slider-step="2" data-slider-value="8"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">硬盘(G):</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="disk" id="disk" data-slider-id='ex1Slider' type="text" data-slider-min="100" data-slider-max="1000" data-slider-step="100" data-slider-value="500"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">机房:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="idc_id">
+                {% for _id, _value in idcs %}
+                    <option value="{{_id}}">{{_value}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">使用人:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="admin"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">业务:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="business"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">采购日期:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="purchase_date" value="2012-05-15" id="buytime" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">保修时间:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="warranty" value="2017-05-15" id="safetime"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">供应商:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="vendor"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">型号:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="model"/>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        $('#cpu').slider({
+	formatter: function(value) {
+		return 'CPU核数: ' + value;
+	}
+    });
+
+        $('#ram').slider({
+	formatter: function(value) {
+		return '内存数: ' + value;
+	}
+    });
+
+        $('#disk').slider({
+	formatter: function(value) {
+		return '磁盘大小: ' + value;
+	}
+    });
+
+        $('#safetime').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language: "zh-CN",
+            minView: "month",
+            todayBtn: "linked",
+            todayHighlight:"true"
+        });
+
+        $('#buytime').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language: "zh-CN",
+            minView: "month"
+        });
+});
+</script>

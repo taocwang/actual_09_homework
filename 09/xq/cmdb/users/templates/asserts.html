@@ -9,6 +9,7 @@
       <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-slider.min.css')}}"  type="text/css" />
       <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-datetimepicker.min.css')}}"  type="text/css" />
       <link rel="stylesheet" href="{{url_for('static',filename='css/jquery.dataTables.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/sweet-alert.css')}}"  type="text/css" />
 
     <script type="text/javascript">
             function del(){
@@ -32,7 +33,7 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="#">某某系统</a>
         </div>
- <!--右边消息提示部分-->
+ <!--欢迎页-->
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li>
@@ -139,32 +140,39 @@
     <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap-slider.min.js')}}" ></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap-datetimepicker.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.zh-CN.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/sweet-alert.min.js') }}"></script>
 
-<!--点击按钮后，会显示dialog框框 -->
+<!--触发修改密码事件后，进行密码修改 -->
     <script type="text/javascript">
 
     jQuery(document).ready(function() {
 
     jQuery('#dialog').on('show.bs.modal', function (event) {
+//通过触发事件，获取button上带的数据：标题、button上显示的信息、url
         var button = jQuery(event.relatedTarget);
         var title = button.data('title');
         var btn_txt = button.data('btn-txt');
         var url = button.data('url');
 
+//把获取后的数据赋值给弹出的模态框对应的titile、按钮信息、body
+//关键点：this需要赋给that变量，
         var that = this;
         jQuery(that).find('.modal-title').text(title);
         jQuery(that).find('.btn-form-submit').text(btn_txt);
+//load其实是个get操作，get到url的html页面
         jQuery(that).find('.modal-body').load(url);
-        /*jQuery.get(url, {}, function(result) {
-            jQuery(that).find('.modal-body').html(result);
-        });
-        */
-//如果该dialog是进行资产修改，则需要对信息进行回显
+
+        // jQuery.get(url, {}, function(result) {
+        //   console.log(this);
+        //     jQuery(that).find('.modal-body').html(result);
+        // });
+
+//如果dialog是进行资产信息修改，则需要对信息进行回显，这次采用ajax.get方式获取
+//注意：get方式不需要params，直接写返回函数即可，传回去的id通过url带过去就行了
+
         if(title=='修改资产信息') {
          var serverid = button.data('id');
          console.log(serverid);
-
-//ajax.get方式从数据库获取对应serverid的信息，然后回传给dialog界面进行回显
         jQuery.get('/asserts/getinfo/'+serverid, function(data) {
           if(data.id){
               $('#serverid').val(data.id);
@@ -186,7 +194,8 @@
                 alert("数据不存在");
               }
         }, 'json')
-//否则，就是添加资产，什么也不不需要做；如果还有其他动作，则在else里面加即可。
+
+//否则，就是添加资产，什么也不需要做
         } else {
 
           return;
@@ -194,28 +203,33 @@
     });
 
 //dialog里面的提交按钮click事件触发后，进行表单数据提交，并根据后台返回的结果进行用户提示
-    jQuery('.btn-form-submit').on('click', function() {
+        jQuery('.btn-form-submit').on('click', function() {
+
         var _form = jQuery('#dialog').find('form');
+
         console.log(_form.attr('action'));  //获取提交表单的url
         console.log(_form.serialize());     //通过post方式提交表单
         console.log(_form.serializeArray()); //获取表单数据，结果为对象（字典）
         //return;
+
         jQuery.post(_form.attr('action'), _form.serializeArray(), function(result) {
           if(result['is_ok']){
-                alert('操作成功！');
+                swal('操作成功！');
                 console.log(result);  //控制台显示data
                 jQuery('#dialog').modal('hide');   //更新成功后，自动消失框框
                 //window.location.replace('/users/');
-                window.location.reload();
+                //window.location.reload();
               } else {
                 alert(result['error']);
               }
         }, 'json')
     });
 });
+
 </script>
 
- <!--设置表格和top的距离-->
+
+ <!--设置表格和上面的距离-->
 <style>
     body{
 
@@ -223,7 +237,7 @@
     }
 </style>
 
-<!--汉化分页表格-->
+<!--汉化-->
 <script>
         $(document).ready(function() {
         $('.datatable').dataTable( {

@@ -297,3 +297,15 @@ print '=================7===================='
 1. assets 改为类的调用
 2. user.删除 调用sweetalert
 '''
+
+'''
+os,sys
+* argparse
+time / datatime
+hashlib = md5
+paramiko = ssh  cmd && scp
+getpass
+logging,traceback.format_exc()
+
+
+'''

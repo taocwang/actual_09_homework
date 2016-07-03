@@ -34,7 +34,7 @@ def get_by_id(aid):
     _sql = 'SELECT {column} FROM assets WHERE status=0 and asset_id=%s'.format(column=_column)
     _args = (aid,)
     _cnt, _rt_list = execute_fetch_sql(_sql, _args)
-    #print _cnt, _rt_list
+    # print _cnt, _rt_list
     return None if _cnt == 0 else dict(zip(_columns, _rt_list[0]))
 
 
@@ -75,7 +75,7 @@ def validate_create(asset):
     '''
     取值选项:idc_id
     '''
-    if asset.get('idc_id') not in [_value[0] for _value in get_idc_list()]:
+    if asset.get('idc_id') not in [str(_value[0]) for _value in get_idc_list()]:
         _is_ok = False
         _errors['idc'] = '机房选择不正确'
 

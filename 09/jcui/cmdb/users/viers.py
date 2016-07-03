@@ -198,7 +198,9 @@ def test():
 @app.route('/assets/')
 def assets_list():
     _assets = assets.get_list()
-    return render_template('assets.html',assets=_assets)
+    _idcs = dict([(1,'衡阳机房'),(2,'北京机房')])
+    return render_template('assets.html',assets=_assets)                   #从数据库获取
+    # return render_template('assets.html',assets=_assets,idcs=_idcs)      #从字符串获取
 
 @app.route('/assets/create/',methods=['POST','GET'])
 def assets_create():

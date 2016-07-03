@@ -29,7 +29,7 @@ CREATE TABLE `assets` (
    `idc_id` int(11) NOT NULL COMMENT '机房ID',
    `ipaddr` varchar(128) NOT NULL COMMENT 'IP地址',
    `hostname` varchar(64) NOT NULL COMMENT '主机名',
-   `verdor` varchar(64) DEFAULT NULL COMMENT '供应商',
+   `vendor` varchar(64) DEFAULT NULL COMMENT '供应商',
    `model` varchar(64) NOT NULL COMMENT '型号',
    `admin` varchar(50) DEFAULT NULL COMMENT '使用人',
    `business` varchar(32) DEFAULT NULL COMMENT '业务',

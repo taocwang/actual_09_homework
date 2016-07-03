@@ -4,6 +4,10 @@
     <link href="{{ url_for('static', filename='bootstrap-slider/css/bootstrap-slider.min.css') }}" rel="stylesheet"/>
     <link href="{{ url_for('static', filename='bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css') }}"
           rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='sweetalert-1.1.1/dist/sweetalert.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='DataTables-1.10.12/media/css/jquery.dataTables.min.css') }}"
+          rel="stylesheet"/>
+
 {% endblock %}
 {% block nav_asset %}active{% endblock %}
 {% block main %}
@@ -32,7 +36,7 @@
                 <td>{{ asset['ipaddr'] }}({{ asset['hostname'] }})</td>
                 <td>{{ asset['os'] }}</td>
                 <td>{{ asset['cpu'] }}核/{{ asset['ram'] }}G/{{ asset['disk'] }}G</td>
-                <td>{{ asset['idc_id'] }}</td>
+                <td>{{ idcs.get( asset['idc_id'] ) }}</td>
                 <td>{{ asset['admin'] }}({{ asset['business'] }})</td>
                 <td>{{ asset['purchase_date'] }}({{ asset['warranty_date'] }}年)</td>
                 <td>{{ asset['model'] }}({{ asset['vendor'] }})</td>
@@ -76,11 +80,65 @@
             src="{{ url_for('static', filename='bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script type="text/javascript"
             src="{{ url_for('static', filename='bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js') }}"></script>
+
+
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='sweetalert-1.1.1/dist/locales/sweetalert.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='DataTables-1.10.12/media/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='DataTables-1.10.12/media/js/dataTables.bootstrap.js') }}"></script>
+
+
 {% endblock %}
 
 
 {% block js %}
+
+
     jQuery(document).ready(function() {
+    jQuery('table').DataTable({
+    language: {
+    "sProcessing": "处理中...",
+    "sLengthMenu": "显示 _MENU_ 项结果",
+    "sZeroRecords": "没有匹配结果",
+    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+    "sInfoPostFix": "",
+    "sSearch": "搜索:",
+    "sUrl": "",
+    "sEmptyTable": "表中数据为空",
+    "sLoadingRecords": "载入中...",
+    "sInfoThousands": ",",
+    "oPaginate": {
+    "sFirst": "首页",
+    "sPrevious": "上页",
+    "sNext": "下页",
+    "sLast": "末页"
+    },
+    "oAria": {
+    "sSortAscending": ": 以升序排列此列",
+    "sSortDescending": ": 以降序排列此列"
+    }
+    }
+    });
+
+
+    swal({   title: "Are you sure?",
+    text: "You will not be able to recover this imaginary file!",
+    type: "warning",showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText:"No, cancel plx!",
+    closeOnConfirm: false,   closeOnCancel: false },
+    function(isConfirm){   if (isConfirm) {
+    swal("Deleted!", "Your imaginary file has been deleted.", "success");   }
+    else {     swal("Cancelled", "Your
+    imaginary file is safe :)", "error");   } });
+
+
+
     jQuery('#dialog').on('show.bs.modal', function (event) {
     if(!event.relatedTarget) {return;}
     var button = jQuery(event.relatedTarget);
@@ -96,6 +154,7 @@
     });
     */
     });
+
     jQuery('.btn-form-submit').on('click', function() {
     var _form = jQuery('#dialog').find('form');
     jQuery.post(_form.attr('action'), _form.serializeArray(), function(result) {
@@ -109,7 +168,21 @@
     for(var key in result['errors']) {
     errors.push(result['errors'][key]);
     }
-    alert(errors.join('\n'));
+    // alert(errors.join('\n'));
+
+
+    swal({
+    title: "错误信息",
+    text: errors.join('\n'),
+    type: "Error",
+    showCancelButton: false,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "确定",
+    cancelButtonText:"关闭",
+    closeOnConfirm: false,
+    closeOnCancel: false },
+    function(isConfirm){
+    if (isConfirm) {});
     }
     }, 'json')
     });

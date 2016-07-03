@@ -5,6 +5,58 @@ import MySQLdb
 import gconf
 
 
+class MySQLConnection(object):
+    def __init__(self, host, port, user, passwd, db, charset='utf8'):
+        self.__host = host
+        self.__port = port
+        self.__user = user
+        self.__passwd = passwd
+        self.__db = db
+        self.__charset = charset
+        self.__conn = None
+        self.__cur = None
+        self.__connect()
+
+    def __connect(self):
+        try:
+            self.__conn = MySQLdb.connect(host=self.__host, port=self.__port, user=self.__user, passwd=self.__passwd,
+                                          db=self.__db, charset=self.__charset)
+            # print self.__conn
+            self.__cur = self.__conn.cursor()
+            # print self.__cur
+
+        except BaseException as e:
+            print e
+
+    def close(self):
+        self.commit()
+        if self.__cur:
+            self.__cur.close()
+            self.__cur = None
+        if self.__conn:
+            self.__conn.close()
+            self.__conn = None
+
+    def commit(self):
+        if self.__conn:
+            self.__conn.commit()
+
+    def execute(self, sql, args=()):
+        _cnt = 0
+        if self.__cur:
+            _cnt = self.__cur.execute(sql, args)
+            print _cnt
+        return _cnt
+
+    def fetch(self, sql, args=()):
+        _cnt = 0
+        _rt_list = []
+        if self.__cur:
+            _cnt = self.__cur.execute(sql, args)
+            _rt_list = self.__cur.fetchall()
+        return _cnt, _rt_list
+
+
 def execute_fetch_sql(sql, args=()):
     return execute_sql(sql, args, True)
 
@@ -64,3 +116,12 @@ def bulker_commit_sql(sql, args_list=[]):
             _conn.close()
 
     return _count, _rt_list
+
+
+if __name__ == '__main__':
+    c = MySQLConnection(host=gconf.MYSQL_HOST, port=gconf.MYSQL_PORT, user=gconf.MYSQL_USER, passwd=gconf.MYSQL_PASSWD,
+                        db=gconf.MYSQL_DB, charset=gconf.MYSQL_CHARSET)
+    c.execute('insert into user(username,password,age) VALUES (%s,%s,%s)',
+              ('kk', 'e10adc3949ba59abbe56e057f20f883e', 20))
+    print c.fetch('select * from user')
+    c.close()

@@ -4,6 +4,7 @@
     <link href="{{ url_for('static', filename='bootstrap-slider/css/bootstrap-slider.min.css') }}" rel="stylesheet"/>
     <link href="{{ url_for('static', filename='bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css') }}"
           rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='sweetalert-1.1.1/dist/sweetalert.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block nav_asset %}active{% endblock %}
 {% block main %}
@@ -32,7 +33,7 @@
                 <td>{{ asset['ipaddr'] }}({{ asset['hostname'] }})</td>
                 <td>{{ asset['os'] }}</td>
                 <td>{{ asset['cpu'] }}核/{{ asset['ram'] }}G/{{ asset['disk'] }}G</td>
-                <td>{{ asset['idc_id'] }}</td>
+                <td>{{ idcs.get( asset['idc_id'] ) }}</td>
                 <td>{{ asset['admin'] }}({{ asset['business'] }})</td>
                 <td>{{ asset['purchase_date'] }}({{ asset['warranty_date'] }}年)</td>
                 <td>{{ asset['model'] }}({{ asset['vendor'] }})</td>
@@ -80,7 +81,24 @@
 
 
 {% block js %}
+
+
     jQuery(document).ready(function() {
+
+    swal({   title: "Are you sure?",
+    text: "You will not be able to recover this imaginary file!",
+    type: "warning",showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText:"No, cancel plx!",
+    closeOnConfirm: false,   closeOnCancel: false },
+    function(isConfirm){   if (isConfirm) {
+    swal("Deleted!", "Your imaginary file has been deleted.", "success");   }
+    else {     swal("Cancelled", "Your
+    imaginary file is safe :)", "error");   } });
+
+
+
     jQuery('#dialog').on('show.bs.modal', function (event) {
     if(!event.relatedTarget) {return;}
     var button = jQuery(event.relatedTarget);
@@ -96,6 +114,7 @@
     });
     */
     });
+
     jQuery('.btn-form-submit').on('click', function() {
     var _form = jQuery('#dialog').find('form');
     jQuery.post(_form.attr('action'), _form.serializeArray(), function(result) {
@@ -109,7 +128,24 @@
     for(var key in result['errors']) {
     errors.push(result['errors'][key]);
     }
-    alert(errors.join('\n'));
+    // alert(errors.join('\n'));
+
+
+      swal({
+    title: "错误信息",
+    text: "You will not be able to recover this imaginary file!",
+    type: "warning",showCancelButton: false,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText:"关闭",
+    closeOnConfirm: false,   closeOnCancel: false },
+    function(isConfirm){   if (isConfirm) {
+    swal("Deleted!", "Your imaginary file has been deleted.", "success");   }
+    else {     swal("Cancelled", "Your
+    imaginary file is safe :)", "error");   } });
+
+
+
     }
     }, 'json')
     });

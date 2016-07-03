@@ -34,7 +34,7 @@ def get_by_id(aid):
     _sql = 'SELECT {column} FROM assets WHERE status=0 and asset_id=%s'.format(column=_column)
     _args = (aid,)
     _cnt, _rt_list = execute_fetch_sql(_sql, _args)
-    print _cnt,_rt_list
+    #print _cnt, _rt_list
     return None if _cnt == 0 else dict(zip(_columns, _rt_list[0]))
 
 
@@ -128,6 +128,7 @@ def create(asset):
 
     _sql = 'INSERT INTO assets({columns}) VALUES({values})'.format(columns=_column_str,
                                                                    values=','.join(['%s'] * len(_columns)))
+    print _sql
     execute_commit_sql(_sql, _args)
 
 
@@ -158,7 +159,7 @@ def update(asset):
     _args.append(asset.get('asset_id'))
 
     _sql = 'UPDATE assets SET {values} WHERE asset_id=%s'.format(values=','.join(_values))
-    print _sql
+    # print _sql
     execute_commit_sql(_sql, _args)
 
 

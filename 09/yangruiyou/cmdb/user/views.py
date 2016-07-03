@@ -247,7 +247,8 @@ def test():
 @login_required
 def assets():
     _assets = asset.get_list()
-    return render_template('asset.html', assets=_assets)
+    _idcs = dict(asset.get_idc_list())
+    return render_template('asset.html', assets=_assets,idcs=_idcs)
 
 
 @app.route('/asset/create/', methods=['POST', 'GET'])

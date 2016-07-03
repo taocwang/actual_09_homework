@@ -29,6 +29,7 @@ class MySQLConnection(object):
             print e
 
     def close(self):
+        self.commit()
         if self.__cur:
             self.__cur.close()
             self.__cur = None
@@ -37,7 +38,6 @@ class MySQLConnection(object):
             self.__conn = None
 
     def commit(self):
-        self.commit()
         if self.__conn:
             self.__conn.commit()
 
@@ -46,11 +46,11 @@ class MySQLConnection(object):
         if self.__cur:
             _cnt = self.__cur.execute(sql, args)
             print _cnt
-            return _cnt
+        return _cnt
 
     def fetch(self, sql, args=()):
         _cnt = 0
-        _rt_list = 0
+        _rt_list = []
         if self.__cur:
             _cnt = self.__cur.execute(sql, args)
             _rt_list = self.__cur.fetchall()
@@ -125,4 +125,3 @@ if __name__ == '__main__':
               ('kk', 'e10adc3949ba59abbe56e057f20f883e', 20))
     print c.fetch('select * from user')
     c.close()
-

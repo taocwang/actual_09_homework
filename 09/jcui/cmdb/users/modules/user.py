@@ -24,7 +24,7 @@ def get_user():
     colloens = ('id','username','password','age','telphone','email')
     _sql = 'select * from user'
     rt = []
-    sql_count,rt_list = excute_fetch_sql(_sql)
+    sql_count,rt_list = excute_fetch_sql(_sql)    #函数调用
     for i in rt_list:
         rt.append(dict(zip(colloens,i)))
     return rt

@@ -10,6 +10,7 @@ from flask import Flask,render_template,request,redirect,session, flash ,jsonify
 from . import app         #user模块下的变量,在__init__.py  中定义
 from modules import user,logs
 from modules import assets
+from modules.modules import User
 
 
 #
@@ -27,11 +28,20 @@ def login():
     params = request.args if request.method == 'GET' else request.form
     username = params.get('username','')
     password = params.get('password','')
-    if user.validate_login(username, password):
-        session['username'] = {'username': username}
+    #类调用--------
+    get_session = User.validate_login(username, password)
+    if get_session:
+        session['username'] = get_session
         return redirect('/user/')
     else:
-        return render_template('login.html',username=username,error='用户名或密码错误')
+        return render_template('login.html', username=username, error='用户名或密码错误')
+
+    #函数调用------
+    # if user.validate_login(username, password):
+    #     session['username'] = {'username': username}
+    #     return redirect('/user/')
+    # else:
+    #     return render_template('login.html',username=username,error='用户名或密码错误')
 
 '''
 a
@@ -40,7 +50,7 @@ a
 @app.route('/user/')
 @user.login_check
 def users():
-    return render_template('user.html', user_list=user.get_user())
+    return render_template('user.html', user_list=User.get_list())
 
 '''
 用户添加
@@ -51,6 +61,7 @@ def users_add():
     params = request.args if request.method == 'GET' else request.form
     if not params:
         return render_template('useradd.html')
+    '''
     username = params.get('username')
     password = params.get('password')
     gender = params.get('gender')
@@ -63,12 +74,13 @@ def users_add():
     age = params.get('age')
     telphone = params.get('telphone')
     email = params.get('email')
-    if user.user_add(params):
-        flash("用户%s添加成功" % username)
+    '''
+    if User.user_add(params):
+        # flash("用户%s添加成功" % username)
         return redirect('/user/')
     else:
         error = '用户名已存在'
-    return render_template('useradd.html',error=error,username=username,password=password,age=age,telphone=telphone,email=email)
+    return render_template('useradd.html',error=error)
 
 '''
 用户删除
@@ -79,8 +91,8 @@ def user_del():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
     username = params.get('username')
-    if user.user_del(int(id), username):
-        flash("用户删除成功")
+    if User.user_del(int(id), username):
+        # flash("用户删除成功")
         return redirect('/user/')
     return render_template('user.html',error='删除失败')
 
@@ -91,7 +103,7 @@ def user_del():
 @user.login_check
 def user_update():
     params = request.args if request.method == 'GET' else request.form
-    _is_ok, _error = user.user_update(params)
+    _is_ok, _error = User.user_update(params)
     return jsonify({'is_ok': _is_ok, 'error': _error})
 
 # @app.route('/user/userupdate/',methods=['POST','GET'])
@@ -153,7 +165,7 @@ def user_reset():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
     username = params.get('username')
-    _is_ok,_error,newpasswd = user.user_reset(id, username)
+    _is_ok,_error,newpasswd = User.user_reset(id, username)
     return jsonify({'is_ok':_is_ok,'error':_error,'newpass':newpasswd})
 #test
 # @app.route('/test/',methods=['POST','GET'])
@@ -175,9 +187,9 @@ def change_passwd():
     upass = params.get('user-password')
     muser = session['username']['username']
     mpass = params.get('manager-password')
-    _is_ok,_error = user.valid_change_passwd(uid, upass, muser, mpass)
+    _is_ok,_error = User.valid_change_passwd(uid, upass, muser, mpass)
     if _is_ok:
-        _is_ok,_error = user.change_passwd(uid, upass)
+        _is_ok,_error = User.change_passwd(uid, upass)
     return jsonify({'is_ok':_is_ok,'error':_error})
 
 @app.route('/user/newuser/',methods=['POST'])
@@ -239,6 +251,7 @@ def assets_update():
 def assets_delete():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
+    print id
     _is_ok,_error = assets.delete(int(id))
     if _is_ok:
         return redirect('/assets/')

@@ -4,7 +4,75 @@ try:
     from users.gconfig import gconfig
 except:
     from gconfig import gconfig
+
 import MySQLdb
+
+
+class MySQLConnection(object):
+    def __init__(self,host,user,passwd,db,port=3306,charset='utf8'):
+        self.__host = host
+        self.__port = port
+        self.__user = user
+        self.__passwd = passwd
+        self.__db = db
+        self.__charset = charset
+        self.__conn = None
+        self.__cur = None
+        self.__connect()
+    def __connect(self):
+        try:
+            self.__conn = MySQLdb.connect(host=self.__host,port=self.__port,user=self.__user,passwd=self.__passwd,
+                                          db=self.__db,charset=self.__charset)
+            self.__cur = self.__conn.cursor()
+        except BaseException as e:
+            print e
+
+    def excute(self,sql,args=()):
+        _cnt = 0
+        if self.__cur:
+            _cnt = self.__cur.execute(sql,args)
+        return _cnt
+
+    def fetch(self,sql,args=()):
+        _cnt = 0
+        _rt_list = []
+        if self.__cur:
+            _cnt = self.__cur.execute(sql,args)
+            _rt_list = self.__cur.fetchall()
+        # _cnt = self.excute(sql,args)
+        # _rt_list = self.__cur.fetchall()
+        return _cnt,_rt_list
+
+
+    def commit(self):
+        if self.__conn:
+            self.__conn.commit()
+
+    def close(self):
+        self.commit()
+        if self.__cur:
+            self.__cur.close()
+            self.__cur = None
+
+        if self.__conn:
+            self.__conn.close()
+            self.__conn = None
+
+    @classmethod
+    def excute_sql(cls,sql,args=(),fetch=True):
+        _cnt = 0
+        _rt_list = []
+        _dbconn = MySQLConnection(host=gconfig.mysql_host, port=gconfig.mysql_port, user=gconfig.mysql_user,
+                                 passwd=gconfig.mysql_passwd,
+                                 db=gconfig.mysql_db, charset=gconfig.mysql_charset)
+        if fetch:
+            _cnt,_rt_list = _dbconn.fetch(sql,args)
+        else:
+            _cnt = _dbconn.excute(sql,args)
+
+        _dbconn.close()
+        return _cnt,_rt_list
+
 
 
 def excute_fetch_sql(sql,args=()):
@@ -67,3 +135,8 @@ def excute_nginx_log_write(sql,loglist):
         if conn:
             conn.close()
     return sql_count
+
+if __name__ == '__main__':
+    dbconn = MySQLConnection(host=gconfig.mysql_host,port=gconfig.mysql_port, user=gconfig.mysql_user, passwd=gconfig.mysql_passwd,
+                               db=gconfig.mysql_db, charset=gconfig.mysql_charset)
+    dbconn.db_close()

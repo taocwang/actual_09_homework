@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}日志检索{% endblock %}
+{% block css %}
+<link href="/static/css/datatable/jquery.dataTables.css" rel="stylesheet">
+{% endblock %}
 {% block status_log %}active{% endblock %}
 {% block main %}
 <form action="/upload/" class="col-md-6"  method="post" enctype="multipart/form-data" >
@@ -39,4 +42,40 @@
         </tbody>
     </table>
 </div>
+{% endblock %}
+{% block script %}
+<script type="application/javascript" src="/static/js/datatable/jquery.dataTables.js"></script>
+<script type="application/javascript" src="/static/js/datatable/dataTables.bootstrap.js"></script>
+{% endblock %}
+{% block javascipt %}
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery('table').DataTable({
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}

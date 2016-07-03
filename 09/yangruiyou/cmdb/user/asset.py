@@ -1,5 +1,6 @@
-#encoding: utf-8
+# encoding: utf-8
 from dbutils import execute_fetch_sql, execute_commit_sql
+
 
 def get_idc_list():
     return [('1', '北京-亦庄'), ('2', '北京-酒仙桥'), ('3', '北京-西单'), ('4', '北京-东单')]
@@ -11,6 +12,8 @@ def get_idc_list():
     {'sn' : '', 'id' : '', 'hostname':'', 'ip':'', .....}
 ]
 '''
+
+
 def get_list():
     _column = 'asset_id,sn,ipaddr,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty_date,vendor,model'
     _columns = _column.split(',')
@@ -18,17 +21,22 @@ def get_list():
     _cnt, _rt_list = execute_fetch_sql(_sql)
     return [dict(zip(_columns, _line)) for _line in _rt_list]
 
+
 '''
 通过主键返回资产信息
 None/{}
 '''
+
+
 def get_by_id(aid):
     _column = 'asset_id,sn,ipaddr,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty_date,vendor,model'
     _columns = _column.split(',')
     _sql = 'SELECT {column} FROM assets WHERE status=0 and asset_id=%s'.format(column=_column)
     _args = (aid,)
     _cnt, _rt_list = execute_fetch_sql(_sql, _args)
+    print _cnt,_rt_list
     return None if _cnt == 0 else dict(zip(_columns, _rt_list[0]))
+
 
 def get_by_sn(sn):
     _column = 'asset_id,sn,ipaddr,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty_date,vendor,model'
@@ -38,10 +46,13 @@ def get_by_sn(sn):
     _cnt, _rt_list = execute_fetch_sql(_sql, _args)
     return None if _cnt == 0 else dict(zip(_columns, _rt_list[0]))
 
+
 '''
 在创建资产时对输入信息进行检查
 True/False, error_msg{}
 '''
+
+
 def validate_create(asset):
     _is_ok = True
     _errors = {}
@@ -73,10 +84,10 @@ def validate_create(asset):
     检查数字类型isdigit, 最大值, 最小值
     '''
     _rules = {
-        'cpu' : {'min' : 2, 'max' : 64},
-        'ram' : {'min' : 2, 'max' : 512},
-        'disk' : {'min' : 2, 'max' : 2048},
-        'warranty_date' : {'min' : 1, 'max' : 5},
+        'cpu': {'min': 2, 'max': 64},
+        'ram': {'min': 2, 'max': 512},
+        'disk': {'min': 2, 'max': 2048},
+        'warranty_date': {'min': 1, 'max': 5},
     }
     for _key in 'cpu,ram,disk,warranty_date'.split(','):
         _value = asset.get(_key, '').strip()
@@ -101,10 +112,13 @@ def validate_create(asset):
 
     return _is_ok, _errors
 
+
 '''
 创建资产，操作数据库
 返回True/False
 '''
+
+
 def create(asset):
     _column_str = 'sn,ipaddr,hostname,os,admin,business,vendor,model,idc_id,cpu,ram,disk,warranty_date,purchase_date'
     _columns = _column_str.split(',')
@@ -112,20 +126,27 @@ def create(asset):
     for _column in _columns:
         _args.append(asset.get(_column, ''))
 
-    _sql = 'INSERT INTO assets({columns}) VALUES({values})'.format(columns=_column_str, values=','.join(['%s'] * len(_columns)))
+    _sql = 'INSERT INTO assets({columns}) VALUES({values})'.format(columns=_column_str,
+                                                                   values=','.join(['%s'] * len(_columns)))
     execute_commit_sql(_sql, _args)
+
 
 '''
 在修改资产时对输入信息进行检查
 True/False, error_msg{}
 '''
+
+
 def validate_update(asset):
     return True, {}
+
 
 '''
 更新资产，操作数据库
 返回True/False
 '''
+
+
 def update(asset):
     _column_str = 'sn,ipaddr,hostname,os,admin,business,vendor,model,idc_id,cpu,ram,disk,warranty_date,purchase_date'
     _columns = _column_str.split(',')
@@ -137,6 +158,7 @@ def update(asset):
     _args.append(asset.get('asset_id'))
 
     _sql = 'UPDATE assets SET {values} WHERE asset_id=%s'.format(values=','.join(_values))
+    print _sql
     execute_commit_sql(_sql, _args)
 
 
@@ -144,10 +166,13 @@ def update(asset):
 删除资产，操作数据库
 返回True/False
 '''
+
+
 def delete(aid):
     _sql = 'UPDATE assets SET status=1 WHERE asset_id=%s'
-    _args = (aid, )
+    _args = (aid,)
     execute_commit_sql(_sql, _args)
+
 
 if __name__ == '__main__':
     print get_list()

@@ -97,7 +97,7 @@
             var _form = jQuery('#dialog').find('form');
 //            console.log(_form)
             var url = _form.attr('action')
-            var params = _form.serialize()
+            var params = _form.serialize()          /*获取提交的信息 name为key  值为value*/
 //            console.log(url)
 //            console.log(params)
             jQuery.post(url,params,function (data) {

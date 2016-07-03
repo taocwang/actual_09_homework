@@ -134,10 +134,14 @@ def update(params):
     _column = 'sn,ip,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty,vendor,model'
     id = params.get('id')
     rt_set = []
+    _args = []
     for i in _column.split(','):
-        rt_set.append(i+'='+'\'%s\'' % params[i])
+        # rt_set.append(i+'='+'\'%s\'' % params[i])               #预处理的方式是不需要加''的
+        rt_set.append('{collens}=%s'.format(collens=i))
+        _args.append(params.get(i))
+    _args.append(id)
     _sql = 'update assets set {coll} where id = %s'.format(coll=','.join(rt_set))
-    _args = (id,)
+    # _args = (id,)
     _cnt, _rtlist = excute_commit_sql(_sql, _args)
     if _cnt != 0:
         return True,'更新成功'

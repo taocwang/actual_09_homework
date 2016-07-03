@@ -25,9 +25,10 @@ import asset
 import loganalysisdb as loganalysis
 import log2db
 
-#app = Flask(__name__)
 
-#app.secret_key = 'oF\xd3I\x98\xe5\xb4\x1a\xfb\xc77\xe3\xcc,\xc2\xd2\x05\x8b\xa9\x9b\x01\xa0t\x0f\x04\x11\x19\xcd4\x96\x8d\x14'
+# app = Flask(__name__)
+
+# app.secret_key = 'oF\xd3I\x98\xe5\xb4\x1a\xfb\xc77\xe3\xcc,\xc2\xd2\x05\x8b\xa9\x9b\x01\xa0t\x0f\x04\x11\x19\xcd4\x96\x8d\x14'
 
 
 def login_required(func):
@@ -238,15 +239,54 @@ def test():
     print request.headers
     return render_template('test.html')
 
+
+
+'''asset show
+'''
+
+
 @app.route('/assets/')
 @login_required
 def assets():
-    _idcs=[('1','北京-亦庄'),('2','北京-酒仙桥'),('3','北京-西单')]
-    return render_template('asset_create.html',assets=_assets)
+    _assets = asset.get_list()
+    return render_template('asset.html', assets=_assets)
 
 
-@app.route('/asset/create/',methods=['POST','GET'])
+@app.route('/asset/create/', methods=['POST', 'GET'])
 @login_required
-def create_assset():
-    _idcs = []
-    return render_template('asset_create.html',idcs=_idcs)
+def create_asset():
+    return render_template('asset_create.html', idcs=asset.get_idc_list())
+
+
+@app.route('/asset/add/', methods=['POST'])
+def add_asset():
+    _is_ok, _errors = asset.validate_create(request.form)
+    if _is_ok:
+        asset.create(request.form)
+    return json.dumps({'is_ok': _is_ok, 'errors': _errors, 'success': '添加成功'})
+
+
+@app.route('/asset/modify/')
+@login_required
+def modify_asset():
+    _id = request.args.get('asset_id', '')
+    _asset = asset.get_by_id(_id)
+    return render_template('asset_modify.html', asset=_asset, idcs=asset.get_idc_list())
+
+
+@app.route('/asset/update/', methods=['POST'])
+@login_required
+def update_asset():
+    _is_ok, _errors = asset.validate_update(request.form)
+    if _is_ok:
+        asset.update(request.form)
+    return json.dumps({'is_ok': _is_ok, 'errors': _errors, 'success': '更新成功'})
+
+
+@app.route('/asset/delete/')
+@login_required
+def delete_asset():
+    _id = request.args.get('asset_id', '')
+    asset.delete(_id)
+    return redirect('/assets/')
+

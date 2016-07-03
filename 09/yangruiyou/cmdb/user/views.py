@@ -240,9 +240,7 @@ def test():
     return render_template('test.html')
 
 
-
-'''asset show
-'''
+'''asset show'''
 
 
 @app.route('/assets/')
@@ -289,4 +287,3 @@ def delete_asset():
     _id = request.args.get('asset_id', '')
     asset.delete(_id)
     return redirect('/assets/')
-

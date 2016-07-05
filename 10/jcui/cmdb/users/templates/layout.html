@@ -28,14 +28,14 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
+            <div class="col-sm-1 col-md-1 sidebar">
               <ul class="nav nav-sidebar">
                 <li class="{% block status_user %}{% endblock %}"><a href="/user/">用户管理 <span class="sr-only">(current)</span></a></li>
                 <li class="{% block status_log %}{% endblock %}"><a href="/logs/">日志检索</a></li>
                 <li class="{% block status_assets %}{% endblock %}"><a href="/assets/">资产管理</a></li>
               </ul>
             </div>
-          <div class="col-md-10 col-md-offset-2 main">
+          <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1 main">
             {% block main %}{% endblock %}
           </div>
       </div>

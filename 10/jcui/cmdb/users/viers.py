@@ -167,14 +167,6 @@ def user_reset():
     username = params.get('username')
     _is_ok,_error,newpasswd = User.user_reset(id, username)
     return jsonify({'is_ok':_is_ok,'error':_error,'newpass':newpasswd})
-#test
-# @app.route('/test/',methods=['POST','GET'])
-# def test():
-#     print request.form
-#     print request.args
-#     print request.files
-#     # print request.header
-#     return render_template('user.html',user_list=user.get_user())
 
 '''
 dialog 修改密码

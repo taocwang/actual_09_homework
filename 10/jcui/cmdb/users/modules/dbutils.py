@@ -137,4 +137,4 @@ def excute_nginx_log_write(sql,loglist):
 if __name__ == '__main__':
     dbconn = MySQLConnection(host=gconfig.mysql_host,port=gconfig.mysql_port, user=gconfig.mysql_user, passwd=gconfig.mysql_passwd,
                                db=gconfig.mysql_db, charset=gconfig.mysql_charset)
-    dbconn.db_close()
+    dbconn.close()

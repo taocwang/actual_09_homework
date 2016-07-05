@@ -1,4 +1,6 @@
 #encoding:utf-8
+import string
+from random import choice
 
 from dbutils import MySQLConnection as SQL
 
@@ -94,7 +96,15 @@ class User(object):
         if _sql_count:
             return True, '修改成功'
         return False, '修改失败'
-
+    @classmethod
+    def user_reset(cls,id, username):
+        _sql = 'update user set password = md5(%s) where id=%s and username=%s'
+        newpassword = ''.join([choice(string.ascii_letters + string.digits) for i in range(8)])
+        args = (newpassword, id, username)
+        _sql_count, rt_list = SQL.excute_sql(_sql, args)
+        if _sql_count != 0:
+            return True, '重置成功', newpassword
+        return False, '重置失败', newpassword
 
 
 class Assets(object):

@@ -3,7 +3,7 @@
 {% block css %}
     <link href="/static/css/bootstrap-slider.css" rel="stylesheet">
     <link href="/static/css/bootstrap-datetimepicker.css" rel="stylesheet">
-    <!--<link href="/static/css/sweetalert.css" rel="stylesheet">-->
+    <link href="/static/css/sweetalert.css" rel="stylesheet">
     <link href="/static/css/datatable/jquery.dataTables.css" rel="stylesheet">
 {% endblock %}
 {% block status_assets %}active{% endblock %}
@@ -31,11 +31,7 @@
                     <td>{{ x['ip'] }}({{x['hostname']}})</td>
                     <td>{{ x['os'] }}</td>
                     <td>
-                        <ul>
-                            <li>CPU : {{x['cpu']}}核</li>
-                            <li>内存 : {{x['ram']}}GB</li>
-                            <li>磁盘 : {{x['disk']}}GB</li>
-                        </ul>
+                        {{x['cpu']}}核/{{x['ram']}}G/{{x['disk']}}GB
                     </td>
                     <td>{{x['idc_name']}}</td>
                     <td>{{x['admin']}}({{x['business']}})</td>
@@ -82,34 +78,6 @@
 {% block javascipt %}
 <script type="text/javascript">
     jQuery(document).ready(function () {
-
-         // 分页展示
-        $('table').DataTable({
-            language: {
-                "sProcessing": "处理中...",
-                "sLengthMenu": "显示 _MENU_ 项结果",
-                "sZeroRecords": "没有匹配结果",
-                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                "sInfoPostFix": "",
-                "sSearch": "搜索:",
-                "sUrl": "",
-                "sEmptyTable": "表中数据为空",
-                "sLoadingRecords": "载入中...",
-                "sInfoThousands": ",",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上页",
-                    "sNext": "下页",
-                    "sLast": "末页"
-                },
-                "oAria": {
-                    "sSortAscending": ": 以升序排列此列",
-                    "sSortDescending": ": 以降序排列此列"
-                }
-            }
-        });
          //修改密码加载数据
          jQuery('#dialog').on('show.bs.modal',function (event) {
              if(!event.relatedTarget){return;}
@@ -197,6 +165,43 @@
                 })
             });
         })
+
+        // 分页展示
+        $('table').DataTable({
+            "language": {
+                "processing": "处理中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "search": "搜索:",
+                "searchPlaceholder": "搜索...",
+                "url": "",
+                "emptyTable": "表中数据为空",
+                "loadingRecords": "载入中...",
+                "infoThousands": ",",
+                "paginate": {
+                    "first": "首页",
+                    "previous": "上页",
+                    "next": "下页",
+                    "last": "末页"
+                },
+                "aria": {
+                    paginate: {
+                        first: '首页',
+                        previous: '上页',
+                        next: '下页',
+                        last: '末页'
+                    },
+                    "sortAscending": ": 以升序排列此列",
+                    "sortDescending": ": 以降序排列此列"
+                },
+                "decimal": "-",
+                "thousands": "."
+            }
+        });
 
 
     })

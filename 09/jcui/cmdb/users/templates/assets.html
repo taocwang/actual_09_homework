@@ -112,6 +112,7 @@
         });
          //修改密码加载数据
          jQuery('#dialog').on('show.bs.modal',function (event) {
+             if(!event.relatedTarget){return;}
              var button = jQuery(event.relatedTarget);
              var title = button.data('title');
              var btn_txt = button.data('btn-txt');

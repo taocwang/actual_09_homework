@@ -96,6 +96,7 @@ class User(object):
         if _sql_count:
             return True, '修改成功'
         return False, '修改失败'
+
     @classmethod
     def user_reset(cls,id, username):
         _sql = 'update user set password = md5(%s) where id=%s and username=%s'
@@ -108,4 +109,51 @@ class User(object):
 
 
 class Assets(object):
-    pass
+
+    def __init__(self,id,sn,ip,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty,vendor,model,status):
+        self.id = id
+        self.sn = sn
+        self.ip = ip
+        self.hostname = hostname
+        self.os = os
+        self.cpu = cpu
+        self.ram = ram
+        self.disk = disk
+        self.idc_id = idc_id
+        self.admin = admin
+        self.business = business
+        self.purchase_date = purchase_date
+        self.warranty = warranty
+        self.vendor = vendor
+        self.model = model
+        self.status = status
+    @classmethod
+    def get_list(cls):
+        _column = 'id,sn,ip,hostname,os,cpu,ram,disk,idc_name,admin,business,purchase_date,warranty,vendor,model,status'
+        _columns = _column.split(',')
+        _sql = 'select {column} from assets,idc_name where assets.status=0 and assets.idc_id = idc_name.idc_id;'.format(column=_column)
+        _cnt,_rt_list = SQL.excute_sql(_sql)
+        return [dict(zip(_columns,i)) for i in _rt_list]
+
+    @classmethod
+    def get_by_id(cls,aid):
+        _column = 'id,sn,ip,hostname,os,cpu,ram,disk,idc_id,admin,business,purchase_date,warranty,vendor,model,status'
+        # _sql = 'select {coll} from assets,idc_name where assets.status=0 and assets.idc_id = idc_name.idc_id and id = %s'.format(coll=_column)
+        _sql = 'select {coll} from assets where id = %s'.format(coll=_column)
+        _args = (aid,)
+        _cnt, _rt_list = SQL.excute_sql(_sql, _args)
+        rt = []
+        if _cnt != 0:
+            for x in range(len(_column.split(','))):
+                rt.append((_column.split(',')[x], _rt_list[0][x]))
+            return dict(rt)
+        return ''
+
+    @classmethod
+    def get_idc_name(cls):
+        _sql = 'select idc_id,idc_name from idc_name'
+        rt = []
+        _cnt, _rt_list = SQL.excute_sql(_sql)
+        for i in _rt_list:
+            rt.append(i)
+        return rt

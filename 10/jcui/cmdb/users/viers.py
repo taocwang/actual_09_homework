@@ -1,16 +1,12 @@
 #encoding:utf-8
-import json
-import os
 import sys
 import random
 import string
 
-import time
-from flask import Flask,render_template,request,redirect,session, flash ,jsonify,url_for
+from flask import render_template,request,redirect,session, flash ,jsonify
 from . import app         #user模块下的变量,在__init__.py  中定义
-from modules import user,logs
-from modules import assets
-from modules.modules import User
+from modules import logs
+from modules.modules import User,Assets,Logs
 
 
 #
@@ -48,7 +44,7 @@ a
 用户列表
 '''
 @app.route('/user/')
-@user.login_check
+@User.login_check
 def users():
     return render_template('user.html', user_list=User.get_list())
 
@@ -56,7 +52,7 @@ def users():
 用户添加
 '''
 @app.route('/user/useradd/',methods=['POST','GET'])
-@user.login_check
+@User.login_check
 def users_add():
     params = request.args if request.method == 'GET' else request.form
     if not params:
@@ -86,7 +82,7 @@ def users_add():
 用户删除
 '''
 @app.route('/user/userdel/',methods=['POST','GET'])
-@user.login_check
+@User.login_check
 def user_del():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
@@ -100,7 +96,7 @@ def user_del():
 用户更新
 '''
 @app.route('/user/userupdate/',methods=['POST','GET'])
-@user.login_check
+@User.login_check
 def user_update():
     params = request.args if request.method == 'GET' else request.form
     _is_ok, _error = User.user_update(params)
@@ -125,7 +121,7 @@ def user_update():
 
 #加载日志的页面
 @app.route('/logs/')
-@user.login_check
+@User.login_check
 def nginx_logs():
     params = request.args if request.method == 'GET' else request.form
     if params.get('numbers'):
@@ -137,14 +133,14 @@ def nginx_logs():
 
 #触发后将日志导入到mysql中
 @app.route('/import_los/')
-@user.login_check
+@User.login_check
 def import_logs():
     if logs.logs_import_sql():
         return 'ok'
 
 
 @app.route('/upload/',methods=['POST','GET'])
-@user.login_check
+@User.login_check
 def files_upload():
     files = request.files.get('files')
     if files:
@@ -160,7 +156,7 @@ def files_upload():
     return redirect('/logs/')
 
 @app.route('/user/reset/',methods=['POST','GET'])
-@user.login_check
+@User.login_check
 def user_reset():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
@@ -172,7 +168,7 @@ def user_reset():
 dialog 修改密码
 '''
 @app.route('/user/passwd-change/',methods=['POST'])
-@user.login_check
+@User.login_check
 def change_passwd():
     params = request.args if request.method == 'GET' else request.form
     uid = params.get('userid')
@@ -185,9 +181,10 @@ def change_passwd():
     return jsonify({'is_ok':_is_ok,'error':_error})
 
 @app.route('/user/newuser/',methods=['POST'])
+@User.login_check
 def newuser():
     params = request.args if request.method == 'GET' else request.form
-    _is_ok,_error = user.user_add(params)
+    _is_ok,_error = User.user_add(params)
     return jsonify({'is_ok':_is_ok,'error':_error})
 
 
@@ -200,21 +197,22 @@ def test():
     return render_template('tt.html')
 
 @app.route('/assets/')
+@User.login_check
 def assets_list():
-    _assets = assets.get_list()
-    _idcs = dict([(1,'衡阳机房'),(2,'北京机房')])
+    _assets = Assets.get_list()
     return render_template('assets.html',assets=_assets)                   #从数据库获取
-    # return render_template('assets.html',assets=_assets,idcs=_idcs)      #从字符串获取
 
 @app.route('/assets/create/',methods=['POST','GET'])
+@User.login_check
 def assets_create():
-    _idcs = assets.get_idc_name()
+    _idcs = Assets.get_idc_name()
     return render_template('assets_create.html',idcs=_idcs)
 
 @app.route('/assets/add/',methods=['POST','GET'])
+@User.login_check
 def assets_add():
     params = request.args if request.method == 'GET' else request.form
-    _is_ok,_error = assets.validate_create(params)
+    _is_ok,_error = Assets.validate_create(params)
     if _is_ok:
         success = '添加成功'
     else:
@@ -222,17 +220,19 @@ def assets_add():
     return jsonify({'is_ok':_is_ok,'error':_error,'success':success})
 
 @app.route('/assets/modify/',methods=['POST','GET'])
+@User.login_check
 def assets_modify():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
-    result = assets.get_by_id(id)
-    _idcs = assets.get_idc_name()
+    result = Assets.get_by_id(id)
+    _idcs = Assets.get_idc_name()
     return render_template('assets_modify.html',result=result,idcs=_idcs)
 
 @app.route('/assets/update/',methods=['POST','GET'])
+@User.login_check
 def assets_update():
     params = request.args if request.method == 'GET' else request.form
-    _is_ok,_error = assets.validate_update(params)
+    _is_ok,_error = Assets.validate_update(params)
     if _is_ok:
         success = '更新成功'
     else:
@@ -240,11 +240,12 @@ def assets_update():
     return jsonify({'is_ok':_is_ok,'error':_error,'success':success})
 
 @app.route('/assets/delete/',methods=['POST','GET'])
+@User.login_check
 def assets_delete():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
     print id
-    _is_ok,_error = assets.delete(int(id))
+    _is_ok,_error = Assets.delete(int(id))
     if _is_ok:
         return redirect('/assets/')
     return render_template('assets.html')

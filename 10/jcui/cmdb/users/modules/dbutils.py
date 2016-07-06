@@ -37,8 +37,6 @@ class MySQLConnection(object):
         if self.__cur:
             _cnt = self.__cur.execute(sql,args)
             _rt_list = self.__cur.fetchall()
-        # _cnt = self.excute(sql,args)
-        # _rt_list = self.__cur.fetchall()
         return _cnt,_rt_list
 
 
@@ -65,11 +63,13 @@ class MySQLConnection(object):
                                  db=gconfig.mysql_db, charset=gconfig.mysql_charset)
         if fetch:
             _cnt,_rt_list = _dbconn.fetch(sql,args)
+
         else:
             _cnt = _dbconn.excute(sql,args)
 
         _dbconn.close()
         return _cnt,_rt_list
+
 
 
 

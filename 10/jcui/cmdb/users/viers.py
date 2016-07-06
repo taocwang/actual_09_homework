@@ -34,7 +34,7 @@ def login():
         session['username'] = get_session
         return redirect('/user/')
     else:
-        return render_template('login.html', username=username, error='用户名或密码错误')
+        return render_template('login.html', username=username, error='用户认证失败')
 
     #函数调用------
     # if user.validate_login(username, password):

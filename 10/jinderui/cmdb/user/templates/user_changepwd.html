@@ -1,0 +1,27 @@
+{% extends "layout2.html" %}
+
+{% block commit %}action="/changepassword/" {% endblock %}
+
+{% block readuser %}readonly="readonly"{% endblock %}
+{% block type %}type=hidden{% endblock%} 
+{% block readpass %}readonly="readonly"{% endblock %}
+
+
+ {% block password %}{% endblock %}
+ {% block age %}{% endblock %}
+
+{% block managepassword %}
+          <div class="form-group">
+            <label for="password-manager-password" class="control-label">管理员密码:</label>
+            <input type="password" class="form-control" id="password-manager-password" name="manager-password"></input>
+          </div>
+{% endblock %}
+{% block userpassword %}
+         <div class="form-group">
+            <label for="password-user-password" class="control-label">用户密码:</label>
+            <input type="password" class="form-control" id="password-user-password" name="user-password"></input>
+          </div>
+
+{% endblock %}
+
+

@@ -4,6 +4,8 @@
       <meta charset="utf-8">
       <title>用户列表</title>
       <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+
       <style>
         body {
           padding-top: 50px;
@@ -90,7 +92,7 @@
             <p class="bg-success">{{msg}}</p>
             <a class="btn btn-default" href="/user/create/">添加用户</a>
             <br/><br/>
-            <table class="table table-bordered table-striped table-hover">
+            <table id="user-list" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
                         <th>用户名</th>
@@ -116,5 +118,14 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.12.3.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#user-list').DataTable();
+    } );
+    </script>
   </body>
 </html>

@@ -2,7 +2,11 @@
 import string
 from random import choice
 from functools import wraps
+
+import time
+
 from dbutils import MySQLConnection as SQL
+from dbutils import md5_str
 from flask import session,redirect
 
 class User(object):
@@ -29,8 +33,8 @@ class User(object):
     @classmethod
     def validate_login(cls,username, password):
         _columns  = ('id','username')
-        _sql = 'select * from user where username = %s and password = md5(%s)'
-        args = (username, password)
+        _sql = 'select * from user where username = %s and password = %s'
+        args = (username, md5_str(password))
         sql_count, rt_list = SQL.excute_sql(_sql, args)
         return dict(zip(_columns,rt_list[0])) if sql_count != 0 else None
 
@@ -58,12 +62,12 @@ class User(object):
         telphone = params.get('telphone')
         email = params.get('email')
         _sql_select = 'select * from user where username = %s'
-        _sql_insert = 'insert into user(username,password,age,telphone,email) values(%s,md5(%s),%s,%s,%s)'
+        _sql_insert = 'insert into user(username,password,age,telphone,email) values(%s,%s,%s,%s,%s)'
         agrs1 = (username,)
         _sql_count, rt_list = SQL.excute_sql(_sql_select, agrs1)
         if _sql_count != 0:
             return False, username + '已存在,请尝试其他的名字'
-        args2 = (username, password, age, telphone, email)
+        args2 = (username, md5_str(password), age, telphone, email)
         SQL.excute_sql(_sql_insert, args2)
         return True, '添加成功'
 
@@ -275,3 +279,31 @@ class Assets(object):
         if _cnt != 0:
             return True, '更新成功'
         return False, '更新失败'
+
+
+class Performs(object):
+
+    @classmethod
+    def add(cls,req):
+        _ip = req.get('ip')
+        _cpu = req.get('cpu')
+        _ram = req.get('ram')
+        _time = req.get('time')
+        _sql = 'insert into performs(ip,cpu,ram,time) VALUES (%s,%s,%s,%s)'
+        SQL.excute_sql(_sql,(_ip,_cpu,_ram,_time),False)
+    @classmethod
+    def get_list(cls,ip):
+        _sql = 'select cpu,ram,time from performs where ip=%s and time >=%s ORDER by time asc'
+        _args = (ip,time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time() - 60*60)))
+        _cnt,_rt_list = SQL.excute_sql(_sql,_args)
+        cpu_list = []
+        ram_list = []
+        time_list = []
+        for _cpu,_ram,_time in _rt_list:
+            cpu_list.append(_cpu)
+            ram_list.append(_ram)
+            time_list.append(time.strftime('%H:%M',_time))
+        # time_list.reverse()
+        # cpu_list.reverse()
+        # ram_list.reverse()
+        return time_list,cpu_list,ram_list

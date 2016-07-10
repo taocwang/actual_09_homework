@@ -1,6 +1,7 @@
 #encoding:utf-8
 ''
-from dbutils import excute_nginx_log_write,excute_select_log
+# from dbutils import excute_nginx_log_write,excute_select_log
+from dbutils import excute_nginx_log_write
 
 '''
 对日志进行处理,返回ip,url,code,nums

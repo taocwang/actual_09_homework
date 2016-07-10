@@ -1,4 +1,5 @@
 #encoding:utf-8
+import json
 import sys
 import random
 import string
@@ -6,7 +7,7 @@ import string
 from flask import render_template,request,redirect,session, flash ,jsonify
 from . import app         #user模块下的变量,在__init__.py  中定义
 from modules import logs
-from modules.modules import User,Assets,Logs
+from modules.modules import User,Assets,Logs,Performs
 
 
 #
@@ -249,7 +250,17 @@ def assets_delete():
     if _is_ok:
         return redirect('/assets/')
     return render_template('assets.html')
-    # return redirect(url_for('assets',color='alert-danger',msg=u'删除失败'))
+
+@app.route('/assets/perform/', methods=['POST', 'GET'])
+@User.login_check
+def assets_perform():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id','')
+    _asset = Assets.get_by_id(id)
+    datetime_list,cpu_list,ram_list = Performs.get_list(_asset.get('ip'))
+
+    # return render_template('assets_perform.html',datetime_list=datetime_list,cpu_list=cpu_list,ram_list=ram_list)
+    return render_template('assets_perform.html')
 
 
 
@@ -260,5 +271,11 @@ def assets_delete():
 def logout():
     session.clear()
     return redirect('/')
+
+@app.route('/performs/',methods=['POST'])
+def performs():
+    params =  request.get_json()
+    Performs.add(params)
+    return json.dumps({'code':200,'text':'success'})
 
 

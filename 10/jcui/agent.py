@@ -72,6 +72,16 @@ if __name__ == '__main__':
 
     '''
     Content-Type application/json
+
+CREATE TABLE `performs` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(128) DEFAULT NULL,
+  `cpu` float DEFAULT NULL,
+  `ram` float DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=utf8
+
     '''
 
 

@@ -1,7 +1,7 @@
-<div id="container" style="min-width:580px;height:400px"></div>
+<div id="perform_container" style="min-width:580px;height:400px"></div>
 <script type="application/javascript">
     $(function () {
-    $('#container').highcharts({
+    $('#perform_container').highcharts({
         title: {
             text: '',
             x: -20 //center
@@ -11,7 +11,7 @@
             x: -20
         },
         xAxis: {
-            categories: {{datetime_list|toJSON|safe}}
+            categories: {{ datetime_list|safe }}
         },
         yAxis: {
             title: {
@@ -34,10 +34,10 @@
         },
         series: [{
             name: 'CPU使用率',
-            data: {{cpu_list|toJSON|safe}}
+            data: {{ cpu_list|safe }}
         }, {
             name: '内存使用率',
-            data: {{ram_list|toJSON|safe}}
+            data: {{ ram_list|safe }}
         }]
     });
 });

@@ -294,7 +294,7 @@ class Performs(object):
     @classmethod
     def get_list(cls,ip):
         _sql = 'select cpu,ram,time from performs where ip=%s and time >=%s ORDER by time asc'
-        _args = (ip,time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time() - 60*60)))
+        _args = (ip,time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time() - 60*30)))
         _cnt,_rt_list = SQL.excute_sql(_sql,_args)
         cpu_list = []
         ram_list = []
@@ -302,7 +302,7 @@ class Performs(object):
         for _cpu,_ram,_time in _rt_list:
             cpu_list.append(_cpu)
             ram_list.append(_ram)
-            time_list.append(time.strftime('%H:%M',_time))
+            time_list.append(_time.strftime('%H:%M'))
         # time_list.reverse()
         # cpu_list.reverse()
         # ram_list.reverse()

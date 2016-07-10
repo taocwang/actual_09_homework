@@ -258,9 +258,11 @@ def assets_perform():
     id = params.get('id','')
     _asset = Assets.get_by_id(id)
     datetime_list,cpu_list,ram_list = Performs.get_list(_asset.get('ip'))
-
-    # return render_template('assets_perform.html',datetime_list=datetime_list,cpu_list=cpu_list,ram_list=ram_list)
-    return render_template('assets_perform.html')
+    # print datetime_list
+    # print cpu_list
+    # print ram_list
+    return render_template('assets_perform.html',datetime_list=json.dumps(datetime_list),cpu_list=json.dumps(cpu_list),ram_list=json.dumps(ram_list))
+    # return render_template('assets_perform.html')
 
 
 

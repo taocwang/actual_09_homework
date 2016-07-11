@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}日志查看{% endblock %}
+{% block nav_log%}active{% endblock %}
+{% block main%}
+          <h2 class="sub-header">nginx访问TOP{{n}}</h2>
+          <div class="table-responsive">
+            <a href="?topn=5"> TOP5 </a>
+            <a href="?topn=10"> TOP10</a>
+            <a href="?topn=30">TOP30</a>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>来源IP</th>
+                  <th>访问路径</th>
+                  <th>访问结果</th>
+                  <th>访问次数</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in rt_list %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{row[1]}}</td>
+                  <td>{{row[2]}}</td>
+                  <td>{{row[3]}}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+{% endblock %}
+        </div>
+      </div>
+    </div>
+</html>

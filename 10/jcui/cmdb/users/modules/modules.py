@@ -106,8 +106,8 @@ class User(object):
 
     @classmethod
     def change_passwd(cls,uid, upass):
-        _sql = 'update user set password = md5(%s) where id = %s'
-        _args = (upass, uid)
+        _sql = 'update user set password = %s where id = %s'
+        _args = (md5_str(upass), uid)
         _sql_count, rt_list = SQL.excute_sql(_sql, _args)
         if _sql_count:
             return True, '修改成功'
@@ -115,9 +115,9 @@ class User(object):
 
     @classmethod
     def user_reset(cls,id, username):
-        _sql = 'update user set password = md5(%s) where id=%s and username=%s'
+        _sql = 'update user set password = %s where id=%s and username=%s'
         newpassword = ''.join([choice(string.ascii_letters + string.digits) for i in range(8)])
-        args = (newpassword, id, username)
+        args = (md5_str(newpassword), id, username)
         _sql_count, rt_list = SQL.excute_sql(_sql, args)
         if _sql_count != 0:
             return True, '重置成功', newpassword

@@ -6,7 +6,6 @@ import string
 
 from flask import render_template,request,redirect,session, flash ,jsonify
 from . import app         #user模块下的变量,在__init__.py  中定义
-from modules import logs
 from modules.modules import User,Assets,Logs,Performs
 
 

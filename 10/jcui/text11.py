@@ -89,7 +89,17 @@ root
 
 
 
+作业:
 
+1. asset的采购时间改为%Y-%m-%d
+
+2. 添加用户,修改用户密码改为md5_str函数
+
+3. 今天的课程做完.
+
+4. web执行命令
+    form 提交ip,port,username,password,cmd=>ssh.py 获取结果显示
+            管理员密码 =>
 
 
 '''

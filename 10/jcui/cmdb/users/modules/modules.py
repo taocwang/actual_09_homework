@@ -125,8 +125,43 @@ class User(object):
 
 
 class Logs(object):
+    @classmethod
+    def log_anslysis(cls,sfile):
+        file_dict = {}
+        try:
+            files = open(sfile, 'r')
+            for i in files:
+                i = i.split()
+                x, y, z = i[0], i[6], i[8]
+                file_dict[(x, y, z)] = file_dict.get((x, y, z), 0) + 1
+        except BaseException as e:
+            print e
+            return ''
+        finally:
+            if files:
+                files.close()
+        return sorted(file_dict.items(), key=lambda x: x[1], reverse=False)
 
-    pass
+    @classmethod
+    def logs_import_sql(cls,logs_path):
+        # logs_path = '/home/op/test/www_access_20140823.log'
+        # logs_path = '/home/jcui/files/www_access_20140823.log'
+        log_list = cls.log_anslysis(logs_path)
+        _sql = 'insert into access_logs(ip,url,code,nums) values(%s,%s,%s,%s)'
+        if SQL.excute_log_sql(_sql, log_list):
+            return True
+        return False
+
+    @classmethod
+    def log_access(cls,top=10):
+        colloens = ('id', 'ip', 'url', 'code', 'nums')
+        _sql = 'select * from access_logs order by nums desc limit %s'
+        args = (top,)
+        rt = []
+        _sql_count, rt_list = SQL.excute_sql(_sql, args)
+        for x in rt_list:
+            rt.append(dict(zip(colloens, x)))
+        return rt
 
 
 

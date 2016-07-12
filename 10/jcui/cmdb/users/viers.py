@@ -129,14 +129,14 @@ def nginx_logs():
         top = params.get('numbers')
     else:
         top = 10
-    access_list = logs.log_access(top=int(top))
+    access_list = Logs.log_access(top=int(top))
     return render_template('logstop.html',toplist=access_list,numbers=top)
 
 #触发后将日志导入到mysql中
 @app.route('/import_los/')
 @User.login_check
 def import_logs():
-    if logs.logs_import_sql():
+    if Logs.logs_import_sql():
         return 'ok'
 
 
@@ -148,7 +148,7 @@ def files_upload():
         filename = ''.join(random.sample(string.ascii_letters + string.digits, 8))
         filepath = '/home/op/test/%s.log' % filename
         files.save(filepath)
-        if logs.logs_import_sql(filepath):
+        if Logs.logs_import_sql(filepath):
             flash("日志上传成功")
         else:
             flash("日志上传失败")

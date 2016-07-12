@@ -87,3 +87,4 @@ if __name__ == '__main__':
 
     s = Tt('["Tim", "Bob", "Alice"]')
     print json.load(s)
+    print type(json.load(s))

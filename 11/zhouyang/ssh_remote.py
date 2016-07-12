@@ -14,7 +14,7 @@ def ssh_execute(hostname,username,password,cmds=[],port=22):
 
     for cmd in cmds:
         stdin,stdout,stderr=ssh.exec_command(cmd)
-        rt_list.append([cmd,stdout,stderr])
+        rt_list.append([cmd,stdout.readlines(),stderr.readlines()])
 
     ssh.close()
 
@@ -35,8 +35,9 @@ if __name__=="__main__":
     files=['log.txt','/tmp/zz']
     #password=getpass.getpass('请输入密码:')
     password='321100'
-    '''for cmd,stdout,stderr in ssh_execute(hostname=host,username=username,password=password,cmds=['pwd','id']):
-        print cmd,stdout,stderr'''
 
-    upload(hostname=host,username=username,password=password,files=files,port=22)
+    for cmd,stdout,stderr in ssh_execute(host,username,password,cmds=['pwd','id']):
+        print (cmd,stdout,stderr)
+
+    #upload(hostname=host,username=username,password=password,files=files,port=22)
 

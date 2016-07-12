@@ -55,11 +55,11 @@ def send():
 
 if __name__ == '__main__':
     while True:
-        try:    
+        try:
             logging.basicConfig(level=logging.INFO,
                                 format="%(asctime)s %(name)s %(lineno)d %(message)s",
                                 filename="agent.log")
-        
+
             send()
             time.sleep(60)
         except BaseException as e:

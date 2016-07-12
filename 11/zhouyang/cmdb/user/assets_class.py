@@ -104,5 +104,52 @@ class Performs(object):
             return False,'入库失败'
         return True,''
 
+    @classmethod
+    def get_performs_view(cls,_iner_ip):
+        import datetime
+        last_hour=(datetime.datetime.now() - datetime.timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')
+        _sql_time="select time from performs where ip=%s and time > %s order by time;"
+        _sql_cpu="select cpu from performs where ip=%s and time > %s order by time;"
+        _sql_ram="select ram from performs where ip=%s and time > %s order by time;"
+        _args=(_iner_ip,last_hour)
+        _times=[]
+        _cpus=[]
+        _rams=[]
+        _cnt_time,_rt_list_time=MYSQLConnection.excute_sql(_sql_time,_args)
+        _cnt_cpu,_rt_list_cpu=MYSQLConnection.excute_sql(_sql_cpu,_args)
+        _cnt_ram,_rt_list_ram=MYSQLConnection.excute_sql(_sql_ram,_args)
+        [_times.append(i[0].strftime('%Y-%m-%d %H:%M:%S')) for i in _rt_list_time]
+        [_cpus.append(i[0]) for i in _rt_list_cpu]
+        [_rams.append(i[0]) for i in _rt_list_ram]
+        return _times,_cpus,_rams
+
+class remote_exec(object):
+    @classmethod
+    def remote_cmds(cls,params):
+        import paramiko
+        _colum=dict(params)
+        re_ip=_colum.get('ip')[0]
+        re_port=int(_colum.get('port')[0]) if _colum.get('port')[0].isdigit() else 22
+        re_user=_colum.get('user')[0]
+        re_pass=_colum.get('password')[0]
+        cmds=_colum.get('cmds')[0]
+
+        rt_list=[]
+
+        #创建远程ssh对象
+        ssh=paramiko.SSHClient()
+        #设定ssh连接方式
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        #连接服务器
+        ssh.connect(re_ip,re_port,re_user,re_pass)
+
+        for cmd in cmds.split(';'):
+            stdin,stdout,stderr=ssh.exec_command(cmd)
+            rt_list.append([cmd,stdout.readlines(),stderr.readlines()])
+
+        ssh.close()
+        return rt_list
+
+
 if __name__ == '__main__':
-    print Asset.get_list()
+    Performs.get_performs_view('192.168.0.101')

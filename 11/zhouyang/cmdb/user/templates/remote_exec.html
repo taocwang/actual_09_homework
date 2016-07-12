@@ -1,5 +1,5 @@
-{% extends "layout.html" %}
-{% block title %}用户管理{% endblock %}
+{% extends 'layout.html'%}
+{%block nav_remote%}active{%endblock%}
 {% block link %}
 <link href="{{ url_for('static', filename='bootstrap-slider/css/bootstrap-slider.min.css') }}" rel="stylesheet"/>
 <link href="{{ url_for('static', filename='bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
@@ -7,47 +7,43 @@
 <link href="{{ url_for('static', filename='sweetalert-master/dist/sweetalert.css') }}" rel="stylesheet"/>
 <link href="{{ url_for('static', filename='DataTables-1.10.12/media/css/jquery.dataTables.min.css') }}" rel="stylesheet"/>
 {% endblock %}
-{% block nav_user%}active{% endblock %}
-{% block main%}
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              <ul class=flashes>
-              {% for message in messages %}
-                <li class="text-danger"> {{ message }}</li>
-              {% endfor %}
-              </ul>
-            {% endif %}
-          {% endwith %}
-          <h2 class="sub-header">用户信息列表</h2>
-          <div class="table-responsive">
-              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="用户注册" data-submit="注册" data-url="/readytoadduser/">用户注册</button></td>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>用户名</th>
-                  <th>密码</th>
-                  <th>年龄</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in user_list %}
-                <tr>
-                  <td>{{row['username']}}</td>
-                  <td>{{row['password']}}</td>
-                  <td>{{row['age']}}</td>
-                  <td><button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#dialog"
-                              data-title="用户信息修改" data-submit="修改" data-url="/readytousermodify/?username={{row['username']}}">修改信息</button>
-                      <button type="button" class="btn btn-xs btn-danger btn-delete" data-url="/asset/delete/?username={{row['username']}}" data-text="{{row['username']}}">删除用户</td>  <!--confirm为前端选择框，返回false时不提交请求给后台-->
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-          </div>
+{% block main %}
+<form class="form-horizontal" action="/remote/exec/" method="post">
+    <div class="form-group">
+        <label class="col-md-3 control-label">远程IP:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" id="bt-ip" placeholder="多个ip用;分割" name="re_ip" />
         </div>
-{% endblock %}
-{% block script%}
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">ssh端口:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" id="bt-port" name="re_port" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">用户名</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="bt-user" placeholder="执行用户名" name="re_user"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">用户密码:</label>
+        <div class="col-md-5">
+            <input class="form-control" id="bt-pass" type="password" name="re_password"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">命令:</label>
+        <div class="col-md-5">
+            <textarea class="form-control" id="bt-cmds" name="re_cmds"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+       <button type="button" id="btn-exec" class="btn btn-primary btn-form-submit">执行</button></div>
+</form>
+{% endblock%}
+{% block script %}
 <script type="text/javascript"
         src="{{ url_for('static', filename='bootstrap-slider/js/bootstrap-slider.min.js') }}"></script>
 <script type="text/javascript"
@@ -60,7 +56,9 @@
         src="{{ url_for('static', filename='DataTables-1.10.12/media/js/jquery.dataTables.js')}}"></script>
 <script type="text/javascript"
         src="{{ url_for('static', filename='DataTables-1.10.12/media/js/dataTables.bootstrap.js')}}"></script>
-{% endblock%}
+<script type="text/javascript"
+        src="{{ url_for('static', filename='Highcharts-4.2.5/js/highcharts.js')}}"></script>
+{% endblock %}
 {% block js %}
 jQuery(document).ready(function() {
 
@@ -81,14 +79,16 @@ jQuery(document).ready(function() {
         */
 
     });
-    jQuery('.btn-form-submit').on('click', function() {
-        var _form = jQuery('#dialog').find('form');
-        var bootstrapValidator = $(_form).data('bootstrapValidator');
-        if(bootstrapValidator) {
-            bootstrapValidator.validate();
-            if(!bootstrapValidator.isValid()) {return;}
-        }
-        jQuery.post(_form.attr('action'), _form.serialize(), function(result) {
+    jQuery('#btn-exec').on('click', function() {
+        var re_ip = jQuery('#bt-ip').val();
+        var re_user = $('#bt-user').val();
+        var re_pass = $('#bt-pass').val();
+        var re_cmds = $('#bt-cmds').val();
+        var re_port = $('#bt-port').val();
+        var url = "/remote/doing/"
+        params={'ip':re_ip,'port':re_port,'user':re_user,'password':re_pass,'cmds':re_cmds}
+        jQuery.post(url, params, function(result) {
+            console.log(result['_is_ok'])
             if(result['_is_ok']) {
                     swal({
                         title: result['msg'],
@@ -128,7 +128,7 @@ jQuery(document).ready(function() {
             url = jQuery(that).data('url');
 
         swal({
-            title: "确定删除用户" + text,
+            title: "确定删除资产" + text,
             text: '',
             type: "warning",
             showCancelButton: true,

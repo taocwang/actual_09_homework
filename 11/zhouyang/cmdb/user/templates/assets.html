@@ -96,7 +96,6 @@ jQuery(document).ready(function() {
         jQuery.post(_form.attr('action'), _form.serialize(), function(result) {
             console.log(result['_is_ok'])
             if(result['_is_ok']) {
-                if(result['success']) {
                     swal({
                         title: result['msg'],
                         text: '',
@@ -111,7 +110,6 @@ jQuery(document).ready(function() {
                         function(isConfirm){
                             window.location.reload();
                     });
-                }
             } else {
                 swal({
                         title: "错误信息",

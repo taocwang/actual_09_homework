@@ -45,7 +45,15 @@ jQuery(document).ready(function () {
              var title = button.data('title');
              var btn_txt = button.data('btn-txt');
              var url = button.data('url');
+             var name = button.data('name')
+             console.log(name)
+             if (name == "monitor"){
+                 jQuery('.modal-dialog').addClass('modal-lg')
+             }else{
+                 jQuery('.modal-dialog').removeClass('modal-lg')
+             }
              var that = this;
+
              jQuery(that).find('.modal-title').text(title);
              jQuery(that).find('.dialog-commit').text(btn_txt) ;
              jQuery(that).find('.modal-body').load(url)

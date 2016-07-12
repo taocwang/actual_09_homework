@@ -39,7 +39,7 @@
                     <td>{{x['model']}}({{x['vendor']}})</td>
                     <td width="300">
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#dialog" data-title="资源监控"
-                                data-url="/assets/perform/?id={{ x['id'] }}" data-btn-txt="关闭">资源监控</button>
+                                data-url="/assets/perform/?id={{ x['id'] }}" data-name="monitor" data-btn-txt="关闭">资源监控</button>
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#dialog" data-title="更新资产"
                                 data-url="/assets/modify/?id={{ x['id'] }}" data-btn-txt="更新">更新资产</button>
                         <button type="button" class="btn btn-danger del-assets" data-text="{{ x['hostname'] }}" data-id="{{ x['id'] }}">删除资产</button>
@@ -53,7 +53,7 @@
 {% endblock %}
 {% block dialog %}
 <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

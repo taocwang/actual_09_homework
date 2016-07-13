@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>用户列表</title>
+    </head>
+    <body>
+        <a href="/user/create">添加用户</a>
+        <a href="/logout/">退出登录</a>
+        <a>欢迎{{session.get('user').get('username')}}</a>
+        {% for msg in get_flashed_messages() %}
+            <p>{{msg}}</p>
+        {% endfor %}
+        <table border="2px">
+            <thead>
+                <tr>
+                    <th>用户索引</th>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{user['username']}}</td>
+                        <td>******</td>
+                        <td>{{user['age']}}</td>
+                        <td>
+                            <a href="/user/modify/?id={{user['id']}}">更新</a>
+                            <a href="/user/delete/?id={{user['id']}}">删除</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

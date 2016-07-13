@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>用户列表</title>
+    </head>
+    <body>
+        {% for msg in get_flashed_messages()  %}
+            <span>{{ msg }}</span>
+        {% endfor %}
+        欢迎,{{ session.get("user",{}).get("username","")}}
+        <table border="1px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for info in users  %}
+                    <tr>
+                        <td>{{ info["id"] }}</td>
+                        <td>{{ info["username"] }}</td>
+                        <td>{{ info["password"] }}</td>
+                        <td>{{ info["age"] }}</td>
+                        <td>
+                            <a href="/user/modify/?id={{ info["id"] }}">修改</a>
+                            <a href="/user/delete/?id={{ info["id"] }}">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/user/create/">新建</a>
+        <a href="/logout/">登出</a>
+        <a href="/logs/">查看日志</a>
+    </body>
+</html>

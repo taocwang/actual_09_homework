@@ -1,0 +1,118 @@
+<form class="form-horizontal" action="/asset/add/" method="post">	
+	<div class="form-group">
+		<label for="sn" class="col-sm-3 control-label">SN编号:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="sn" name="sn"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="ip" class="col-sm-3 control-label">IP:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="ip" name="ip"/>
+		</div>
+	</div>	
+	<div class="form-group">
+		<label for="hostname" class="col-sm-3 control-label">主机名:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="hostname" name="hostname"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="os" class="col-sm-3 control-label">操作系统:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="os" name="os"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="cpu" class="col-sm-3 control-label">CPU(核数):</label>
+		<div class="col-sm-8">
+			<input class="form-control" id="cpu" name="cpu" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="64" data-slider-step="1" data-slider-value="2"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="ram" class="col-sm-3 control-label">内存(G):</label>
+		<div class="col-sm-8">
+			<input class="form-control" id="ram" name="ram" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="512" data-slider-step="1" data-slider-value="4"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="disk" class="col-sm-3 control-label">硬盘(G):</label>
+		<div class="col-sm-8">
+			<input class="form-control" id="disk" name="disk" data-slider-id='ex1Slider' type="text" data-slider-min="50" data-slider-max="3072" data-slider-step="1" data-slider-value="100"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="idc" class="col-sm-3 control-label">机房:</label>
+		<div class="col-sm-8">
+			<select name="idc_id">
+				{% for id, value in idcs %}
+					<option value="{{ id }}">{{ value }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="admin" class="col-sm-3 control-label">使用人:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="admin" name="admin"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="business" class="col-sm-3 control-label">业务:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="business" name="business"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="purchase_date" class="col-sm-3 control-label">采购日期:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="purchase_date" name="purchase_date" value="2016-06-29" >
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="warranty" class="col-sm-3 control-label">保修时间(年):</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="warranty" name="warranty"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="vendor" class="col-sm-3 control-label">供应商:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="vendor" name="vendor"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="model" class="col-sm-3 control-label">型号:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="model" name="model"/>
+		</div>
+	</div>	
+</form>
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		// With JQuery
+		$('#cpu').slider({
+			formatter: function(value) {
+				return 'CPU核数: ' + value;
+			}
+		});
+		// With JQuery
+		$('#ram').slider({
+			formatter: function(value) {
+				return '内存G数: ' + value + "G";
+			}
+		});		
+		// With JQuery
+		$('#disk').slider({
+			formatter: function(value) {
+				return '硬盘G数: ' + value + "G";
+			}
+		});
+		$('#purchase_date').datetimepicker({
+			minView:2,
+			language:"zh-CN",
+			format: 'yyyy-mm-dd'
+		});
+	});
+</script>

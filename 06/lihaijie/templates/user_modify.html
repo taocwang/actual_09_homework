@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>修改用户</title>
+    </head>
+    <body>
+        <form action="/user/update/" method ="post">
+            {% if info %}
+            <span style="color:red">{{info}}</span>
+            {% endif %}
+            <input type="hidden" name="uid" value="{{uid}}" />
+            <p>用户名:<input type="text" name="username" value="{{username}}" /></p>
+            {#<a href="/user/check/">check username</a>#}
+            <p>密码: <input type="password" name="password" value="{{password}}" /></p>
+            <p>年龄::   <input type="text" name="age" value="{{age}}" /></p>
+            <input type="submit" value="修改"/>
+            <a href = "/">登录</a>
+        </form>       
+    </body>
+</html>

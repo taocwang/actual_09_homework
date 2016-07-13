@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="utf-8">
+  <head>
+    <meta charset="utf-8">
+    <title>用户登录</title>
+<<<<<<< HEAD
+    <link rel="icon" href="/static/favicon.ico">
+=======
+    <link rel="icon" href="/static/temp/favicon.ico">
+>>>>>>> f5947768a61fa20e516dfeeead8bd726e9c8250e
+    <!-- Bootstrap core CSS -->
+      <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/jquery.dataTables.css')}}"  type="text/css" />
+
+  </head>
+
+  <body>
+<<<<<<< HEAD
+    <div class="container">
+
+=======
+<!--布局容器1，用于固定宽度的-->
+    <div class="container">
+
+<!--登陆表单-->
+>>>>>>> f5947768a61fa20e516dfeeead8bd726e9c8250e
+      <form class="form-signin" action="/login/" method="post">
+        <h2 class="form-signin-heading">用户登录</h2>
+
+        <label for="username" class="sr-only">username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="username" value="{{username}}" >
+        <label for="Password" class="sr-only">password</label>
+        <input type="password" id="Password"  name="password" class="form-control" placeholder="Password"  value="">
+        {% if error %}
+        <div style='text-align:center;color:red;font-size:20px' class="bg-danger">{{error}}</div>
+        {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+      </form>
+
+    </div> <!-- /container -->
+  </body>
+</html>

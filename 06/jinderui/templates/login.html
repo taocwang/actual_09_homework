@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>form test</title>
+</head>
+<body>
+	<form action="/login/" method="post">
+
+		姓名：
+		<input name="user" type="text" />
+		<br />
+
+		密码：
+		<input name="password" type="password"> </input>
+		<br />
+
+		性别：
+		<input name="radionbutton" type="radio" value="nan" checked="checked" />
+		男
+		<input type="radio" name="radionbutton" value="nv" />
+		女
+		<br />
+
+		爱好：
+		<input name="radionbutton1" type="radio" value="nan"  />
+		男
+		<input type="radio" name="radionbutton1" value="nv" checked="checked" />
+		女
+		<br />
+
+		<input name="Submit" type="submit" value="提交" />
+		<input name="Submit2" type="submit" value="忘记密码" /> 
+		<br />
+		
+		<span style="color:red"> {{error}} </span>
+	</form>
+</body>
+</html>

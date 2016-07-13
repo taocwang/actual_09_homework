@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>密码修改</title>
+      <link rel="icon" href="/static/favicon.ico">
+      <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/jquery.dataTables.css')}}"  type="text/css" />
+  </head>
+  <!--导航条-->
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">某某系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  <!--页面主体，流式布局类2，适用于100%宽度，占据全部视口（viewport）的容器 -->
+   {% if username in ['admin'] %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+           <li class="active"><a href="/users/">用户管理<span class="sr-only"></span></a></li>
+           <li class="inactive"><a href="/user/create/">添加用户<span class="sr-only"></span></a></li>
+           <li class="inactive"><a href="/user/modifypasswd/">修改密码<span class="sr-only"></span></a></li>
+           <!--li class="inactive"><a href="/user/finduser/">查询用户<span class="sr-only"></span></a></li-->
+           <li class="active"><a href="/user/logs/">日志查询<span class="sr-only"></span></a></li>
+           <li class="active"><a href="/user/upload/">文件上传<span class="sr-only"></span></a> </li>
+           <li class="active"><a href="/asserts/">资产管理<span class="sr-only"></span></a></li>
+          </ul>
+        </div>
+    {% else %}
+     <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+           <li class="active"><a href="/users/">用户管理<span class="sr-only"></span></a></li>
+           <!--li class="inactive"><a href="/user/create/">添加用户<span class="sr-only"></span></a></li-->
+           <li class="inactive"><a href="/user/modifypasswd/">修改密码<span class="sr-only"></span></a></li>
+           <!--li class="inactive"><a href="/user/finduser/">查询用户<span class="sr-only"></span></a></li-->
+           <li class="active"><a href="/user/logs/">日志查询<span class="sr-only"></span></a></li>
+           <li class="active"><a href="/user/upload/">文件上传<span class="sr-only"></span></a> </li>
+           <li class="active"><a href="/asserts/">资产管理<span class="sr-only"></span></a></li>
+          </ul>
+        </div>
+      {% endif %}
+
+  <!--导航面板，占2列 -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+         {% if username %}
+         <div style='text-align:center;color:red;font-size:20px' class="bg-danger">{{username}}，您好!下面即将要进行修改密码操作，请慎重!</div>
+        {% endif %}
+
+   <!--主体内容部分 -->
+      <div class="container">
+      <form  class="form-signin" action="/user/updatepasswd/" method="post">
+             {% for msg in get_flashed_messages() %}
+             <div style='text-align:center;color:red;font-size:20px' class="bg-danger">{{msg}}</div>
+             {% endfor %}
+
+            {% if error%}
+            <div style='text-align:center;color:red;font-size:20px' class="bg-danger">{{error}}</div>
+            {% endif %}
+        <input type="hidden" name="id" value="{{_id}}" />
+        <label for="_password" class="sr-only">password</label>
+        <input type="text" id="_password" name="_password" class="form-control" placeholder="原密码" value="{{_password}}" >
+        <label for="_password1" class="sr-only">password</label>
+        <input type="text" id="_password1" name="_password1" class="form-control" placeholder="新密码" value="{{_password1}}" >
+        <label for="_password2" class="sr-only">password</label>
+        <input type="text" id="_password2" name="_password2" class="form-control" placeholder="再次输入新密码" value="{{_password2}}" > <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input align='center' type="submit" class="btn btn-info" value="修改" />
+        <!-- input type="button" class="btn btn-info" value="返回" onclick="javascript:history.back();"/ -->
+      </form>
+
+    </div> <!-- /container -->
+    </div> <!-- /main-->
+    </div> <!-- /row -->
+    </div> <!-- /container-fluid -->
+  </body>
+</html>
+

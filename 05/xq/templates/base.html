@@ -1,0 +1,15 @@
+<html>
+  <head>
+    {% if count %}
+    <title>日志访问top{{ count }}</title>
+    {% else %}
+    <title>TOP-Log</title>
+    {% endif %}
+  </head>
+  <body>
+      <a href="/index2/?count=10">Top 10</a>
+      <a href="/index2/?count=20">Top 20</a>
+      <a href="/index2/?count=30">Top 30</a>
+     {% block content %}{% endblock %}
+  </body>
+</html>

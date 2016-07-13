@@ -1,0 +1,38 @@
+问题一:
+jQuery(document).ready(function() {
+	jQuery('#dialog').on('show.bs.modal', function(event) {
+		var button = jQuery(event.relatedTarget);
+		var title = button.data('title');
+		var btn-txt = button.data("btn-txt");
+		var url = button.data("url");
+		jQuery(this).find('.modal-title')   这里的jQuery为什么调用的是要显示的弹出框样式,而不是button按钮
+		jQuery('#password-userid').val(userid);
+		jQuery('#password-username').val(username);
+		console.log(userid);
+		console.log(username);
+	});
+kk解答后理解: 其实在button按钮时已经通过data-toggle="modal" 绑定了dialog, 并且当点击button按钮时就会打开dialog弹出框，而jQuery('#dialog').on('show.bs.modal', function(event) {。。。} 的意思是在打开#dialog实例之前执行一块代码. 所以这里的this不是代表button按钮而是代表dialog实例  
+	
+问题二:
+提交
+jQuery('#id').val()获取不到值
+kk解答后理解: 可以使用val()获取值，但在多个参数的情况下使用var form=jQuery('#dialog').find('form');  console.log(form.serialize());比较方便。 太多参数使用val()需要定义很多个变量获取参数。
+
+问题三:
+当对弹窗填充时,form为什么可以获得bootstarp和jQuery
+kk解答后理解: dialog本来就是html页面中的一块代码，不是一个完整的html
+
+问题四:
+jQuery.post jQuery.load不同处
+kk解答后理解: 很类似， load主要用于回填html。 其它情况下使用post()就好.
+
+
+
+mysqldump -uroot -p --opt app1 -R --hex-blob -x >app1.sql;	
+
+模板继承
+<% block name %><% endblock %>
+<% extends "layout.html" %>
+
+bootstrap-slider
+bootstrap-datetimepicker

@@ -1,0 +1,91 @@
+{% extends 'layout.html'%}
+{%block nav_asset%}active{%endblock%}
+{% block link %}
+<link href="{{ url_for('static', filename='bootstrap-slider/css/bootstrap-slider.min.css') }}" rel="stylesheet"/>
+<link href="{{ url_for('static', filename='bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block main %}
+          <h2 class="sub-header">资产列表</h2>
+          <div class="table-responsive">
+            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="添加资产" data-submit="添加" data-url="/assets/create/">添加资产</button></td>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>资产编号</th>
+                  <th>内网ip</th>
+                  <th>负责人</th>
+                  <th>业务</th>
+                  <th>保修期</th>
+                  <th>配置信息</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in _assets %}
+                <tr>
+                  <td>{{row['sn']}}</td>
+                  <td>{{row['iner_ip']}}</td>
+                  <td>{{row['admin']}}</td>
+                  <td>{{row['business']}}</td>
+                  <td>{{row['warranty']}}</td>
+                  <td>
+                      <ul>
+                          <li>CPU:{{row['cpu']}}</li>
+                          <li>内存:{{row['ram']}}</li>
+                          <li>硬盘:{{row['dick']}}</li>
+                      </ul>
+                  </td>
+                  <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog"
+                              data-title="资产修改" data-submit="修改" data-url="/assets/update/?sn={{row['sn']}}">修改资产</button></td>
+                  <td><a href="/asset/delete?sn={{row['sn']}}" class="btn btn-primary" onclick="return confirm('确定删除吗？')">删除</button></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+{% endblock%}
+{% block script %}
+<script type="text/javascript"
+        src="{{ url_for('static', filename='bootstrap-slider/js/bootstrap-slider.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js')}}"></script>
+{% endblock %}
+{% block js %}
+      jQuery(document).ready(function(){
+        jQuery('#dialog').on('show.bs.modal', function (event){
+          var button = $(event.relatedTarget)   //这句不变，无需理解吧
+          var url = button.data('url')
+          var title=button.data('title')
+          var sub=button.data('submit')
+          var btn_text=button.data('btn-text')
+          var that = this;
+          jQuery(this).find('.modal-title').html(title);  //html和text的不同时html会对字符进行html转义
+          jQuery(this).find('.btn-form-submit').text(sub);
+          jQuery(this).find('.modal-body').load(url);  //load方法与下面ajax的get方法一样。
+          /* jQuery.post(url,{},function(result){   //ajax提交数据。post可直接替换为get，即变为get方法
+            jQuery(that).find('.modal-body').html(result);//不注释的时候，这句是干吗的？
+            }); */
+      });
+
+      jQuery('.btn-form-submit').on('click',function(){
+        var _form = jQuery('#dialog').find('form');
+        var _url = _form.attr('action');
+        var _params = _form.serialize();
+        jQuery.post(_url,_params,function(result){
+                    if(result['_is_ok']){
+                      alert(result['msg'])
+                      jQuery('#dialog').modal('hide') //隐藏当前窗口
+                      window.location.reload()  //刷新页面
+                      //window.location.replace('/logs/') //跳转到其他页面
+                    }
+                    else{
+                        alert(result['msg'])
+                      }
+                  },
+                  'json'
+        );
+      });
+});
+{% endblock %}

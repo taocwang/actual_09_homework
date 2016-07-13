@@ -1,0 +1,15 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>用户信息修改</title>
+</head>
+<body>
+    {% if error_r %}
+        <span style="color:#ff594b">抱歉，{{username}} {{error_r}}</span>
+    {% endif %}
+    {% if ok_r %}
+        <span style="color:#ff594b">恭喜，{{username}}{{ok_r}}</span>
+    {% endif %}
+</body>
+</html>

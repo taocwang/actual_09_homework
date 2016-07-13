@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block title %}资产管理{% endblock %}
+{% block nav_asset %}active{% endblock %}
+{% block link %}<link href="/static/bootstrap-slider/css/bootstrap-slider.min.css" rel="stylesheet">
+    <link href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">{% endblock %}
+ {% block main %}<div class="row">
+                <p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="新建资产" data-btn-txt="添加" data-url="/asset/create/">新建资产</button>
+                </p>
+                <table class="table table-striped table-bordered table-hover table-condensed" border="1px">
+                    <thead>
+                        <tr class="active">
+                            <th>ID</th>
+                            <th>SN</th>
+                            <th>IP(主机名)</th>
+                            <th>操作系统</th>
+                            <th>CPU/内存/硬盘</th>
+                            <th>机房</th>
+                            <th>使用者(业务)</th>
+                            <th>采购时间(保修时长)</th>
+                            <th>型号(供应商)</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for asset in asset_list %}
+                        <tr class="warning">
+                            <td>{{ asset['id'] }}</td>
+                            <td>{{ asset['sn'] }}</td>
+                            <td>{{ asset['ip'] }}({{ asset['hostname'] }})</td>
+                            <td>{{ asset['os'] }}</td>
+                            <td>
+                                <ur>
+                                    <li>CPU:{{ asset['cpu'] }}核</li>
+                                    <li>内存:{{ asset['ram'] }}G</li>
+                                    <li>硬盘:{{ asset['disk'] }}G</li>
+                                </ur>
+                            </td>
+                            <td>{{ asset['idc_id'] }}</td>
+                            <td>{{ asset['admin'] }}({{ asset['business'] }})</td>
+                            <td>{{ asset['purchase_date'] }}({{ asset['warranty'] }})</td>
+                            <td>{{ asset['model'] }}({{ asset['vendor'] }})</td>
+                            <td>
+                                <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="更新资产" data-btn-txt="更新"-->
+                                        <!--data-url="/asset/update/?status=update" data-id="{{ asset['id'] }}" data-sn="{{ asset['sn'] }}" data-ip="{{ asset['ip'] }}"-->
+                                        <!--data-hostname="{{ asset['hostname'] }}" data-os="{{ asset['os'] }}" data-cpu="{{ asset['cpu'] }}" data-ram="{{ asset['ram'] }}"-->
+                                        <!--data-disk="{{ asset['disk'] }}" data-idc_id="{{ asset['idc_id'] }}" data-admin="{{ asset['admin'] }}" data-business="{{ asset['business'] }}"-->
+                                        <!--data-purchase_date="{{ asset['purchase_date'] }}" data-warranty="{{ asset['warranty'] }}" data-model="{{ asset['model'] }}"-->
+                                        <!--data-vendor="{{ asset['vendor'] }}">更新</button>-->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="更新资产" data-btn-txt="更新" data-url="/asset/update/?id={{ asset['id'] }}" >更新</button>
+                                <a class="btn btn-danger " href="/asset/delete/?id={{ asset['id'] }}" onclick="return confirm('确定删除吗？');">删除</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>{% endblock %}
+    {% block script %}
+    <script type="text/javascript" src="/static/bootstrap-slider/js/bootstrap-slider.min.js" ></script>
+    <script type="text/javascript" src="/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script type="text/javascript" src="/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" ></script>
+    <script type="text/javascript" src="/static/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+    {% endblock %}

@@ -1,0 +1,126 @@
+<form class="form-horizontal" action="/asserts/add/" method="post">
+    <div class="form-group">
+        <label class="col-md-3 control-label">SN编号:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="sn"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">IP:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="ip"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">主机名:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="hostname"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">操作系统:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="os"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">CPU(核数):</label>
+        <div class="col-md-5">
+        <input id="cpu" class="form-control"  data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="64" data-slider-step="1" data-slider-value="14" name="cpu"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">内存(G):</label>
+        <div class="col-md-5">
+         <input id="ram" class="form-control"  data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="256" data-slider-step="2" data-slider-value="32" name="ram"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">硬盘(G):</label>
+        <div class="col-md-5">
+        <input id="disk" class="form-control"  data-slider-id='ex1Slider' type="text" data-slider-min="20" data-slider-max="2000" data-slider-step="50" data-slider-value="50" name="disk" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">机房:</label>
+        <div class="col-md-5">
+            <select name="idc_id">
+                {% for _id, _value in idcs %}
+                    <option value="{{_id}}">{{_value}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">使用人:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="admin"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">业务:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="business"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">采购日期:</label>
+        <div class="col-md-5">
+
+            <input class="form-control" type="text" id="purchase_date" name="purchase_date"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">保修年限:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="warranty"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">设备产商:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="vendor"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">设备型号:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="model"/>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+$('#cpu').slider({
+    formatter: function(value) {
+        return 'CPU核数: ' + value;
+    }
+});
+
+
+$('#ram').slider({
+    formatter: function(value) {
+        return '内存大小: ' + value;
+    }
+});
+
+$('#disk').slider({
+    formatter: function(value) {
+        return '硬盘大小: ' + value;
+    }
+});
+
+
+$('#purchase_date').datetimepicker({
+            language:'zh-CN',
+            format: 'yyyy-mm-dd',
+            minView:2
+        });
+});
+</script>
+<style>
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}
+</style>

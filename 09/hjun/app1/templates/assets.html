@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block title %}资产管理{% endblock %}
+{% block link %}
+<link href="/static/bootstrap-slider/css/bootstrap-slider.min.css" rel="stylesheet" type="text/css">
+<link href="/static/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block nav_asset %}active{% endblock %}
+{% block main %}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="添加资产" data-btn-txt="添加" data-url="/asset/create/">添加资产</button>
+<div class="table-responsive">
+	<table class="table table-striped">
+	  <thead>
+		<tr>
+		  <th>序号</th>
+		  <th>IP(主机名)</th>
+		  <th>操作系统</th>
+		  <th>CPU/内存/硬盘</th>
+		  <th>机房</th>
+		  <th>使用者(业务)</th>
+		  <th>采购时间(保修时长)</th>
+		  <th>型号(供应商)</th>
+		  <th>操作</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		{% for asset in assets %}
+			<tr>
+				<td>{{ assets.index(asset)+1}}</td>
+				<td>{{asset['ip']}}({{asset['hostname']}})</td>
+				<td>{{ asset['os'] }}</td>
+				<td>
+					<ul>
+						<li>cpu:{{asset['cpu']}}核</li>
+						<li>内存:{{asset['ram']}}G</li>
+						<li>硬盘:{{asset['disk']}}G</li>
+					</ul>
+				</td>
+				<td>{{asset['idc_name']}}</td>
+				<td>{{asset['admin']}}({{asset['business']}})</td>
+				<td>{{asset['purchase_date']}}({{asset['warranty']}})</td>
+				<td>{{asset['model']}}({{asset['vendor']}})</td>						
+				<td>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="修改资产" data-btn-txt="修改" data-url="/asset/edit/" data-asset-id={{asset['id']}}>修改</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" data-title="删除资产" data-btn-txt="删除" data-url="/asset/del/" data-asset-id={{asset['id']}}>删除</button>
+				</td>				
+			</tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+	
+</div>
+{% endblock %}
+{% block dialog %}
+<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="exampleModalLabel">新增用户</h4>
+	  </div>
+	  <div class="modal-body">
+		新增资产
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		<button type="button" class="btn btn-primary" id="btn-form-submit">更新</button>
+	  </div>
+	</div>
+  </div>
+</div>	
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="/static/bootstrap-slider/js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+{% endblock %}
+{% block js %}
+jQuery(document).ready(function() {
+	jQuery('#dialog').on('show.bs.modal', function(event) {
+		var params={};
+		var button = jQuery(event.relatedTarget);
+		var title = button.data('title');
+		var btn_txt = button.data("btn-txt");
+		var url = button.data("url");
+		params['asset_id']=button.data("asset-id");
+		var that = this;
+		jQuery(that).find('#exampleModalLabel').text(title);
+		jQuery(that).find('#btn-form-submit').text(btn_txt);
+		jQuery(that).find('.modal-body').load(url,params);
+	});
+	jQuery('#btn-form-submit').on('click', function() {
+		var form=jQuery('#dialog').find('form');
+		console.log(form.serialize());
+		jQuery.post(form.attr('action'), form.serialize(), function(result) {
+		if(result["is_ok"]) {
+			alert(result["success"]);
+			jQuery('#dialog').modal('hide');
+			window.location.reload();
+		} else {
+			var errors = [];
+			for(var i in result['errors']) {
+				errors.push(result['errors'][i]);
+				console.log(result['errors'][i]);
+			}
+			console.log(result['asset_info']);
+			alert(errors.join('\n'));
+		}
+		}, 'json')
+	});	
+});	
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}添加用户{% endblock %}
+
+{% block main %}
+    {% if msg %}
+	    <div class="alert alert-danger" role="alert">{{msg}}</div>
+	{% endif %}
+    <h3 class="page-header" style="margin: auto">{{ pageheader }}</h3>
+    <form action="/user/add/" method="post" style="margin:200px auto;width:500px;height: 300px;text-align: center;" class="form-horizontal">
+		<div class="form-group">
+			<label for="username" class="col-sm-2 control-label">用户名</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" placeholder="username" name="username" >
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="password" class="col-sm-2 control-label">密码</label>
+			<div class="col-sm-10">
+				<input type="password" class="form-control" placeholder="password" name="password" >
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="age" class="col-sm-2 control-label">年龄</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" placeholder="age" name="age" >
+			</div>
+		</div>
+        <div class="form-group">
+			<label for="age" class="col-sm-2 control-label">权限</label>
+			<div class="col-sm-10">
+				<select name='privilege' class="form-control">
+                  <option value="admin">admin</option>
+                  <option value="user" selected="selected">user</option>
+                </select>
+			</div>
+		</div>
+		<input type="submit" value="提交" class="btn btn-primary col-sm-12">
+	</form>
+{% endblock %}

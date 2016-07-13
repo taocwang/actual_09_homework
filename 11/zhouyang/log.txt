@@ -1,0 +1,6 @@
+2016-07-10 14:41:36,529 INFO test_log 9 i am info
+2016-07-10 14:41:36,529 WARNING test_log 10 i am warmming
+2016-07-10 14:41:45,255 INFO test_log 9 i am info
+2016-07-10 14:41:45,255 WARNING test_log 10 i am warmming
+2016-07-10 14:42:16,591 INFO test_log 8 i am info
+2016-07-10 14:42:16,592 WARNING test_log 9 i am warmming

@@ -46,6 +46,10 @@ def userinfo():
     user_list=login.get_users(uconf.user_conf)
     return render_template('show_users.html',user_list=user_list)
 
+@app.route('/readytoadduser/',methods=['POST'])
+def readytoadduser():
+    return render_template('readytoadduser.html')
+
 @app.route('/user/create/',methods=['GET','POST'])
 def adduser():
     import adduser
@@ -63,6 +67,35 @@ def adduser():
         return render_template('adduser.html',fres='注册信息不全，请重新注册',user=username)
 
 
+@app.route('/readytousermodify/',methods=['GET','POST'])
+def readytousermodify():
+    username=request.args.get('username','')
+    return render_template('readytousermodify.html',username=username)
+
+@app.route('/usermodify/',methods=['GET','POST'])
+def usermodify():
+    import usermodify
+    params=request.args if request.method == 'GET' else request.form
+    username=params.get('username','')
+    password=params.get('password','')
+    age=params.get('age','')
+    age=int(age) if str(age).isdigit() else ''
+    print username,password,age
+    usermodify.usermodify(username,password,age)
+    return render_template('modify_ok.html',username=username)
+    #return redirect('/usermodify/?username=')
+
+
+
 if __name__=='__main__':
     app.run(host='127.0.0.1',port=8080,debug=True)
 
+
+'''
+功能ok，继续加油，完成删除用户 功能
+改进点
+1. 模块是将一些具有相似功能或者功能一致的函数封装到一个文件，目前用户的添加、修改、删除功能都是用户的功能，可写在同一个模块，用来定义，若所有函数都卸载不同的模块，那模块的概念反而没有意义
+2. app中尽量保持逻辑简单，只保存逻辑调用代码，所有和用户相关的检查、存储功能都放在user模块中
+3. 用户从json文件中读取，或写入（增删改）这两个功能用的地方掉多，能否写公共函数处理
+
+'''

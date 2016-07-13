@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{{title}}</title>
+    </head>
+    <body>
+   		{% for msg in get_flashed_messages() %}
+			<div><h3 style="color: red">{{ msg }}</h3></div>
+   		{% endfor%}
+    	
+	    <div>
+	        <a href="/logs/?number=10">accesslog top10</a>
+	        <a href="/logs/?number=20">accesslog top20</a>
+	        <a href="/logs/?number=50">accesslog top50</a>
+	        <a href="/logs/?number=100">accesslog top100</a>
+	        欢迎{{session.get('user', {}).get('username', '')}} <a href="/logout/">logout</a>
+	    </div>
+	    <div>
+	        <table border="1">
+	            <th>
+	                <tr>
+	                	<td width="100px" align="center">排名</td>
+	                    <td width="100px" align="center">IP</td>
+	                    <td width="100px" align="center">URL</td>
+	                    <td width="100px" align="center">status</td>
+	                    <td width="100px" align="center">访问次数</td>
+	                </tr>
+	            </th>
+	            <tbody>
+	                {% for node in content %}
+	                <tr>
+	                	<td width="100px" align="center">{{ node['number']}}</td>
+	                    <td width="100px" align="center">{{ node['ip']}}</td>
+	                    <td width="100px" align="center">{{ node['url']}}</td>
+	                    <td width="100px" align="center">{{ node['status']}}</td>
+	                    <td width="100px" align="center">{{ node['count']}}</td>
+	                </tr>
+	                {% endfor %}
+	            </tbody>
+        </table>
+        </div>
+        	<p></p>
+        <div>
+        </div>
+    </body>
+</html>

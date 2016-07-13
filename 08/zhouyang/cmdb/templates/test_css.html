@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>用户注册</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='test_css.css')}}" type="text/css"/>
+</head>
+<body>
+    <form action="/user/create/" method="POST" enctype="multipart/form-data">
+        <p>用户名<input type="text" name="username" value="{{user}}"/></p>
+        <p>密码<input type="password" name="password"/></p>
+        <p>年龄<input type="number" name="age"/></p>
+        <p>性别<input type="radio" name="gender" value="1" checked </p>男
+               <input type="radio" name="gender" value="0" </p>女
+        <p>爱好<input type="checkbox" name="hobby" value="computer" checked </p>计算机
+               <input type="checkbox" name="hobby" value="games" </p>游戏
+               <input type="checkbox" name="hobby" value="music" </p>音乐
+               <input type="checkbox" name="hobby" value="sport" </p>运动 <br \>
+        <br \>
+        部门<select name="department">
+            <option value="op_01">运维一部></option>
+            <option value="op_02"selected>运维二部></option>
+            <option value="dev_01">开发一部></option>
+            <option value="dev_02">开发二部></option>
+           </select><br \>
+        <br \>
+        头像<input type="file" name="img"/><br \>
+            <img src="http://tse1.mm.bing.net/th?&id=OIP.M5369f9faa0fd1f219363383c41f97a13H0&w=300&h=225&c=0&pid=1.9&rs=0&p=0"
+        <br \>
+        <br \>
+        备注<textarea rows="" cols="" name="remark"></textarea><br \>
+        <br \>
+        <p>提交<input type="submit" name="SUBMIT"/></p>
+    </form>
+    <div span_1>好玩不</div>
+    <div class="class1">不好玩</div>
+    <div id="id_1">是吗</div>
+</body>
+</html>

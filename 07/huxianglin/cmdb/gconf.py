@@ -1,0 +1,7 @@
+UserFile='./UserList.txt'
+MYSQL_HOST='192.168.0.25'
+MYSQL_PORT=3306
+MYSQL_USER='root'
+MYSQL_PASSWD='012615'
+MYSQL_DB='huxianglin_cmdb'
+MYSQL_CHARSET='utf8'

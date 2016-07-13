@@ -23,7 +23,7 @@
 		** --字典
 		def num(**s):
 			return s
-		print num(a=1,c=2)
+		print num(a=1,c=2)   #里面定义的是关键参数可以定义多个 x=xx 
 		结果{'a': 1, 'c': 2}
 
 		def num(*s):
@@ -44,10 +44,41 @@
 
 		a = {'a':2,'b':4}
 		print num(**a)
+		定义的参数名 a b 要和num里面定义的一样。传递的个数也要一样
 		结果(2, 4)
 
 	5、参数：
 			(参数在函数定义的圆括号对内指定，用逗号分割。当我们调用函数的时候，我们以同样的方式提供值。注意我们使用过的术语——函数中的参数名称为 形参 而你提供给函数调用的值称为 实参 )
 			形参:函数中的参数名称为 形参
 			实参:而你提供给函数调用的值称为 实参
+	6、递归函数
+	只要符合递归的两个条件，都可以使用。
+	1. 参数必须有最后默认结果，比如if n==0
+	2. 参数必须向默认结果收敛，factorial(n-1)
+	比如求阶层，求和，递归一个目录等。
+	阶乘：（很重要的一点是一直到执行到最后默认值以后才会返回最终结果。不是没满足一个条件就会return。else这个返回值临时保存到内存里
+	直到默认值以后不在递归调用，才返回值）
+	def test(n):
+	if n == 0:
+		return 1 最后默认值必须是1 （阶乘定义的）
+	else:
+		return n * test(n-1)
+
+	print test(2)
 	
+	
+	
+	import os,sys
+
+	def print_files(path):
+		lsdir = os.listdir(path)  #拿到一个列表
+		dirs = [i for i in lsdir if os.path.isdir(os.path.join(path,i))] #用列表推导式产生一个新的
+		files = [i for i in lsdir if os.path.isfile(os.path.join(path,i))]
+	
+		if files:
+			for f in files:
+				print os.path.join(path,f)
+		if dirs:
+			for d in dirs:
+				print_files(os.path.join(path,d))  #递归调用自己
+	print_files(sys.argv[1])

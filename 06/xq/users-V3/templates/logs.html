@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>用户列表</title>
+    </head>
+    <body>
+        {% if username %}
+        欢迎{{username}}
+        {% endif %}
+        {% for msg in get_flashed_messages() %}
+        <span>{{msg}}</span>
+        {% endfor %}
+        <form align="center" action="/user/logs/" method="POST">
+           <input type="TEXT" style="width:250px;height:30px;size=20px"  name="count" value="{{count}}"/>
+           <input type="SUBMIT" class="btn btn-default"  value="查询"/>
+           <input type="button" value="返回上一步" onclick="javascript:history.back();"/>
+           <a href="/user/find/">返回主页</a>
+       </form>
+       <br />
+       <br />
+        <table border="1px;" align="center">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>IP</th>
+                    <th>URL</th>
+                    <th>CODE</th>
+                    <th>次数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{log['id']}}</td>
+                    <td>{{log['ip']}}</td>
+                    <td>{{log['url']}}</td>
+                    <td>{{log['code']}}</td>
+                    <td>{{log['cnt']}}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </body>
+</html>

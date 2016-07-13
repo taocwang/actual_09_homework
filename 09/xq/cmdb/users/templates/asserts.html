@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="utf-8">
+      <title>用户管理</title>
+      <link rel="icon" href="/static/temp/favicon.ico">
+      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-slider.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-datetimepicker.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/jquery.dataTables.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/sweet-alert.css')}}"  type="text/css" />
+
+    <script type="text/javascript">
+            function del(){
+                if(!confirm("确认要删除？")){
+                    window.event.returnValue = false;
+                }
+
+            }
+
+           function logout(){
+            if(!confirm("确定要退出？"))
+            { window.event.returnValue = false; }
+            }
+        </script>
+</head>
+
+ <!--导航条-->
+   <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">某某系统</a>
+        </div>
+ <!--欢迎页-->
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+            {% for msg in get_flashed_messages() %}
+            <a>{{msg}}</a>
+            {% endfor %}
+            </li>
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>  <!--navbar-->
+      </div>   <!--container-fluid-->
+    </nav>
+
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+           <li class="active"><a href="/users/">用户管理<span class="sr-only"></span></a></li>
+           <li class="active"><a href="/user/logs/">日志查询<span class="sr-only"></span></a></li>
+           <li class="active"><a href="/user/upload/">文件上传<span class="sr-only"></span></a> </li>
+           <li class="active"><a href="/asserts/">资产管理<span class="sr-only"></span></a></li>
+          </ul>
+        </div>
+
+  <!--偏移2列，主体内容部分 -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+  <!-- 添加资产按钮，放在表格上面，有点丑 -->
+         <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#dialog" data-title="添加资产" data-btn-txt="添加" data-url="/asserts/create/">添加资产</button>
+         <br /><br />
+
+  <!-- dialog部分，用于弹出dialog的 -->
+         <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+         <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">修改用户</h4>
+            </div>
+            <div class="modal-body">
+               body部分
+         <!--弹出框表单部分 id,sn,ip,hostname,idc_id,purchase_date,warranty,vendor,model,admin,business,cpu,ram,disk,os,status'-->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary btn-form-submit">更新</button>
+            </div>
+        </div>
+        </div>
+        </div> <!--dialog-->
+
+  <!--页面主体-表格，流式布局类2，适用于100%宽度，占据全部视口（viewport）的容器 -->
+        <div class="container-fluid">
+              <table class="table table-bordered table-striped table-hover datatable">
+              <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>SN</th>
+                  <th>IP(主机名)</th>
+                  <th>OS</th>
+                  <th>CPU/MEM/Disk</th>
+                  <th>机房</th>
+                  <th>使用者(业务)</th>
+                  <th>采购时间(保修时长)</th>
+                  <th>型号(供应商)</th>
+                  <th>操作</th>
+             </tr>
+             </thead>
+             <tbody>
+             {% for asset in asserts %}
+                  <tr>
+                      <td>{{asset['id']}}</td>
+                      <td>{{asset['sn']}}</td>
+                      <td>{{asset['ip']}}({{asset['hostname']}})</td>
+                      <td>{{asset['os']}}</td>
+                      <td>
+                          <ul>
+                              <li>cpu:{{asset['cpu']}}核</li>
+                              <li>内存:{{asset['ram']}}G</li>
+                              <li>硬盘:{{asset['disk']}}G</li>
+                          </ul>
+                      </td>
+                      <td>{{asset['idc_id']}}</td>
+                      <td>{{asset['admin']}}({{asset['business']}})</td>
+                      <td>{{asset['purchase_date']}}({{asset['warranty']}}年)</td>
+                      <td>{{asset['model']}}({{asset['vendor']}})</td>
+                      <td>
+                          <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#dialog" data-title="修改资产信息"  data-btn-txt="修改"  data-url="/asserts/update/" data-id="{{asset['id']}}">修改</button>
+                          <a class="btn btn-xs btn-danger" href="/assets/delete/?id={{asset['id']}}" onclick="return confirm('确定删除吗?');">删除</a>
+                      </td>
+                  </tr>
+            {% endfor %}
+           </tbody>
+       </table>
+        </div>  <!-- container-fluid -内部 -->
+    </div>
+    </div>
+  </div> <!-- container-fluid 外部-->
+
+<!--页面加载完成后，加载js -->
+   <script type="text/javascript" src="{{url_for('static', filename='js/jquery-1.12.4.js')}}" ></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}" ></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery.dataTables.js')}}" ></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap-slider.min.js')}}" ></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.zh-CN.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/sweet-alert.min.js') }}"></script>
+
+<!--触发修改密码事件后，进行密码修改 -->
+    <script type="text/javascript">
+
+    jQuery(document).ready(function() {
+
+    jQuery('#dialog').on('show.bs.modal', function (event) {
+//通过触发事件，获取button上带的数据：标题、button上显示的信息、url
+        var button = jQuery(event.relatedTarget);
+        var title = button.data('title');
+        var btn_txt = button.data('btn-txt');
+        var url = button.data('url');
+
+//把获取后的数据赋值给弹出的模态框对应的titile、按钮信息、body
+//关键点：this需要赋给that变量，
+        var that = this;
+        jQuery(that).find('.modal-title').text(title);
+        jQuery(that).find('.btn-form-submit').text(btn_txt);
+//load其实是个get操作，get到url的html页面
+        jQuery(that).find('.modal-body').load(url);
+
+        // jQuery.get(url, {}, function(result) {
+        //   console.log(this);
+        //     jQuery(that).find('.modal-body').html(result);
+        // });
+
+//如果dialog是进行资产信息修改，则需要对信息进行回显，这次采用ajax.get方式获取
+//注意：get方式不需要params，直接写返回函数即可，传回去的id通过url带过去就行了
+
+        if(title=='修改资产信息') {
+         var serverid = button.data('id');
+         console.log(serverid);
+        jQuery.get('/asserts/getinfo/'+serverid, function(data) {
+          if(data.id){
+              $('#serverid').val(data.id);
+              $('#sn').val(data.sn);
+              $('#ip').val(data.ip);
+              $('#hostname').val(data.hostname);
+              $('#os').val(data.os);
+              $('#cpu').slider("setValue",data.cpu);
+              $('#ram').slider("setValue",data.ram);
+              $('#disk').slider("setValue",data.disk);
+              $('#idc_id').val(data.idc_id);
+              $('#admin').val(data.admin);
+              $('#business').val(data.business);
+              $('#purchase_date').val(data.purchase_date);
+              $('#warranty').val(data.warranty);
+              $('#vendor').val(data.vendor);
+              $('#model').val(data.model);
+              } else {
+                alert("数据不存在");
+              }
+        }, 'json')
+
+//否则，就是添加资产，什么也不需要做
+        } else {
+
+          return;
+        }
+    });
+
+//dialog里面的提交按钮click事件触发后，进行表单数据提交，并根据后台返回的结果进行用户提示
+        jQuery('.btn-form-submit').on('click', function() {
+
+        var _form = jQuery('#dialog').find('form');
+
+        console.log(_form.attr('action'));  //获取提交表单的url
+        console.log(_form.serialize());     //通过post方式提交表单
+        console.log(_form.serializeArray()); //获取表单数据，结果为对象（字典）
+        //return;
+
+        jQuery.post(_form.attr('action'), _form.serializeArray(), function(result) {
+          if(result['is_ok']){
+                swal('操作成功！');
+                console.log(result);  //控制台显示data
+                jQuery('#dialog').modal('hide');   //更新成功后，自动消失框框
+                //window.location.replace('/users/');
+                //window.location.reload();
+              } else {
+                alert(result['error']);
+              }
+        }, 'json')
+    });
+});
+
+</script>
+
+
+ <!--设置表格和上面的距离-->
+<style>
+    body{
+
+        margin-top: 5px;
+    }
+</style>
+
+<!--汉化-->
+<script>
+        $(document).ready(function() {
+        $('.datatable').dataTable( {
+         language: {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
+        }
+    }
+        });
+        } );
+</script>
+  </body>
+</html>

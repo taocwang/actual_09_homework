@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+    <link rel="stylesheet" href="../static/css/css.css" type="text/css">
+</head>
+<body>
+    <form action="/user/useradd/" method="post" enctype="multipart/form-data" >
+        {% if error %}
+            <span style="color:red">{{ error }}</span>
+        {% endif %}
+        <p>用户<input type="text" name="username" value="{{ username }}"></p>
+        <p>密码<input type="password" name="password" minlength="6" maxlength="32" value="{{ password }}" > </p>
+        <p>性别<input type="radio" name="gender"  value="{{ 0 }}" checked="checked"> 男
+               <input type="radio" name="gender"  value="{{ 1 }}" > 女</p>
+        <p>爱好<input type="checkbox" name="hobby" value="basketball" > 篮球
+               <input type="checkbox" name="hobby" value="computer" checked="checked" > 计算机
+               <input type="checkbox" name="hobby" value="football" > 足球
+               <input type="checkbox" name="hobby" value="girl" > 美女</p>
+        <p><select name="department">
+                <option value="de01">研发一部</option>
+                <option value="de02">研发二部</option>
+                <option value="de03">研发三部</option>
+                <option value="test01" selected="selected">测试一部</option>
+            </select></p>
+        <p>年龄<input type="number" name="age" min="0" max="120" value="{{ age }}" > </p>
+        <p>电话<input type="number" name="telphone" minlength="11" maxlength="11" value="{{ telphone }}" > </p>
+        <p>邮件<input type="email" name="email" value="{{ email }}" > </p>
+        <p>文件上传<input type="file" name="files"><br>
+            <div class="images"><img src="http://img.ugirls.com/uploads/magazine/content/ad619c3f753b494550d30a0cbc66ca0e_magazine_web_m.jpg"></div>
+        </p>
+        <p>个人简介 <br>
+            <textarea name="remake" ></textarea>
+        </p>
+        <span style="border-radius: 1px;background-color: yellow">span1</span>
+        <span>span2</span>
+        <span>span3</span>
+        <div id="divs1">div1</div>
+        <div class="divs2">div2</div>
+        <p>段落1</p>
+        <p>段落2</p>
+        <iframe href="www.baidu.com"></iframe>
+        <p><input type="submit" value="确认添加"> </p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+      <title>CMDB</title>
+      <!-- Bootstrap core CSS -->
+      <link rel="stylesheet" href="/static/bootstrap-3.3.5-dist/css/bootstrap.css" type="text/css">
+      <link href="/static/dashboard.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">CMDB</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a>{% for msg in get_flashed_messages() %}
+                <span>{{msg}}</span>
+            {% endfor %}</a></li>
+            <li><a>欢迎{{session.get('user',{}).get('username','')}}</a></li>
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="/users/">用户管理<span class="sr-only">(current)</span></a></li>
+            <li><a href="/logs/">日志管理</a></li>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <p>
+        <!--<a class="btn btn-success" href="/user/create/">添加用户</a>-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-user" >添加用户</button>
+        </p>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                  <tr>
+                      <td>{{user['username']}}</td>
+                      <td>{{user['password']}}</td>
+                      <td>{{user['age']}}</td>
+                      <td>
+                          <!--<a href="/user/modify/?username={{user['username']}}">修改</a>
+                          <a href="/user/modify/?id={{user['id']}}">修改</a>-->
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-age" data-userid="{{user['id']}}" data-username="{{user['username']}}">修改年龄</button>
+                          <!--<a href="/user/delete/?id={{user['id']}}" onclick="return confirm('确定要删除吗？');">删除</a>-->
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-user" data-userid="{{user['id']}}" data-username="{{user['username']}}">删除</button>
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#update-password" data-userid="{{user['id']}}" data-username="{{user['username']}}">修改密码</button>
+                      </td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!--修改密码提示框-->
+    <div class="modal fade" id="update-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">修改密码</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="hidden" id="password-userid"/>
+              <div class="form-group">
+                <label for="password-username" class="control-label">用户名:</label>
+                <input type="text" class="form-control" id="password-username" readonly="readonly">
+              </div>
+              <div class="form-group">
+                <label for="password-manager-password" class="control-label">管理员密码:</label>
+                <input type="password" class="form-control" id="password-manager-password">
+              </div>
+              <div class="form-group">
+                <label for="password-user-password" class="control-label">用户密码:</label>
+                <input type="password" class="form-control" id="password-user-password">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" id="password-commit" class="btn btn-primary">更新</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--修改年龄提示框-->
+    <div class="modal fade" id="modify-age" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel1">修改信息</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="hidden" id="userid"/>
+              <div class="form-group">
+                <label for="username" class="control-label">用户名:</label>
+                <input type="text" class="form-control" id="username" readonly="readonly">
+              </div>
+              <div class="form-group">
+                <label for="user-age" class="control-label">年龄:</label>
+                <input type="text" class="form-control" id="user-age">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" id="modify-commit" class="btn btn-primary">更新</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--添加用户提示框-->
+    <div class="modal fade" id="create-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel2">添加用户</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="user-username" class="control-label">用户名:</label>
+                <input type="text" class="form-control" id="user-username">
+              </div>
+              <div class="form-group">
+                <label for="user-userage" class="control-label">年龄:</label>
+                <input type="text" class="form-control" id="user-userage">
+              </div>
+               <div class="form-group">
+                <label for="user-password" class="control-label">密码:</label>
+                <input type="text" class="form-control" id="user-password">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" id="create-commit" class="btn btn-primary">添加</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--删除用户提示框-->
+    <div class="modal fade" id="delete-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel3">删除用户</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="hidden" id="delete-userid"/>
+              <div class="form-group">
+                <label for="user-username" class="control-label">用户名:</label>
+                <input type="text" class="form-control" id="delete-username" readonly="readonly">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" id="delete-commit" class="btn btn-primary">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="/static/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#update-password').on('show.bs.modal', function (event) {
+                var button = jQuery(event.relatedTarget)
+                var username = button.data('username')
+                var userid = button.data('userid')
+                jQuery('#password-userid').val(userid);
+                jQuery('#password-username').val(username)
+            })
+
+            jQuery('#modify-age').on('show.bs.modal', function (event) {
+              var button = jQuery(event.relatedTarget)
+              var username = button.data('username')
+              var userid = button.data('userid')
+              jQuery('#userid').val(userid);
+              jQuery('#username').val(username)
+            })
+            jQuery('#delete-user').on('show.bs.modal', function (event) {
+              var button = jQuery(event.relatedTarget)
+              var username = button.data('username')
+              var userid = button.data('userid')
+              jQuery('#delete-userid').val(userid);
+              jQuery('#delete-username').val(username)
+            })
+            jQuery('#password-commit').on('click', function () {
+              var params = {};
+                params['userid'] = jQuery('#password-userid').val();
+                params['password-manager-password'] = jQuery('#password-manager-password').val();
+                params['password-user-password'] = jQuery('#password-user-password').val();
+                console.log(params);
+                jQuery.post('/user/charge-password/',
+                        params,
+                        function (data) {
+                            if(data['is_ok']){
+                                alert('更新成功');
+                                jQuery('#update-password').modal('hide');
+                                //windows.location.reload();
+                                window.location.replace('/users/');
+                            }else{
+                                alert(data['error']);
+                            }
+                        },
+                        'json'
+                );
+            });
+            jQuery('#modify-commit').on('click', function () {
+              var params = {};
+                params['userid'] = jQuery('#userid').val();
+                params['user-age'] = jQuery('#user-age').val();
+                console.log(params);
+                jQuery.post('/user/modify-age/',
+                        params,
+                        function (data) {
+                            if(data['is_ok']){
+                                alert('更新成功');
+                                jQuery('#modify-age').modal('hide');
+                                window.location.reload();
+                                //windows.location.replace('/users/');
+                            }else{
+                                alert(data['error']);
+                            }
+                        },
+                        'json'
+                );
+            });
+            jQuery('#create-commit').on('click', function () {
+              var params = {};
+                params['user-username'] = jQuery('#user-username').val();
+                params['user-userage'] = jQuery('#user-userage').val();
+                params['user-password'] = jQuery('#user-password').val();
+                console.log(params);
+                jQuery.post('/user/create-user/',
+                        params,
+                        function (data) {
+                            if(data['is_ok']){
+                                alert('更新成功');
+                                jQuery('#create-user').modal('hide');
+                                //windows.location.reload(true);
+                                window.location.replace('/users/');
+                            }else{
+                                alert(data['error']);
+                            }
+                        },
+                        'json'
+                );
+            });
+            jQuery('#delete-commit').on('click', function () {
+              var params = {};
+                params['userid'] = jQuery('#delete-userid').val();
+                console.log(params);
+                jQuery.post('/user/delete-user/',
+                        params,
+                        function (data) {
+                            if(data['is_ok']){
+                                alert('删除成功');
+                                jQuery('#delete-user').modal('hide');
+                                //windows.location.reload(true);
+                                window.location.replace('/users/');
+                            }else{
+                                alert(data['error']);
+                            }
+                        },
+                        'json'
+                );
+            });
+        });
+    </script>
+  </body>
+</html>

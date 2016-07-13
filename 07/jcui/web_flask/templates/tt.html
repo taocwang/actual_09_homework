@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS学习</title>
+</head>
+<body>
+    <script type="application/javascript" src="../static/js/jquery-1.12.4.js"></script>
+    <script type="application/javascript">
+        var name = 'kk' ;
+        var age = 19;
+        var score_1 = 10 , score_2 = 20;
+        var sex = true , hobby = ['abc','haohao']; scores={'math':80,'english':90}
+        var max_num = null;
+        console.log(name);       /* js打印 */
+        console.log(age);
+        console.log(sex);
+        console.log(hobby);
+        console.log(scores);
+        console.log(max_num);
+        console.log(score_1+score_2)
+        var score_all = score_1 + score_2
+        console.log(score_all)
+
+        //输入判断
+//        var s = prompt('请输入你的名字');
+//        if (s == 'kk') {
+//            console.log('true')
+//            alert('恭喜你登陆成功'+s);
+//        } else if (s == 'jcui') {
+//            alert('恭喜你登陆成功');
+//        } else {
+//            alert('登陆失败');
+//        }
+        //数字判断
+//        if (score_1 > 80 ){
+//            alert('优秀'+s);
+//        }else if ( score_1 > 60) {
+//            alert('良好');
+//        }else if ( score_1 == 60 ){
+//            alert('及格');
+//        }else {
+//            alert('不及格');
+//        }
+
+//        var input ;
+//        while(input != 'kk'){
+//            var input = prompt('请输入你的名字');
+//            if (input == 'kk') {
+//                alert('ok');
+//            }else{
+//                alert('错误,请重新输入你的名字');
+//            }
+//        }
+        //do while 循环
+//        do {
+//            var  input = prompt('请输入你的名字');
+//            if (input == 'kk'){
+//                alert('ok')
+//            }else {
+//                alert('error,请重新输入')
+//            }
+//        }while (input != 'kk')
+        // for循环
+//        for(var i = 0 ;i < 10;i++){
+//             console.log(i)
+//        }
+        //列表的增,遍历
+//        var x = []
+//        x.push(1)
+//        x.push(2)
+//        x.push(3)
+//        var len = x.length
+//        for (i=0;i<=len-1;i++){
+//            alert(x[i])
+//        }
+        //字典的增加,修改,删除,遍历
+//        var test = {}
+//        test['name'] = 'jcui'
+//        test['age'] = 12
+//        test['age'] = 28
+//        test['papa'] = 'haha'
+//        for (var i in test) {
+//            console.log(test[i])
+//        }
+        //函数
+//        function add(num1,num2) {
+//            return parseInt(num1) + parseInt(num2)
+//        }
+//        function calc() {
+//            var num1 = prompt('请输入第一个数字');
+//            var num2 = prompt('请输入第二个数字');
+//            alert(num1+'+'+num2+'='+add(num1,num2))
+//        }
+//        calc()    //函数引用
+
+//        document.write('hello world')
+
+        //js事件
+        function add(num1,num2) {
+            return parseInt(num1) + parseInt(num2)
+
+        }
+        function calc() {
+            num1 = document.getElementById('num1').value
+            num2 = document.getElementById('num2').value
+            var rt = add(num1,num2)
+            document.getElementById('result').value = rt
+            document.getElementById('content').innerHTML = ('js结果为'+rt)
+
+        }
+
+        //jQuery事件
+        jQuery(document).ready(function () {
+            //页面加载完成后执行的代码
+            //获取标签时间
+            /*
+            tag = JQuery('tag')
+            id = JQuery('#id')
+            class = jQuery('.class')
+             */
+//            console.log(jQuery('input'));
+//
+//            jquery('#num2').val(1000);  //设置value值
+//            jquery('#content').html('结果为:') ;
+
+            //绑定事件
+            jQuery('#calc2').bind('click',function () {
+                console.log('calc2 click')
+                var x = jQuery('#num1').val()     //取第一个值
+                var y = jQuery('#num2').val()     //取第二个值
+                var z = add(x,y)                  //将两个值相加
+                jQuery('#result').val(z)          //将结果返回给对应的input标签
+                jQuery('#result').html()          //获取值
+                jQuery('#content').html('jQuery结果为'+z)    //将结果返回给页面
+
+            })
+            jQuery('.hidden-btn').bind('click',function () {
+                var tt = jQuery('.hidden-btn').val()
+                if (tt == '隐藏'){
+                    jQuery('#content').hide(1,function () {
+                        jQuery('.hidden-btn').val('显示')
+                    })
+                }else{
+                    jQuery('#content').show(1,function () {
+                       jQuery('.hidden-btn').val('隐藏')
+                    })
+                }
+            })
+            jQuery('#bububu').click(function () {
+                console.log('clock')
+//                window.alert(5 + 6);
+                var uid = $(this).attr('ll')
+                console.log(uid)
+                jQuery('#mybutton').html(Date())
+                
+            })
+
+        })
+    </script>
+        <input type="input" id="num1">
+        <input type="input" id="num2">
+        <input type="button" id="calc" onclick="calc()" value="相加(js)">
+        <input type="button" id="calc2" value="相加(jQuery)">
+        <input type="button" class="hidden-btn" value="隐藏">
+        <input type="text" id="result" readonly="readonly">
+        <div id = "content"></div>
+        <div id="mybutton"></div>
+        <button id="bububu" type="button" ll="dddd" >点击我</button>
+
+</body>
+</html>

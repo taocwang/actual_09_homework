@@ -1,0 +1,42 @@
+<form class="form-horizontal" action="/user/add/" method="post">
+    <div class="form-group">
+        <label class="col-md-3 control-label">用户名:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="username" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">年龄</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="age"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">用户密码:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="password" name="password"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">密码确认:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="password" name="try_password"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">生日:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="birthday" value="2000-05-15" id="birthday"/>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+        $('#birthday').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language: "zh-CN",
+            minView: "month",
+            todayBtn: "linked",
+            todayHighlight:"true"
+        });
+</script>

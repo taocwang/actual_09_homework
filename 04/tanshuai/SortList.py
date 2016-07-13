@@ -49,7 +49,8 @@ print '方法3，用排序函数sorted实现：%s ' % sorted(arr, key=hello)   #
 arr = [(1, 3), (4, 7), (2, 5), (2, 1), (6, 2), (4, 1)]
 print '方法4，用sorted加lambda实现：%s ' % sorted(arr, key=lambda x:max(x))
 # 一行代码实现，此方法非常赞！
-
+arr = [((1, 3),6), ((4, 7),4), ((2, 5),3), ((2, 1),7), ((6, 2),5), ((4, 1),2)]
+print '方法4，用sorted加lambda实现：%s ' % sorted(arr, key=lambda x:x[1],reverse=True)
 
 '''
 功能ok，非常棒！继续加油

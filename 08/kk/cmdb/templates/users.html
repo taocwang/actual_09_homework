@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>用户列表</title>
+      <link href="{{url_for('static', filename='bootstrap-3.3.5-dist/css/bootstrap.min.css')}}" rel="stylesheet" />
+      <style>
+        body {
+          padding-top: 50px;
+        }
+
+        .navbar-fixed-top {
+          border: 0;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        @media (min-width: 768px) {
+          .sidebar {
+            position: fixed;
+            top: 51px;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            display: block;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+            background-color: #f5f5f5;
+            border-right: 1px solid #eee;
+          }
+        }
+        .nav-sidebar {
+          margin-right: -21px; /* 20px padding + 1px border */
+          margin-bottom: 20px;
+          margin-left: -20px;
+        }
+        .nav-sidebar > li > a {
+          padding-right: 20px;
+          padding-left: 20px;
+        }
+        .nav-sidebar > .active > a,
+        .nav-sidebar > .active > a:hover,
+        .nav-sidebar > .active > a:focus {
+          color: #fff;
+          background-color: #428bca;
+        }
+        .main {
+          padding: 20px;
+        }
+        @media (min-width: 768px) {
+          .main {
+            padding-right: 40px;
+            padding-left: 40px;
+          }
+        }
+        .main .page-header {
+          margin-top: 0;
+        }
+      </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">CMDB</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a>欢迎{{session.get('user', {}).get('username', '')}}</a></li>
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="/users/">用户管理</a></li>
+            <li><a href="/logs/">访问日志分析</span></a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {% for msg in get_flashed_messages() %}
+                    <p class="bg-success">{{msg}}</p>
+            {% endfor %}
+            <p class="bg-success">{{msg}}</p>
+            <!--
+            <a class="btn btn-default" href="/user/create/">添加用户</a>
+            -->
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#create-user">添加用户</button>
+            <br/><br/>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>用户名</th>
+                        <th>密码</th>
+                        <th>年龄</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user['username']}}</td>
+                        <td>******</td>
+                        <td>{{user['age']}}</td>
+                        <td>
+                            <!--
+                            <a href="/user/modify/?id={{user['id']}}">修改</a>
+                            -->
+                            <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#update-password" data-userid="{{user['id']}}" data-username="{{user['username']}}">修改密码</button>
+                            <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#update-user" data-userid="{{user['id']}}" data-username="{{user['username']}}" data-age="{{user['age']}}">修改</button>
+                            <a class="btn btn-xs btn-danger" href="/user/delete/?id={{user['id']}}" onclick="return confirm('确定删除吗?');">删除</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    <!--修改密码框-->
+    <div class="modal fade" id="update-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">修改密码</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="hidden" id="password-userid"/>
+              <div class="form-group">
+                <label for="password-username" class="control-label">用户名</label>
+                <input type="text" class="form-control" id="password-username" readonly="readonly">
+              </div>
+              <div class="form-group">
+                <label for="password-manager-password" class="control-label">管理员密码</label>
+                <input type="password" class="form-control" id="password-manager-password">
+              </div>
+              <div class="form-group">
+                <label for="password-user-password" class="control-label">用户密码</label>
+                <input type="password" class="form-control" id="password-user-password">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="password-commit">更新密码</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--添加用户框-->
+    <div class="modal fade" id="create-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">添加用户</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="create-user-username" class="control-label">用户名</label>
+                <input type="text" class="form-control" id="create-user-username">
+              </div>
+              <div class="form-group">
+                <label for="create-user-password" class="control-label">管理员密码</label>
+                <input type="password" class="form-control" id="create-user-password">
+              </div>
+              <div class="form-group">
+                <label for="create-user-age" class="control-label">年龄</label>
+                <input type="text" class="form-control" id="create-user-age"/>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="create-commit">添加</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--修改用户-->
+    <div class="modal fade" id="update-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">修改用户</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="hidden" id="update-user-userid"/>
+              <div class="form-group">
+                <label for="update-user-username" class="control-label">用户名</label>
+                <input type="text" class="form-control" id="update-user-username" readonly="readonly">
+              </div>
+              <div class="form-group">
+                <label for="update-user-age" class="control-label">年龄</label>
+                <input type="text" class="form-control" id="update-user-age"/>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="update-commit">更新</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-1.12.4.js')}}" ></script>
+    <script type="text/javascript" src="{{url_for('static', filename='bootstrap-3.3.5-dist/js/bootstrap.min.js')}}" ></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+          jQuery('#update-password').on('show.bs.modal', function (event) {
+              var button = jQuery(event.relatedTarget);
+              var username = button.data('username');
+              var userid = button.data('userid');
+              jQuery('#password-userid').val(userid);
+              jQuery('#password-username').val(username);
+          });
+          jQuery('#password-commit').on('click', function(){
+              var params = {};
+              params['userid'] = jQuery('#password-userid').val();
+              params['manager-password'] = jQuery('#password-manager-password').val();
+              params['user-password'] = jQuery('#password-user-password').val();
+              console.log(params);
+              jQuery.post('/user/charge-password/',
+                  params,
+                  function(data) {
+                    if(data['is_ok']){
+                      alert('修改密码成功');
+                      jQuery('#update-password').modal('hide');
+                      //window.location.replace('/users/');
+                      //window.location.reload();
+                    } else {
+                      alert(data['error']);
+                    }
+                  },
+                  'json'
+              );
+          });
+          jQuery('#create-user').on('show.bs.modal', function (event) {
+              jQuery('#create-user-username').val('');
+              jQuery('#create-user-password').val('');
+              jQuery('#create-user-age').val('');
+          });
+          jQuery('#create-commit').on('click', function(){
+              var params = {};
+              params['username'] = jQuery('#create-user-username').val();
+              params['password'] = jQuery('#create-user-password').val();
+              params['age'] = jQuery('#create-user-age').val();
+              jQuery.post('/user/add/',
+                  params,
+                  function(data) {
+                    if(data['is_ok']){
+                      alert('创建成功');
+                      jQuery('#create-user').modal('hide');
+                      //window.location.replace('/users/');
+                      window.location.reload();
+                    } else {
+                      alert(data['error']);
+                    }
+                  },
+                  'json'
+              );
+          });
+
+          jQuery('#update-user').on('show.bs.modal', function (event) {
+              var button = jQuery(event.relatedTarget);
+              jQuery('#update-user-userid').val(button.data('userid'));
+              jQuery('#update-user-username').val(button.data('username'));
+              jQuery('#update-user-age').val(button.data('age'));
+          });
+          jQuery('#update-commit').on('click', function(){
+              var params = {};
+              params['id'] = jQuery('#update-user-userid').val();
+              params['username'] = jQuery('#update-user-username').val();
+              params['age'] = jQuery('#update-user-age').val();
+              jQuery.post('/user/update/',
+                  params,
+                  function(data) {
+                    if(data['is_ok']){
+                      alert('修改成功');
+                      jQuery('#update-user').modal('hide');
+                      //window.location.replace('/users/');
+                      window.location.reload();
+                    } else {
+                      alert(data['error']);
+                    }
+                  },
+                  'json'
+              );
+          });
+
+      });
+    </script>
+  </body>
+</html>

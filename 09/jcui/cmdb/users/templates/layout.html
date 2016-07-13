@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/image/favicon.ico">
+    <title>{% block title%}{% endblock %}</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/base.css" rel="stylesheet">
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top "style="background-color:darkslategray">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/user/">CMDB</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a> 欢迎 {{ session.get('username',{}).get('username','') }}</a></li>
+            <li><a href="/login/">登出</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+              <ul class="nav nav-sidebar">
+                <li class="{% block status_user %}{% endblock %}"><a href="/user/">用户管理 <span class="sr-only">(current)</span></a></li>
+                <li class="{% block status_log %}{% endblock %}"><a href="/logs/">日志检索</a></li>
+                <li class="{% block status_assets %}{% endblock %}"><a href="/assets/">资产管理</a></li>
+              </ul>
+            </div>
+          <div class="col-md-10 col-md-offset-2 main">
+            {% block main %}{% endblock %}
+          </div>
+      </div>
+    </div>
+    {% block dialog %}{% endblock%}
+    <script type="application/javascript" src="/static/js/jquery-1.12.4.js"></script>
+    <script type="application/javascript" src="/static/js/bootstrap.min.js"></script>
+    {% block script %}{% endblock %}
+    {% block javascipt %}{% endblock %}
+</body>
+</html>

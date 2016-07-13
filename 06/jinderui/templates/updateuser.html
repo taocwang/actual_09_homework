@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>updateuser</title>
+</head>
+<body>
+	<form action="/changeuser/" method="post">
+
+		{% if userid %}
+		<input  name="id" type="hidden" value="{{userid}}" />
+		{% endif %}
+
+		姓名：
+		{% if updateuser %}
+		<input name="user" type="text" value="{{updateuser}}" />
+		{% endif %}
+		<br />
+
+		年龄：
+		{% if updateage %}
+		<input name="age" type="text" value="{{updateage}}" />
+		{% endif %}
+		<br />
+
+		密码：
+		{% if updatepassword %}
+		<input name="password" type="password" value="{{updatepassword}}"> </input>
+		{% endif %}
+		<br />
+
+		<input name="Submit" type="submit" value="提交" />
+		<br />
+
+		<span style="color:red"> {{error}} </span>
+
+
+	</form>
+
+</body>
+</html>

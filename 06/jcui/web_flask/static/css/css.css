@@ -1,0 +1,55 @@
+.login{
+    width:1920px;
+    height:900px;
+    background: center;
+    background-image: url('../login.jpg');
+    background-repeat: no-repeat
+
+}
+.login_form {
+    position: absolute;
+    top:700px;
+    left: 700px;
+}
+#crontol{
+    font-family: "宋体";
+    color: chartreuse;
+    font-size: 20px;
+    height: 200px;
+    width: auto;
+    border-radius: 10px;
+    padding-top: 30%;
+    text-align: center;
+
+}
+/*tag选择器*/
+span {
+    background-color: blue;
+    border: 2px solid red;
+    border-radius: 6px;
+}
+/*id选择器*/
+#divs1 {
+    position: absolute;
+    margin: 10px 20px 40px 20px;
+    padding: 10px;
+    border: 1px solid green;
+    background-color: greenyellow;
+    width: 300px;
+    top: 60%;
+    left: 820px;
+
+}
+.images {
+    position: absolute;
+    margin: 10px 20px 10px 20px;
+    padding: 10px;
+    width: 40%;
+    top: 5%;
+    left: 700px;
+}
+/*class选择器*/
+.divs2 {
+    background-color: #66512c;
+    width: 100px;
+}

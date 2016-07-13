@@ -6,10 +6,8 @@ d = {}
 先把所有key赋空值，发现key在字典里面就把value加1。直到循环完成
 '''
 with open('nginx.log','r') as f:
-    for line in f.readlines():
-        linelist = line.strip().split(' ')
+    for linelist in [line.strip().split(' ') for line in f]:
         dfile = linelist[0],linelist[6],linelist[8]
-        d.setdefault(dfile,0)
         d[dfile] = d.setdefault(dfile,0) + 1
 
 # 把生成的字典转换成列表

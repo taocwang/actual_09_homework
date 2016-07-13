@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>文件上传</title>
+<<<<<<< HEAD
+     <link rel="icon" href="/static/favicon.ico">
+=======
+     <link rel="icon" href="/static/temp/favicon.ico">
+>>>>>>> f5947768a61fa20e516dfeeead8bd726e9c8250e
+      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/jquery.dataTables.css')}}"  type="text/css" />
+  </head>
+
+  <body>
+<<<<<<< HEAD
+=======
+  <!--导航条-->
+>>>>>>> f5947768a61fa20e516dfeeead8bd726e9c8250e
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">某某系统</a>
+        </div>
+<<<<<<< HEAD
+=======
+
+  <!--最右边导航条-->
+>>>>>>> f5947768a61fa20e516dfeeead8bd726e9c8250e
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+<<<<<<< HEAD
+=======
+
+  <!--页面主体，流式布局类2，适用于100%宽度，占据全部视口（viewport）的容器 -->
+>>>>>>> f5947768a61fa20e516dfeeead8bd726e9c8250e
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+             <li class="active"><a href="/users/">用户管理<span class="sr-only">(current)</span></a></li>
+             <li class="active"><a href="/user/logs/">日志查询<span class="sr-only"></span></a></li>
+            <li class="active"><a href="/user/upload/">文件上传<span class="sr-only"></span></a></li>
+
+
+          </ul>
+        </div>
+<<<<<<< HEAD
+=======
+
+  <!--偏移2列，主体内容部分 -->
+>>>>>>> f5947768a61fa20e516dfeeead8bd726e9c8250e
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% for msg in get_flashed_messages() %}
+        <div style='text-align:center;color:red;font-size:20px' class="bg-danger">{{msg}}</div>
+        {% endfor %}
+
+         {% if _path %}
+         <img src="/{{_path}}">
+         {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

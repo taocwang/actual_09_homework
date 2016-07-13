@@ -1,0 +1,17 @@
+span_1 {
+       background-color: indianred;
+   }
+
+    #id_1{
+        position: absolute;
+        margin:10px 20px 30px 40px;
+        padding:20px;
+        width:500px;
+        top:200px;
+        left:200px;
+    }
+   .class_1 {
+           position: absolute;
+           height: 30px;
+           width 500px
+       }

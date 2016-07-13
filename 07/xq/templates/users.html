@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="utf-8">
+      <title>用户管理</title>
+      <link rel="icon" href="/static/favicon.ico">
+      <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}"  type="text/css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}"  type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="http://sandbox.runjs.cn/uploads/rs/238/n8vhm36h/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://sandbox.runjs.cn/uploads/rs/238/n8vhm36h/bootstrap-responsiv.css">
+    <link rel="stylesheet" type="text/css" href="http://sandbox.runjs.cn/uploads/rs/238/n8vhm36h/dataTables.bootstra.css">
+
+    <script type="text/javascript">
+            function del(){
+                if(!confirm("确认要删除？")){
+                    window.event.returnValue = false;
+                }
+
+            }
+
+           function logout(){
+            if(!confirm("确定要退出？"))
+            { window.event.returnValue = false; }
+            }
+        </script>
+</head>
+    <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">某某系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+          <li>
+             {% if username %}
+            <a>{{username}}欢迎回来！</a>
+            {% endif %}
+            </li>
+            <li>
+            {% for msg in get_flashed_messages() %}
+            <a>{{msg}}</a>
+            {% endfor %}
+            </li>
+            <li><a href="/logout/">退出登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+           <li class="active"><a href="/users/">用户管理<span class="sr-only">(current)</span></a></li>
+           <li class="inactive"><a href="/user/create/">添加用户<span class="sr-only"></span></a></li>
+           <li class="inactive"><a href="/user/modifypasswd/">修改密码<span class="sr-only"></span></a></li>
+           <li class="active"><a href="/user/logs/">日志查询<span class="sr-only"></span></a></li>
+           <li class="active"><a href="/user/upload/">文件上传<span class="sr-only"></span></a> </li>
+          </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <form align="center" action="/user/find/" method="POST">
+               <input type="TEXT" style="width:250px;height:30px;size=20px"  name="username" value="{{username}}"/>
+               <input type="SUBMIT" class="btn btn-info"  value="查询"/>
+           </form>
+
+        <div class="container-fluid">
+            <table class="table table-striped table-bordered table-hover datatable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>用户名</th>
+                        <th>密码</th>
+                        <th>年龄</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user['id']}}</td>
+                        <td>{{user['username']}}</td>
+                        <td>{{user['password']}}</td>
+                        <td>{{user['age']}}</td>
+                        <td>
+                            <a href="/user/modify/?id={{user['id']}}" class="btn btn-info" >更新</a>
+                            <a href="/user/delete/?id={{user['id']}}" class="btn btn-info" onclick="return del()">删除</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>  <!-- container-fluid -内部 -->
+
+        </div>
+    <script type="text/javascript" src="http://sandbox.runjs.cn/uploads/rs/238/n8vhm36h/jquery.js"></script>
+    <script type="text/javascript" src="http://sandbox.runjs.cn/uploads/rs/238/n8vhm36h/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="http://sandbox.runjs.cn/uploads/rs/238/n8vhm36h/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://sandbox.runjs.cn/uploads/rs/238/n8vhm36h/dataTables.bootstrap.js"></script>
+    </div>
+    </div>  <!-- container-fluid -->
+  </body>
+</html>
+
+    <style>
+    body{
+        margin-top: 20px;
+    }</style>
+    <script>
+    $(document).ready(function() {
+        $('.datatable').dataTable( {
+        "oLanguage": {
+
+        "sProcessing":   "处理中...",
+        "sLengthMenu":   "_MENU_ 记录/页",
+        "sZeroRecords":  "没有匹配的记录",
+        "sInfo":         "显示第 _START_ 至 _END_ 项记录，共 _TOTAL_ 项",
+        "sInfoEmpty":    "显示第 0 至 0 项记录，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项记录过滤)",
+        "sInfoPostFix":  "",
+        "sSearch":       "过滤:",
+        "sUrl":          "",
+        "oPaginate": {
+            "sFirst":    "首页",
+            "sPrevious": "上页",
+            "sNext":     "下页",
+            "sLast":     "末页"
+        }
+
+            }
+        });
+        } );
+    </script>
+
+<!-- Generated by RunJS (Fri Jun 17 17:40:32 CST 2016) 2ms -->

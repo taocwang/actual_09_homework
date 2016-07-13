@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{{title}}</title>
+    </head>
+    <body>
+   		{% for msg in get_flashed_messages() %}
+			<div align="center"><h3 style="color: red">{{ msg }}</h3></div>
+   		{% endfor%}
+    	
+	    <div>
+	        <a href="/users/?number=10">top10</a>
+	        <a href="/users/?number=20">top20</a>
+	        <a href="/users/?number=50">top50</a>
+	        <a href="/users/?number=100">top100</a>
+	        欢迎{{session.get('user', {}).get('username', '')}} <a href="/logout/">logout</a>
+	    </div>
+	    <div>
+	        <table border="1">
+	            <th>
+	                <tr>
+	                    <td width="100px" align="center">用户名</td>
+	                    <td width="100px" align="center">密码</td>
+	                    <td width="100px" align="center">年龄</td>
+	                    <td width="100px" align="center">联系电话</td>
+	                    <td width="100px" align="center">邮箱</td>
+	                    <td width="100px" align="center">操作</td>
+	                </tr>
+	            </th>
+	            <tbody>
+	                {% for node in content %}
+	                <tr>
+	                    <td width="100px" align="center">{{ node['username']}}</td>
+	                    <td width="100px" align="center">{{ node['password']}}</td>
+	                    <td width="100px" align="center">{{ node['age']}}</td>
+	                    <td width="100px" align="center">{{ node['phone']}}</td>
+	                    <td width="100px" align="center">{{ node['email']}}</td>
+	                    <td><a href="/modifyuser/?username={{ node['username']}}">修改</a>&nbsp;&nbsp;<a href="/deluser/?username={{ node['username']}}">删除</a></td>
+	                </tr>
+	                {% endfor %}
+	            </tbody>
+        </table>
+        </div>
+        	<p></p>
+        	<a href="/adduser/">添加用户</a>
+        <div>
+        </div>
+    </body>
+</html>

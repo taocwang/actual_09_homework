@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<title>修改用户</title>
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/users.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">CMDB</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a>
+							{% if useredit_info %}
+								<span style="color:red">{{useredit_info}} </span>
+							{% endif %}
+						</a>
+					</li>
+					<li><a>欢迎{{ session.get('user', {}).get('username') }}登陆系统!!!</a></li>
+					<li><a href="/logout">退出登陆</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">用户管理</a></li>
+            <li><a href="/logs/">日志统计</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+
+		<h5><a href="/users/" class="sub-header">查看用户</a></h5>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>用户名</th>
+                  <th>密码</th>
+                  <th>年龄</th>
+                  <th>性别</th>
+				  <th>邮箱</th>
+				  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+				<form action="/useredit/" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="user_id" value="{{user_id}}" />
+					<tr>
+						<td><input type="text" name="username" value="{{ username }}" readonly="true" /></td>
+						<td><input type="password" name="password" value="{{ password }}" /></td>
+						<td><input type="text" name="age" value="{{age}}" value="{{ age }}" /></td>
+						<td>
+							{% if gender == "男" %}
+								<input type="radio" name="gender"  value="男" checked="checked" /> 男
+								<input type="radio" name="gender"  value="女" /> 女
+							{% elif gender == "女" %}
+								<input type="radio" name="gender"  value="男" /> 男
+								<input type="radio" name="gender"  value="女" checked="checked" /> 女
+							{% endif %}	
+						</td>
+						<td><input type="text" name="email" value="{{ email }}" /></td>
+						<td>
+							<input type="submit" value="更新用户" />
+						</td>
+					</tr>
+				</form>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,27 @@
+{% for asset in assets %}
+                    <tr>
+                        <td>{{asset['sn']}}</td>
+                        <td>{{asset['ip']}}({{asset['hostname']}})</td>
+                        <td>{{asset['os']}}</td>
+                        <td>
+                            <ul>
+                            <li>{{asset['cpu']}}个</li>
+                            <li>{{asset['ram']}}MB</li>
+                            <li>{{asset['disk']}}GB</li>
+                            </ul>
+                        </td>
+                        <td>{{asset['idc_id'][1]}}</td>
+                        <td>{{asset['admin']}}({{asset['business']}})</td>
+                        <td>{{asset['purchase_date']}}({{asset['warranty']}})</td>
+                        <td>{{asset['model']}}({{asset['vendor']}})</td>
+                        <td>
+                            <button type="button" class="btn btn-xs btn-primary update-asset-btn" data-toggle="modal" data-target="#dialog" data-title="更新资产" data-url="/assets/create_update/" data-btn-txt="修改" data-id="{{asset['id']}}" data-asset-sn="{{asset['sn']}}"
+                            data-asset-ip="{{asset['ip']}}" data-asset-hostname="{{asset['hostname']}}" data-asset-os="{{asset['os']}}"
+                            data-asset-cpu="{{asset['cpu']}}" data-asset-ram="{{asset['ram']}}" data-asset-disk="{{asset['disk']}}"
+                            data-asset-idc_id="{{asset['idc_id']}}" data-asset-admin="{{asset['admin']}}" data-asset-business="{{asset['business']}}"
+                            data-asset-purchase_date="{{asset['purchase_date']}}" data-asset-warranty="{{asset['warranty']}}" data-asset-model="{{asset['model']}}"
+                            data-asset-vendor="{{asset['vendor']}}">修改</button>
+                            <button type="button" class="btn btn-xs btn-danger btn-asset-delete" data-url="/assets/delete/" data-id="{{asset['id']}}">删除</button>
+                        </td>
+                    </tr>
+{% endfor %}

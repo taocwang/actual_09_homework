@@ -124,6 +124,27 @@ class User(object):
             return True, '重置成功', newpassword
         return False, '重置失败', newpassword
 
+    @classmethod
+    def validate_mpass(cls,params):
+        mgrpass = params.get('mgrpass')
+        mgruser = 'admin'
+        ip = params.get('ip')
+        cmd = params.get('cmd')
+        _sql = 'select * from user where user=%s and password=%s'
+        _args = (mgruser,mgrpass)
+        _sql_count,rt_list = SQL.excute_sql(_sql,_args)
+        if _sql_count != 0 :
+            return Ssh_cmd.ssh_cmd(ip,cmd)
+        return False,'管理员密码严重失败'
+
+class Ssh_cmd(object):
+    def __init__(self,ip,cmd):
+        self.ip = ip
+        self.cmd = cmd
+
+    def ssh_cmd(self):
+        pass
+
 
 class Logs(object):
     @classmethod

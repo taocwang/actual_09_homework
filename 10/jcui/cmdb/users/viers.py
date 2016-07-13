@@ -260,13 +260,22 @@ def assets_perform():
     id = params.get('id','')
     _asset = Assets.get_by_id(id)
     datetime_list,cpu_list,ram_list = Performs.get_list(_asset.get('ip'))
-    # print datetime_list
-    # print cpu_list
-    # print ram_list
     return render_template('assets_perform.html',datetime_list=json.dumps(datetime_list),cpu_list=json.dumps(cpu_list),ram_list=json.dumps(ram_list))
-    # return render_template('assets_perform.html')
 
+@app.route('/assets/conssh/',methods=['POST','GET'])
+@User.login_check
+def assets__conssh():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id')
+    result = Assets.get_by_id(id)
+    return render_template('assets_conssh.html',result=result)
 
+@app.route('/assets/concmd/',methods=['POST','GET'])
+@User.login_check
+def assets__concmd():
+    params = request.args if request.method == 'GET' else request.form
+    _is_ok,_error = User.validate_mpass(params)
+    pass
 
 '''
 登出用户
@@ -281,5 +290,7 @@ def performs():
     params =  request.get_json()
     Performs.add(params)
     return json.dumps({'code':200,'text':'success'})
+
+
 
 

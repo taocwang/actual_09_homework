@@ -1,0 +1,41 @@
+<form class="form-horizontal" action="/assets/concmd/" method="post">
+    <div class="form-group">
+        <label class="col-md-2 control-label">IP:</label>
+        <div class="col-md-10">
+            <input class="form-control" id="assets-ip" type="text" value="{{ result['ip'] }}" name="ip"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">主机名:</label>
+        <div class="col-md-10">
+            <input class="form-control" id="assets-hostname" type="text" value="{{ result['hostname'] }}" name="hostname"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">管理员密码:</label>
+        <div class="col-md-10">
+            <input type="text" id="assets-mgrpass" class="form-control" name="mgrpass"/>
+        </div>
+    </div>
+        <div class="form-group">
+        <label class="col-md-2 control-label">执行命令:</label>
+        <div class="col-md-10">
+            <textarea type="text" id="assets-cmd" class="form-control" rows="5" name="cmd"/>
+        </div>
+    </div>
+        </div>
+        <div class="form-group">
+        <label class="col-md-2 control-label">执行结果:</label>
+        <div class="col-md-10">
+            <textarea type="text" id="assets-cmd-result" class="form-control" rows="10" readonly/>
+        </div>
+    </div>
+
+
+</form>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+
+    })
+</script>

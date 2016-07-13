@@ -46,7 +46,7 @@ jQuery(document).ready(function () {
              var btn_txt = button.data('btn-txt');
              var url = button.data('url');
              var name = button.data('name')
-             if (name == "monitor"){
+             if (name == "monitor" || name == "cmd"){
                  jQuery('.modal-dialog').addClass('modal-lg')
              }else{
                  jQuery('.modal-dialog').removeClass('modal-lg')

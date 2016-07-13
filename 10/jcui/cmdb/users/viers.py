@@ -4,6 +4,7 @@ import sys
 import random
 import string
 
+import datetime
 from flask import render_template,request,redirect,session, flash ,jsonify
 from . import app         #user模块下的变量,在__init__.py  中定义
 from modules.modules import User,Assets,Logs,Performs
@@ -200,6 +201,8 @@ def test():
 @User.login_check
 def assets_list():
     _assets = Assets.get_list()
+    for x in _assets:
+        x['purchase_date'] = x['purchase_date'].strftime("%Y-%m-%d")
     return render_template('assets.html',assets=_assets)                   #从数据库获取
 
 @app.route('/assets/create/',methods=['POST','GET'])

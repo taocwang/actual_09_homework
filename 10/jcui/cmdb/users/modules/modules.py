@@ -4,6 +4,7 @@ from random import choice
 from functools import wraps
 
 import time
+import datetime
 
 from dbutils import MySQLConnection as SQL
 from dbutils import md5_str
@@ -190,7 +191,7 @@ class Assets(object):
         _columns = _column.split(',')
         _sql = 'select {column} from assets,idc_name where assets.status=0 and assets.idc_id = idc_name.idc_id;'.format(column=_column)
         _cnt,_rt_list = SQL.excute_sql(_sql)
-        return [dict(zip(_columns,i)) for i in _rt_list]
+        return [dict(zip(_columns,i)) for i in _rt_list ]
 
     @classmethod
     def get_by_id(cls,aid):
@@ -202,6 +203,9 @@ class Assets(object):
         rt = []
         if _cnt != 0:
             for x in range(len(_column.split(','))):
+                if _column.split(',')[x] == 'purchase_date':
+                    rt.append((_column.split(',')[x], _rt_list[0][x].strftime("%Y-%m-%d")))
+                    continue
                 rt.append((_column.split(',')[x], _rt_list[0][x]))
             return dict(rt)
         return ''

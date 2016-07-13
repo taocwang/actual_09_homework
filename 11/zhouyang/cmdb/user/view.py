@@ -209,5 +209,20 @@ def asset_performs():
     sn=params.get('sn')
     import assets
     ip=assets.get_by_id(sn)['iner_ip']
-    return render_template('asset_performs.html')
+    from assets_class import Performs
+    _times,_cpus,_rams=Performs.get_performs_view(ip)
+    return render_template('asset_performs.html',times=_times,cpus=_cpus,rams=_rams)
+
+@app.route('/remote/exec/',methods=['POST','GET'])
+def remote_exec():
+    return render_template('remote_exec.html')
+
+@app.route('/remote/doing/',methods=['POST','GET'])
+def remote_doing():
+    params=request.args if request.method == 'GET' else request.form
+    from assets_class import remote_exec
+    msg=remote_exec.remote_cmds(params)
+    print msg
+    return json.dumps({'_is_ok':1,'msg':msg})
+
 

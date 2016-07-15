@@ -1,10 +1,13 @@
 #encoding:utf-8
+import json
 import string
 from random import choice
 from functools import wraps
 
 import time
 import datetime
+
+import paramiko
 
 from dbutils import MySQLConnection as SQL
 from dbutils import md5_str
@@ -129,20 +132,47 @@ class User(object):
         mgrpass = params.get('mgrpass')
         mgruser = 'admin'
         ip = params.get('ip')
-        cmd = params.get('cmd')
-        _sql = 'select * from user where user=%s and password=%s'
-        _args = (mgruser,mgrpass)
+        cmd = params.get('cmd').split('\n')
+        _sql = 'select * from user where username=%s and password=%s'
+        _args = (mgruser,md5_str(mgrpass))
         _sql_count,rt_list = SQL.excute_sql(_sql,_args)
         if _sql_count != 0 :
-            return Ssh_cmd.ssh_cmd(ip,cmd)
-        return False,'管理员密码严重失败'
+            _ssh = Ssh_cmd(ip,cmd)
+            return _ssh.ssh_cmd()
+        return False,'管理员密码验证失败'
 
 class Ssh_cmd(object):
-    def __init__(self,ip,cmd):
+    def __init__(self,ip,cmd=[]):
         self.ip = ip
         self.cmd = cmd
+        self.username = 'op'
+        self.password = 'qingdao0613'
+        self.port = 22
+        self._ssh = None
+        self.__conn()
+
+    def __conn(self):
+        try:
+            self._ssh = paramiko.SSHClient()
+            self._ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            self._ssh.connect(self.ip, self.port, self.username,self.password)
+        except BaseException as e:
+            return False,e
 
     def ssh_cmd(self):
+        _rt_list = []
+        if self._ssh:
+            for _cmd in self.cmd:
+                stdin, stdout, stderr = self._ssh.exec_command(_cmd.strip('\r'))
+                # _rt_list.append([_cmd, stdout.readlines(), stderr.readlines()])
+                _rt_list.append([stdout.readlines(), stderr.readlines()])
+
+            self._ssh.close()
+            return True,_rt_list
+        return False,'执行失败'
+
+
+    def ssh_sftp(self):
         pass
 
 

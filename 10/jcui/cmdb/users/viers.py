@@ -281,16 +281,16 @@ def assets__concmd():
         nums = 1
         for x in _result:
             if x[0] :
-                print 'aa'
                 _data += (nums,x[0])
             else:
-                print 'bb'
                 _data += (nums, x[1])
             nums +=1
     elif _result:
         error = _result
+        _data = ''
     else:
         error = '执行失败'
+        _data = ''
     return jsonify({'is_ok':_is_ok,'error':error,'data_result':_data})
 
 '''

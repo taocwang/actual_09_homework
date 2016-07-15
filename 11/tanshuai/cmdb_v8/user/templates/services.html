@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+{% block title %}日志显示{% endblock %}
+{% block nav_server %}active{% endblock %}
+{% block main %}
+<div class="row">
+    <form class="form-inline" action="/services/" method="post">
+      <div class="form-group " >
+        <label for="url">URL：</label>
+        <input type="text" name="url" class="form-control" id="url" placeholder="请输入网站URL地址" required>
+      </div>
+      <div class="form-group " >
+        <label for="username">用户名：</label>
+        <input type="text" name="username" class="form-control" id="username" placeholder="请输入网站用户名" required>
+      </div>
+      <div class="form-group " >
+        <label for="password">密码：</label>
+        <input type="text" name="password" class="form-control" id="password" placeholder="请输入网站密码" required>
+      </div>
+      <div class="form-group " >
+        <label for="func">功能：</label>
+        <input type="text" name="func" class="form-control" id="func" placeholder="填写网站用途或功能" required>
+      </div>
+      <button type="submit" class="btn btn-primary">添加信息</button>
+    </form>
+    <table class="table table-striped table-bordered table-hover table-condensed" border="1px">
+        <thead>
+            <tr class="active">
+                <th>ID</th>
+                <th>网站</th>
+                <th>登录帐号</th>
+                <th>登录密码</th>
+                <th>备注说明</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in service_list %}
+            <tr class="warning">
+                <td>{{ service['id'] }}</td>
+                <td><a href="{{ service['domain_name'] }}">{{ service['domain_name'] }}</a></td>
+                <td>{{ service['username'] }}</td>
+                <!--<td >********</td>-->
+                <td >{{ service['password'] }}</td>
+                <td>{{ service['function'] }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#update-services" data-id="{{ service['id'] }}" data-domain="{{ service['domain_name'] }}" data-username="{{ service['username'] }}" data-password="{{ service['password'] }}" data-function="{{ service['function'] }}">更新</button>
+                    <a class="btn btn-danger " href="/services/del/?id={{ service['id'] }}" onclick="return confirm('确定删除吗？');">删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block dialog %}
+<!--更新用户信息的dialog页面-->
+<div class="modal fade" id="update-services" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">更新信息</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" id="services-id"/>
+          <div class="form-group">
+            <label for="services-domain" class="control-label">网站:</label>
+            <input type="text" class="form-control" id="services-domain">
+          </div>
+          <div class="form-group">
+            <label for="services-username" class="control-label">登录帐号:</label>
+            <input type="text" class="form-control" id="services-username">
+          </div>
+          <div class="form-group">
+            <label for="services-password" class="control-label">登录密码:</label>
+            <input type="text" class="form-control" id="services-password">
+          </div>
+          <div class="form-group">
+            <label for="services-info" class="control-label">备注说明:</label>
+            <input type="text" class="form-control" id="services-info">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="services-commit">更新</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+    jQuery(document).ready(function(){
+        //更新服务信息--获取服务信息并将值填写到dialog页面
+        $('#update-services').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var domain = button.data('domain')
+            var username = button.data('username')
+            var password = button.data('password')
+            var info = button.data('function')
+            $('#services-id').val(id);
+            $('#services-domain').val(domain);
+            $('#services-username').val(username);
+            $('#services-password').val(password);
+            $('#services-info').val(info);
+        });
+        //更新服务信息--处理dialog页面提交后的请求
+        $('#services-commit').on('click', function () {
+            var params = {};
+            params['id'] = $('#services-id').val()
+            params['url'] = $('#services-domain').val()
+            params['username'] = $('#services-username').val()
+            params['password'] = $('#services-password').val()
+            params['func'] = $('#services-info').val()
+            console.log(params);
+            $.post('/services/update/',
+                params,
+                function(data){
+                    if (data['is_ok']){
+                        alert('更新成功！');
+                        jQuery('#update-services').modal('hide');
+                        window.location.reload();
+                    } else {
+                        alert('更新失败！');
+                        jQuery('#update-services').modal('hide');
+                    }
+                },
+                'json'
+            );
+        });
+    });
+{% endblock %}

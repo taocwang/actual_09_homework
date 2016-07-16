@@ -1,0 +1,51 @@
+<div id="container" style="width:800px;height:400px"></div>
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'areaspline'
+        },
+        title: {
+            text: 'cpu和内存监控'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 60,
+            y: 3,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        xAxis: {
+            categories: {{datetime_list|safe}},
+        },
+        yAxis: {
+            title: {
+                text: 'CPU&内存使用率'
+            }
+        },
+        tooltip: {
+            shared: true,
+            valueSuffix: ' %'
+        },
+        credits: {
+            enabled: false
+        },
+        plotOptions: {
+            areaspline: {
+                fillOpacity: 0.5
+            }
+        },
+        series: [{
+            name: 'Cpu',
+            data: {{cpu_list|safe}}
+        }, {
+            name: 'Mem',
+            data: {{ram_list|safe}}
+        }]
+    });
+});
+
+</script>

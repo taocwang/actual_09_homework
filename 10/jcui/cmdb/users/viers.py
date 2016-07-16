@@ -1,12 +1,13 @@
 #encoding:utf-8
+import json
 import sys
 import random
 import string
 
+import datetime
 from flask import render_template,request,redirect,session, flash ,jsonify
 from . import app         #user模块下的变量,在__init__.py  中定义
-from modules import logs
-from modules.modules import User,Assets,Logs
+from modules.modules import User,Assets,Logs,Performs
 
 
 #
@@ -128,14 +129,14 @@ def nginx_logs():
         top = params.get('numbers')
     else:
         top = 10
-    access_list = logs.log_access(top=int(top))
+    access_list = Logs.log_access(top=int(top))
     return render_template('logstop.html',toplist=access_list,numbers=top)
 
 #触发后将日志导入到mysql中
 @app.route('/import_los/')
 @User.login_check
 def import_logs():
-    if logs.logs_import_sql():
+    if Logs.logs_import_sql():
         return 'ok'
 
 
@@ -147,7 +148,7 @@ def files_upload():
         filename = ''.join(random.sample(string.ascii_letters + string.digits, 8))
         filepath = '/home/op/test/%s.log' % filename
         files.save(filepath)
-        if logs.logs_import_sql(filepath):
+        if Logs.logs_import_sql(filepath):
             flash("日志上传成功")
         else:
             flash("日志上传失败")
@@ -200,6 +201,8 @@ def test():
 @User.login_check
 def assets_list():
     _assets = Assets.get_list()
+    for x in _assets:
+        x['purchase_date'] = x['purchase_date'].strftime("%Y-%m-%d")
     return render_template('assets.html',assets=_assets)                   #从数据库获取
 
 @app.route('/assets/create/',methods=['POST','GET'])
@@ -249,9 +252,46 @@ def assets_delete():
     if _is_ok:
         return redirect('/assets/')
     return render_template('assets.html')
-    # return redirect(url_for('assets',color='alert-danger',msg=u'删除失败'))
 
+@app.route('/assets/perform/', methods=['POST', 'GET'])
+@User.login_check
+def assets_perform():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id','')
+    _asset = Assets.get_by_id(id)
+    datetime_list,cpu_list,ram_list = Performs.get_list(_asset.get('ip'))
+    return render_template('assets_perform.html',datetime_list=json.dumps(datetime_list),cpu_list=json.dumps(cpu_list),ram_list=json.dumps(ram_list))
 
+@app.route('/assets/conssh/',methods=['POST','GET'])
+@User.login_check
+def assets__conssh():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id')
+    result = Assets.get_by_id(id)
+    return render_template('assets_conssh.html',result=result)
+
+@app.route('/assets/concmd/',methods=['POST','GET'])
+@User.login_check
+def assets__concmd():
+    params = request.args if request.method == 'GET' else request.form
+    _is_ok,_result = User.validate_mpass(params)
+    if _is_ok:
+        error = ''
+        _data = []
+        nums = 1
+        for x in _result:
+            if x[0] :
+                _data += (nums,x[0])
+            else:
+                _data += (nums, x[1])
+            nums +=1
+    elif _result:
+        error = _result
+        _data = ''
+    else:
+        error = '执行失败'
+        _data = ''
+    return jsonify({'is_ok':_is_ok,'error':error,'data_result':_data})
 
 '''
 登出用户
@@ -260,5 +300,13 @@ def assets_delete():
 def logout():
     session.clear()
     return redirect('/')
+
+@app.route('/performs/',methods=['POST'])
+def performs():
+    params =  request.get_json()
+    Performs.add(params)
+    return json.dumps({'code':200,'text':'success'})
+
+
 
 

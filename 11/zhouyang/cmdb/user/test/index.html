@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>学习bootstrap</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        con-1
+    </div>
+    <div class="container-fluid">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"> Remember me
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Sign in</button>
+            </div>
+          </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-5">.col-md-8</div>
+        <div class="col-md-4 col-md-offset-3">.col-md-4</div>
+    </div>
+
+    <div class="row">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>密码</th>
+                            <th>年龄</th>
+                            <th>性别</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>kk</td>
+                            <td>kk123456</td>
+                            <td>29</td>
+                            <td>男</td>
+                        </tr>
+                        <tr>
+                            <td>kk2</td>
+                            <td>kk123456</td>
+                            <td>29</td>
+                            <td>男</td>
+                        </tr>
+                        <tr>
+                            <td>kk3</td>
+                            <td>kk123456</td>
+                            <td>29</td>
+                            <td>男</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+<script type="text/javascript">
+      jQuery(document).ready(function() {
+
+          jQuery('table').DataTable({
+              language: {
+                  "sProcessing": "处理中...",
+                  "sLengthMenu": "显示 _MENU_ 项结果",
+                  "sZeroRecords": "没有匹配结果",
+                  "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                  "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                  "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                  "sInfoPostFix": "",
+                  "sSearch": "搜索:",
+                  "sUrl": "",
+                  "sEmptyTable": "表中数据为空",
+                  "sLoadingRecords": "载入中...",
+                  "sInfoThousands": ",",
+                  "oPaginate": {
+                      "sFirst": "首页",
+                      "sPrevious": "上页",
+                      "sNext": "下页",
+                      "sLast": "末页"
+                  },
+                  "oAria": {
+                      "sSortAscending": ": 以升序排列此列",
+                      "sSortDescending": ": 以降序排列此列"
+                  }
+              }
+          });
+
+          jQuery('#dialog').on('show.bs.modal', function (event) {
+              var button = $(event.relatedTarget)   //这句不变，无需理解吧
+              var url = button.data('url')
+              var title = button.data('title')
+              var sub = button.data('submit')
+              var btn_text = button.data('btn-text')
+              var that = this;
+              jQuery(this).find('.modal-title').html(title);  //html和text的不同时html会对字符进行html转义
+              jQuery(this).find('.btn-form-submit').text(sub);
+              jQuery(this).find('.modal-body').load(url);  //load方法与下面ajax的get方法一样。
+          });
+
+
+          jQuery('.btn-form-submit').on('click', function () {
+              var _form = jQuery('#dialog').find('form');
+              var _url = _form.attr('action');
+              var _params = _form.serialize();
+              jQuery.post(_url, _params, function (result) {
+                          if (result['_is_ok']) {
+                              alert(result['msg'])
+                              jQuery('#dialog').modal('hide') //隐藏当前窗口
+                              window.location.reload()  //刷新页面
+                              //window.location.replace('/logs/') //跳转到其他页面
+                          }
+                          else {
+                              alert(result['msg'])
+                          }
+                      },
+                      'json'
+              );
+          });
+
+          jQuery('.btn-delete').on('click', function () {
+              var that = this
+              var _url = jQuery(that).data('url')
+              var _text = jQuery(that).data('text')
+              swal({
+                          title: '确定删除资产' + _text,
+                          text: "",
+                          type: "warming",
+                          showCancelButton: false,
+                          //confirmButtonColor: "#DD6B55",
+                          confirmButtonText: "确定",
+                          cancelButtonText: "取消",
+                          closeOnConfirm: true,
+                          closeOnCancel: true
+                      },
+                      function (isConfirm) {
+                          if (isConfirm) {
+                              window.location.replace(url);
+                          }
+                      })
+          });
+      });
+         </script>
+
+
+</body>
+</html>

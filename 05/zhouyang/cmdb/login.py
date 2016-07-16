@@ -12,7 +12,7 @@ def get_users(file):
 def check_user(username,password):
     users=get_users(uconf.user_conf)
     for user in users:
-        if user.get('username') == username and user.get('password')==password:
+        if user.get('username') == username and user.get('password') == password:
             return True
     return False
 

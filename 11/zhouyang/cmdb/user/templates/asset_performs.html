@@ -1,0 +1,45 @@
+<div id="container" style="width:550px;height:200px"></div>
+<script type="text/javascript">
+    $(function () {
+    $('#container').highcharts({
+        title: {
+            text: '机器负载监控视图',
+            x: -20 //center
+        },
+        subtitle: {
+            text: '来自周洋测试',
+            x: -20
+        },
+        xAxis: {
+            categories: {{times|safe}}
+        },
+        yAxis: {
+            title: {
+                text: '使用量 (%)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'CPU',
+            data: {{cpus}}
+        }, {
+            name: 'RAM',
+            data: {{rams}}
+        }]
+    });
+});
+
+</script>

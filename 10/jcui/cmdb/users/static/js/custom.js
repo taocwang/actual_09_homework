@@ -45,7 +45,14 @@ jQuery(document).ready(function () {
              var title = button.data('title');
              var btn_txt = button.data('btn-txt');
              var url = button.data('url');
+             var name = button.data('name')
+             if (name == "monitor" || name == "cmd"){
+                 jQuery('.modal-dialog').addClass('modal-lg')
+             }else{
+                 jQuery('.modal-dialog').removeClass('modal-lg')
+             }
              var that = this;
+
              jQuery(that).find('.modal-title').text(title);
              jQuery(that).find('.dialog-commit').text(btn_txt) ;
              jQuery(that).find('.modal-body').load(url)
@@ -63,20 +70,24 @@ jQuery(document).ready(function () {
             var params = _form.serialize()          /*获取提交的信息 name为key  值为value*/
             jQuery.post(url,params,function (data) {
                 if (data['is_ok']){
-                    swal({
-                         title: data['success'],
-                         text: '',
-                         type: "success",
-                         showCancelButton: false,
-                         confirmButtonColor: "#DD6B55",
-                         confirmButtonText: "确认",
-                         cancelButtonText: "关闭",
-                         closeOnConfirm: true,
-                         closeOnCancel: false
-                    },
-                    function(isConfirm){
-                        window.location.reload()
-                    });
+                    if (data['data_result']) {
+                        document.getElementById('assets-cmd-result').innerHTML = data['data_result'];
+                    }else{
+                        swal({
+                             title: data['success'],
+                             text: '',
+                             type: "success",
+                             showCancelButton: false,
+                             confirmButtonColor: "#DD6B55",
+                             confirmButtonText: "确认",
+                             cancelButtonText: "关闭",
+                             closeOnConfirm: true,
+                             closeOnCancel: false
+                        },
+                        function(isConfirm){
+                            window.location.reload()
+                        });
+                    }
                 }else{
                     swal({
                          title: "错误信息",
@@ -101,7 +112,7 @@ jQuery(document).ready(function () {
             var that = this
             var id = jQuery(that).data('id')
             var text = jQuery(that).data('text')
-            console.log(id)
+            // console.log(id)
             swal({
                 title: "您确定要删除吗？",
                 text: "您确定要删除"+text+"这条数据？",

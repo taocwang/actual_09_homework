@@ -1,8 +1,16 @@
 #encoding:utf-8
+import json
 import string
 from random import choice
 from functools import wraps
+
+import time
+import datetime
+
+import paramiko
+
 from dbutils import MySQLConnection as SQL
+from dbutils import md5_str
 from flask import session,redirect
 
 class User(object):
@@ -29,8 +37,8 @@ class User(object):
     @classmethod
     def validate_login(cls,username, password):
         _columns  = ('id','username')
-        _sql = 'select * from user where username = %s and password = md5(%s)'
-        args = (username, password)
+        _sql = 'select * from user where username = %s and password = %s'
+        args = (username, md5_str(password))
         sql_count, rt_list = SQL.excute_sql(_sql, args)
         return dict(zip(_columns,rt_list[0])) if sql_count != 0 else None
 
@@ -58,12 +66,12 @@ class User(object):
         telphone = params.get('telphone')
         email = params.get('email')
         _sql_select = 'select * from user where username = %s'
-        _sql_insert = 'insert into user(username,password,age,telphone,email) values(%s,md5(%s),%s,%s,%s)'
+        _sql_insert = 'insert into user(username,password,age,telphone,email) values(%s,%s,%s,%s,%s)'
         agrs1 = (username,)
         _sql_count, rt_list = SQL.excute_sql(_sql_select, agrs1)
         if _sql_count != 0:
             return False, username + '已存在,请尝试其他的名字'
-        args2 = (username, password, age, telphone, email)
+        args2 = (username, md5_str(password), age, telphone, email)
         SQL.excute_sql(_sql_insert, args2)
         return True, '添加成功'
 
@@ -102,8 +110,8 @@ class User(object):
 
     @classmethod
     def change_passwd(cls,uid, upass):
-        _sql = 'update user set password = md5(%s) where id = %s'
-        _args = (upass, uid)
+        _sql = 'update user set password = %s where id = %s'
+        _args = (md5_str(upass), uid)
         _sql_count, rt_list = SQL.excute_sql(_sql, _args)
         if _sql_count:
             return True, '修改成功'
@@ -111,18 +119,101 @@ class User(object):
 
     @classmethod
     def user_reset(cls,id, username):
-        _sql = 'update user set password = md5(%s) where id=%s and username=%s'
+        _sql = 'update user set password = %s where id=%s and username=%s'
         newpassword = ''.join([choice(string.ascii_letters + string.digits) for i in range(8)])
-        args = (newpassword, id, username)
+        args = (md5_str(newpassword), id, username)
         _sql_count, rt_list = SQL.excute_sql(_sql, args)
         if _sql_count != 0:
             return True, '重置成功', newpassword
         return False, '重置失败', newpassword
 
+    @classmethod
+    def validate_mpass(cls,params):
+        mgrpass = params.get('mgrpass')
+        mgruser = 'admin'
+        ip = params.get('ip')
+        cmd = params.get('cmd').split('\n')
+        _sql = 'select * from user where username=%s and password=%s'
+        _args = (mgruser,md5_str(mgrpass))
+        _sql_count,rt_list = SQL.excute_sql(_sql,_args)
+        if _sql_count != 0 :
+            _ssh = Ssh_cmd(ip,cmd)
+            return _ssh.ssh_cmd()
+        return False,'管理员密码验证失败'
+
+class Ssh_cmd(object):
+    def __init__(self,ip,cmd=[]):
+        self.ip = ip
+        self.cmd = cmd
+        self.username = 'op'
+        self.password = 'qingdao0613'
+        self.port = 22
+        self._ssh = None
+        self.__conn()
+
+    def __conn(self):
+        try:
+            self._ssh = paramiko.SSHClient()
+            self._ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            self._ssh.connect(self.ip, self.port, self.username,self.password)
+        except BaseException as e:
+            return False,e
+
+    def ssh_cmd(self):
+        _rt_list = []
+        if self._ssh:
+            for _cmd in self.cmd:
+                stdin, stdout, stderr = self._ssh.exec_command(_cmd.strip('\r'))
+                # _rt_list.append([_cmd, stdout.readlines(), stderr.readlines()])
+                _rt_list.append([stdout.readlines(), stderr.readlines()])
+
+            self._ssh.close()
+            return True,_rt_list
+        return False,'执行失败'
+
+
+    def ssh_sftp(self):
+        pass
+
 
 class Logs(object):
+    @classmethod
+    def log_anslysis(cls,sfile):
+        file_dict = {}
+        try:
+            files = open(sfile, 'r')
+            for i in files:
+                i = i.split()
+                x, y, z = i[0], i[6], i[8]
+                file_dict[(x, y, z)] = file_dict.get((x, y, z), 0) + 1
+        except BaseException as e:
+            print e
+            return ''
+        finally:
+            if files:
+                files.close()
+        return sorted(file_dict.items(), key=lambda x: x[1], reverse=False)
 
-    pass
+    @classmethod
+    def logs_import_sql(cls,logs_path):
+        # logs_path = '/home/op/test/www_access_20140823.log'
+        # logs_path = '/home/jcui/files/www_access_20140823.log'
+        log_list = cls.log_anslysis(logs_path)
+        _sql = 'insert into access_logs(ip,url,code,nums) values(%s,%s,%s,%s)'
+        if SQL.excute_log_sql(_sql, log_list):
+            return True
+        return False
+
+    @classmethod
+    def log_access(cls,top=10):
+        colloens = ('id', 'ip', 'url', 'code', 'nums')
+        _sql = 'select * from access_logs order by nums desc limit %s'
+        args = (top,)
+        rt = []
+        _sql_count, rt_list = SQL.excute_sql(_sql, args)
+        for x in rt_list:
+            rt.append(dict(zip(colloens, x)))
+        return rt
 
 
 
@@ -151,7 +242,7 @@ class Assets(object):
         _columns = _column.split(',')
         _sql = 'select {column} from assets,idc_name where assets.status=0 and assets.idc_id = idc_name.idc_id;'.format(column=_column)
         _cnt,_rt_list = SQL.excute_sql(_sql)
-        return [dict(zip(_columns,i)) for i in _rt_list]
+        return [dict(zip(_columns,i)) for i in _rt_list ]
 
     @classmethod
     def get_by_id(cls,aid):
@@ -163,6 +254,9 @@ class Assets(object):
         rt = []
         if _cnt != 0:
             for x in range(len(_column.split(','))):
+                if _column.split(',')[x] == 'purchase_date':
+                    rt.append((_column.split(',')[x], _rt_list[0][x].strftime("%Y-%m-%d")))
+                    continue
                 rt.append((_column.split(',')[x], _rt_list[0][x]))
             return dict(rt)
         return ''
@@ -275,3 +369,31 @@ class Assets(object):
         if _cnt != 0:
             return True, '更新成功'
         return False, '更新失败'
+
+
+class Performs(object):
+
+    @classmethod
+    def add(cls,req):
+        _ip = req.get('ip')
+        _cpu = req.get('cpu')
+        _ram = req.get('ram')
+        _time = req.get('time')
+        _sql = 'insert into performs(ip,cpu,ram,time) VALUES (%s,%s,%s,%s)'
+        SQL.excute_sql(_sql,(_ip,_cpu,_ram,_time),False)
+    @classmethod
+    def get_list(cls,ip):
+        _sql = 'select cpu,ram,time from performs where ip=%s and time >=%s ORDER by time asc'
+        _args = (ip,time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time() - 60*30)))
+        _cnt,_rt_list = SQL.excute_sql(_sql,_args)
+        cpu_list = []
+        ram_list = []
+        time_list = []
+        for _cpu,_ram,_time in _rt_list:
+            cpu_list.append(_cpu)
+            ram_list.append(_ram)
+            time_list.append(_time.strftime('%H:%M'))
+        # time_list.reverse()
+        # cpu_list.reverse()
+        # ram_list.reverse()
+        return time_list,cpu_list,ram_list

@@ -1,0 +1,42 @@
+<form class="form-horizontal" action="/user/modify/" method="post">
+    <div class="form-group">
+        <label class="col-md-3 control-label">用户名:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="username" value="{{params}}" readonly/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">原密码:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="password" name="password"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">新密码:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="new_password" name="new_password"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">确认新密码:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="try_password" name="try_password"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">年龄:</label>
+        <div class="col-md-5">
+            <input class="form-control" id="age" type="text" name="age" data-slider-id='ex1Slider' data-slider-min="1" data-slider-max="120" data-slider-step="1" data-slider-value="27"/>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        $('#age').slider({
+          formatter: function (value) {
+            return '年龄: ' + value;
+          }
+        });
+});
+</script>

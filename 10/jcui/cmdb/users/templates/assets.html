@@ -37,10 +37,14 @@
                     <td>{{x['admin']}}({{x['business']}})</td>
                     <td>{{x['purchase_date']}}({{x['warranty']}}年)</td>
                     <td>{{x['model']}}({{x['vendor']}})</td>
-                    <td width="200">
+                    <td width="300">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#dialog" data-title="资源监控"
+                                data-url="/assets/perform/?id={{ x['id'] }}" data-name="monitor" data-btn-txt="关闭">监控</button>
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#dialog" data-title="更新资产"
-                                data-url="/assets/modify/?id={{ x['id'] }}" data-btn-txt="更新">更新资产</button>
-                        <button type="button" class="btn btn-danger del-assets" data-text="{{ x['hostname'] }}" data-id="{{ x['id'] }}">删除资产</button>
+                                data-url="/assets/modify/?id={{ x['id'] }}" data-btn-txt="更新">更新</button>
+                        <button type="button" class="btn btn-danger del-assets" data-text="{{ x['hostname'] }}" data-id="{{ x['id'] }}">删除</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#dialog" data-title="远程执行"
+                                data-url="/assets/conssh/?id={{ x['id'] }}" data-name="cmd" data-btn-txt="执行">执行</button>
                         <!--<a href="/assets/delete/?id={{ x['id'] }}" ><button type="button" onclick="return confirm('确定删除么?')"  class="btn btn-success">删除资产</button></a>-->
                     </td>
                 </tr>
@@ -75,6 +79,7 @@
     <script type="application/javascript" src="/static/js/datatable/jquery.dataTables.js"></script>
     <script type="application/javascript" src="/static/js/datatable/dataTables.bootstrap.js"></script>
     <script type="application/javascript" src="/static/js/custom.js"></script>
+    <script type="application/javascript" src="/static/Highcharts-4.2.5/Highcharts-4.2.5/js/highcharts.js"></script>
 {% endblock %}
 {% block javascipt %}
 {% endblock %}

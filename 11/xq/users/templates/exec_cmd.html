@@ -1,0 +1,32 @@
+
+<form class="form-horizontal" action="/asserts/execcmd/" method="post">
+ <input  id="serverid"  class="form-control" name="serverid" type="hidden"/>
+
+    <div class="form-group">
+        <label class="col-md-3 control-label">目标IP:</label>
+        <div class="col-md-5">
+            <input type="text" id="serverip"  class="form-control" name="serverip" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">管理员密码:</label>
+        <div class="col-md-5">
+            <input type="password" id="manage-passwd" class="form-control" name="manage-passwd"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">执行命令:</label>
+        <div class="col-md-10">
+            <textarea  class="form-control" id="cmd" type="text" name="cmd" placeholder="多条命令之间请用分号隔开"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">结果返回:</label>
+        <div class="col-md-10">
+            <textarea  class="form-control" id="result" type="text" name="result"  style="height:400px;"></textarea>
+        </div>
+    </div>
+</form>
+
+
+

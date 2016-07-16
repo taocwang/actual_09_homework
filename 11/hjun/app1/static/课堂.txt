@@ -1,0 +1,1 @@
+mysqldump -uroot -p --opt app1 -R --hex-blob -x >app1.sql;	

@@ -45,7 +45,6 @@ def collect():
     rt['ram'] = collect_ram()
     rt['time'] = time.strftime('%Y-%m-%d %H:%M:%S')
 
-    print rt
     return rt
 
 def send(msg):

@@ -145,8 +145,8 @@ class Ssh_cmd(object):
     def __init__(self,ip,cmd=[]):
         self.ip = ip
         self.cmd = cmd
-        self.username = 'op'
-        self.password = 'qingdao0613'
+        self.username = 'jcui'
+        self.password = '6522123'
         self.port = 22
         self._ssh = None
         self.__conn()

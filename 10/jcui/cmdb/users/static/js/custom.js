@@ -2,6 +2,7 @@
  * Created by op on 16-7-5.
  */
 jQuery(document).ready(function () {
+        var time_interval= null;
         // 分页展示
         $('table').DataTable({
             "language": {
@@ -55,13 +56,35 @@ jQuery(document).ready(function () {
 
              jQuery(that).find('.modal-title').text(title);
              jQuery(that).find('.dialog-commit').text(btn_txt) ;
-             jQuery(that).find('.modal-body').load(url)
+             jQuery(that).find('.modal-body').load(url) ;
+
 
 //             jQuery.get(url,{},function (data) {
 //                 jQuery(that).find('.modal-body') .html(data);
 //             })
 
          })
+        //调用监控展示
+         jQuery('#monitor-dialog').on('show.bs.modal',function (event) {
+             var button = jQuery(event.relatedTarget);
+             var title = button.data('title');
+             var btn_txt = button.data('btn-txt');
+             var url = button.data('url');
+             var name = button.data('name')
+             var that = this;
+
+             jQuery(that).find('.modal-title').text(title);
+             jQuery(that).find('.dialog-commit').text(btn_txt) ;
+             jQuery(that).find('.modal-body').load(url) ;
+             time_interval = setInterval(function () {
+                jQuery(that).find('.modal-body').load(url) ;
+             },60*1000)
+         });
+
+        jQuery('.monitor-close').on('click',function () {
+            clearInterval(time_interval);
+            jQuery('#monitor-dialog').modal('hide');
+        });
 
         //修改资产提交返回弹窗
         jQuery('.dialog-commit').on('click',function () {

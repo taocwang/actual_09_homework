@@ -262,10 +262,12 @@ def assets_perform():
     id = params.get('id','')
     _asset = Assets.get_by_id(id)
     datetime_list,cpu_list,ram_list = Performs.get_list(_asset.get('ip'))
-    print datetime_list
-    print cpu_list
-    print ram_list
-    return render_template('assets_perform.html',datetime_list=json.dumps(datetime_list),cpu_list=json.dumps(cpu_list),ram_list=json.dumps(ram_list))
+    cpu_end = {}
+    cpu_end['y'] = cpu_list[-1]
+    ram_end = {}
+    ram_end['y'] = ram_list[-1]
+    return render_template('assets_perform.html',datetime_list=json.dumps(datetime_list),cpu_list=json.dumps(cpu_list),ram_list=json.dumps(ram_list),cpu_end=json.dumps(cpu_end),
+                           ram_end=json.dumps(ram_end),id=id)
 
 @app.route('/assets/conssh/',methods=['POST','GET'])
 @User.login_check
@@ -298,6 +300,27 @@ def assets__concmd():
         _data = ''
     return jsonify({'is_ok':_is_ok,'error':error,'data_result':_data})
 
+@app.route('/assets/performs/endstat/')
+@User.login_check
+def performs_cpu():
+    params = request.args if request.method == 'GET' else request.form
+    type_name = params.get('name')
+    id = params.get('id')
+    _asset = Assets.get_by_id(id)
+    datetime_list, cpu_list, ram_list = Performs.get_list(_asset.get('ip'))
+    if type_name == 'cpu':
+        end_cpu = cpu_list[-1]
+        print end_cpu
+        return jsonify({'y': end_cpu})
+    elif type_name == 'ram':
+        end_ram = ram_list[-1]
+        print end_ram
+        return jsonify({'y': end_ram})
+
+
+
+
+
 '''
 登出用户
 '''
@@ -315,7 +338,5 @@ def performs():
     params =  request.get_json()
     Performs.add(params)
     return json.dumps({'code':200,'text':'success'})
-
-
 
 

@@ -406,8 +406,8 @@ class Performs(object):
         ram_list = []
         time_list = []
         for _cpu,_ram,_time in _rt_list:
-            cpu_list.append(_cpu)
-            ram_list.append(_ram)
+            cpu_list.append(round(_cpu,2))
+            ram_list.append(round(_ram,2))
             time_list.append(_time.strftime('%H:%M'))
         # time_list.reverse()
         # cpu_list.reverse()

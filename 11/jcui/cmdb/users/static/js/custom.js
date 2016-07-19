@@ -76,9 +76,9 @@ jQuery(document).ready(function () {
              jQuery(that).find('.modal-title').text(title);
              jQuery(that).find('.dialog-commit').text(btn_txt) ;
              jQuery(that).find('.modal-body').load(url) ;
-             time_interval = setInterval(function () {
-                jQuery(that).find('.modal-body').load(url) ;
-             },30*1000)
+             // time_interval = setInterval(function () {
+             //    jQuery(that).find('.modal-body').load(url) ;
+             // },30*1000)
          });
 
         jQuery('.monitor-close').on('click',function () {

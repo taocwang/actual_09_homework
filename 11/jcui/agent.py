@@ -71,7 +71,7 @@ if __name__ == '__main__':
             _msg = collect()
             logger.debug(_msg)
             send(_msg)
-            time.sleep(30)
+            time.sleep(60)
             logger.debug(time.strftime('%Y-%m-%d %H:%M:%S'))
         except BaseException as e:
             logger.error(traceback.format_exc())

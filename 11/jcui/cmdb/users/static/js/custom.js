@@ -78,7 +78,7 @@ jQuery(document).ready(function () {
              jQuery(that).find('.modal-body').load(url) ;
              time_interval = setInterval(function () {
                 jQuery(that).find('.modal-body').load(url) ;
-             },60*1000)
+             },30*1000)
          });
 
         jQuery('.monitor-close').on('click',function () {

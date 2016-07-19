@@ -145,8 +145,8 @@ class Ssh_cmd(object):
     def __init__(self,ip,cmd=[]):
         self.ip = ip
         self.cmd = cmd
-        self.username = 'jcui'
-        self.password = '6522123'
+        self.username = 'op'
+        self.password = 'qingdao0613'
         self.port = 22
         self._ssh = None
         self.__conn()
@@ -215,6 +215,22 @@ class Logs(object):
             rt.append(dict(zip(colloens, x)))
         return rt
 
+    @classmethod
+    def log_code_list(cls):
+        _sql = 'select code,sum(nums) from access_logs group by code'
+        _sql_count,_rt_list = SQL.excute_sql(_sql)
+        _code_list = []
+        all_code = 0
+        if _sql_count != 0:
+            for _code,_nums in _rt_list:
+                all_code += _nums
+            for _code,_nums in _rt_list:
+                rt = {}
+                rt['name'] = _code
+                rt['y'] = round(_nums/all_code,2)
+                _code_list.append(rt)
+            return _code_list
+        return []
 
 
 class Assets(object):

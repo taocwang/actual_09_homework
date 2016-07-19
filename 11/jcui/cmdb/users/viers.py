@@ -131,7 +131,8 @@ def nginx_logs():
     else:
         top = 10
     access_list = Logs.log_access(top=int(top))
-    return render_template('logstop.html',toplist=access_list,numbers=top)
+    code_list = Logs.log_code_list()
+    return render_template('logstop.html',toplist=access_list,numbers=top,code_list=json.dumps(code_list))
 
 #触发后将日志导入到mysql中
 @app.route('/import_los/')
@@ -261,6 +262,9 @@ def assets_perform():
     id = params.get('id','')
     _asset = Assets.get_by_id(id)
     datetime_list,cpu_list,ram_list = Performs.get_list(_asset.get('ip'))
+    print datetime_list
+    print cpu_list
+    print ram_list
     return render_template('assets_perform.html',datetime_list=json.dumps(datetime_list),cpu_list=json.dumps(cpu_list),ram_list=json.dumps(ram_list))
 
 @app.route('/assets/conssh/',methods=['POST','GET'])

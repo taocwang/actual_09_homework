@@ -15,7 +15,7 @@ smtp_host = 'smtp.sohu.com'
 smtp_port = 25
 smtp_user = 'cui6522123@sohu.com'
 smtp_pass = '13700336165'
-alarm_revices = ['cui6522123@sohu.com']
+alarm_revices = ['cui6522123@sohu.com','jia.cui@cloudacc-inc.com']
 
 
 #app_key

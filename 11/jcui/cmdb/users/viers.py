@@ -269,6 +269,24 @@ def assets_perform():
     return render_template('assets_perform.html',datetime_list=json.dumps(datetime_list),cpu_list=json.dumps(cpu_list),ram_list=json.dumps(ram_list),cpu_end=json.dumps(cpu_end),
                            ram_end=json.dumps(ram_end),id=id)
 
+@app.route('/assets/perform/monitor/', methods=['POST', 'GET'])
+@User.login_check
+def assets_perform_monitor():
+    params = request.args if request.method == 'GET' else request.form
+    id = params.get('id')
+    _asset = Assets.get_by_id(id)
+    datetime_list, cpu_list, ram_list = Performs.get_list(_asset.get('ip'))
+    datetime_end = {}
+    cpu_end = {}
+    ram_end = {}
+    datetime_end['y'] = datetime_list[-1]
+    cpu_end['y'] = cpu_list[-1]
+    ram_end['y'] = ram_list[-1]
+    return jsonify(datetime_end,cpu_end,ram_end)
+
+
+
+
 @app.route('/assets/conssh/',methods=['POST','GET'])
 @User.login_check
 def assets__conssh():

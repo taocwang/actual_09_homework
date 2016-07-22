@@ -402,14 +402,13 @@ class Performs(object):
         _sql = 'select cpu,ram,time from performs where ip=%s and time >=%s ORDER by time asc'
         _args = (ip,time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time() - 60*30)))
         _cnt,_rt_list = SQL.excute_sql(_sql,_args)
-        cpu_list = []
-        ram_list = []
-        time_list = []
-        for _cpu,_ram,_time in _rt_list:
-            cpu_list.append(round(_cpu,2))
-            ram_list.append(round(_ram,2))
-            time_list.append(_time.strftime('%H:%M'))
-        # time_list.reverse()
-        # cpu_list.reverse()
-        # ram_list.reverse()
-        return time_list,cpu_list,ram_list
+        if _cnt != 0:
+            cpu_list = []
+            ram_list = []
+            time_list = []
+            for _cpu,_ram,_time in _rt_list:
+                cpu_list.append(round(_cpu,2))
+                ram_list.append(round(_ram,2))
+                time_list.append(_time.strftime('%H:%M'))
+            return time_list,cpu_list,ram_list
+        return False,'',''

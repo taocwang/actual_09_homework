@@ -78,12 +78,13 @@ jQuery(document).ready(function () {
              jQuery(that).find('.modal-body').load(url) ;
              time_interval = setInterval(function () {
                 jQuery(that).find('.modal-body').load(url) ;
-             },60*1000)
+             },120*1000)
          });
 
         jQuery('.monitor-close').on('click',function () {
             clearInterval(time_interval);
             jQuery('#monitor-dialog').modal('hide');
+            window.location.reload()
         });
 
         //修改资产提交返回弹窗

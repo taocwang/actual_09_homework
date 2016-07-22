@@ -263,9 +263,10 @@ def assets_perform():
     _asset = Assets.get_by_id(id)
     datetime_list,cpu_list,ram_list = Performs.get_list(_asset.get('ip'))
     cpu_end = {}
-    cpu_end['y'] = cpu_list[-1]
     ram_end = {}
-    ram_end['y'] = ram_list[-1]
+    if datetime_list:
+        cpu_end['y'] = cpu_list[-1]
+        ram_end['y'] = ram_list[-1]
     return render_template('assets_perform.html',datetime_list=json.dumps(datetime_list),cpu_list=json.dumps(cpu_list),ram_list=json.dumps(ram_list),cpu_end=json.dumps(cpu_end),
                            ram_end=json.dumps(ram_end),id=id)
 
@@ -326,14 +327,14 @@ def performs_cpu():
     id = params.get('id')
     _asset = Assets.get_by_id(id)
     datetime_list, cpu_list, ram_list = Performs.get_list(_asset.get('ip'))
-    if type_name == 'cpu':
-        end_cpu = cpu_list[-1]
-        print end_cpu
-        return jsonify({'y': end_cpu})
-    elif type_name == 'ram':
-        end_ram = ram_list[-1]
-        print end_ram
-        return jsonify({'y': end_ram})
+    if datetime_list:
+        if type_name == 'cpu':
+            end_cpu = cpu_list[-1]
+            return jsonify({'y': end_cpu})
+        elif type_name == 'ram':
+            end_ram = ram_list[-1]
+            return jsonify({'y': end_ram})
+    return jsonify({'y':0})
 
 
 

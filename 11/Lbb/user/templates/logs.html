@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+{% block title %}日志分析{% endblock %}
+{% block nav_log %}active{% endblock %}
+{% block main%}
+<form class="form-inline" action="/uploadlogs/" method="post" enctype="multipart/form-data">
+  <div class="col-md-3">
+    <a class="btn btn-link" href="/logs/?topn=10">Top 10</a>
+    <a class="btn btn-link" href="/logs/?topn=25">Top 25</a>
+    <a class="btn btn-link" href="/logs/?topn=50">Top 50</a>
+  </div>
+  <div class="col-md-9">
+    <div class="input-group">
+      <input type="file" name="logfile" class="form-control" >
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">上传文件</button>
+      </span>
+    </div>
+  </div>
+</form>
+<br/><br/>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>IP地址</th>
+            <th>URL</th>
+            <th>CODE</th>
+            <th>次数</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for node in rt_list %}
+            <tr>
+                <td>{{ node[0] }}</td>
+                <td>{{ node[1] }}</td>
+                <td>{{ node[2] }}</td>
+                <td>{{ node[3] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="row">
+<div style="height: 400px;width: 700px" id="fxt1" class="col-md-6"></div>
+<div style="height: 400px;width: 700px" id="fxt2" class="col-md-6"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript"
+        src="{{ url_for('static', filename='Highcharts-4.2.5/js/highcharts.js') }}"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='Highcharts-4.2.5/js/highcharts-3d.js') }}"></script>
+{% endblock %}
+{% block js %}
+$(function () {
+    $('#fxt1').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: '日志状态码分析图'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '占用的半分比',
+            data: {{list|safe}}
+        }]
+    });
+});
+
+
+
+
+﻿$(function () {
+    $('#fxt2').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: '3D日志状态码分析图'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '占用百分比',
+            data: {{list|safe}}
+        }]
+    });
+});
+{% endblock %}

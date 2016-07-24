@@ -80,9 +80,12 @@ class MySQLConnection(object):
         _dbconn = MySQLConnection(host=gconfig.mysql_host, port=gconfig.mysql_port, user=gconfig.mysql_user,
                                   passwd=gconfig.mysql_passwd,
                                   db=gconfig.mysql_db, charset=gconfig.mysql_charset)
-        for i in range(0, len(loglist)):
-            args = (loglist[i][0][0], loglist[i][0][1], loglist[i][0][2], loglist[i][1])
-            sql_count += _dbconn.excute(sql, args)
+        # for i in range(0, len(loglist)):
+        #     print i
+        #     args = (loglist[i][0][0], loglist[i][0][1], loglist[i][0][2], loglist[i][1])
+        #     sql_count += _dbconn.excute(sql, args)
+        for i in loglist:
+            sql_count += _dbconn.excute(sql,i)
         _dbconn.close()
         return sql_count
 

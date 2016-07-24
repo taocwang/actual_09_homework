@@ -192,13 +192,14 @@ class Logs(object):
         finally:
             if files:
                 files.close()
-        return sorted(file_dict.items(), key=lambda x: x[1], reverse=False)
+        return [(x[0][0],x[0][1],x[0][2],x[1]) for x in sorted(file_dict.items(), key=lambda x: x[1], reverse=False) ]
 
     @classmethod
     def logs_import_sql(cls,logs_path):
         # logs_path = '/home/op/test/www_access_20140823.log'
         # logs_path = '/home/jcui/files/www_access_20140823.log'
         log_list = cls.log_anslysis(logs_path)
+        print log_list
         _sql = 'insert into access_logs(ip,url,code,nums) values(%s,%s,%s,%s)'
         if SQL.excute_log_sql(_sql, log_list):
             return True
@@ -232,6 +233,72 @@ class Logs(object):
             return _code_list
         return []
 
+    @classmethod
+    def log2_code_list(cls):
+        _sql = 'select status,count(status) from access_logs2 group by status'
+        _cnt,_rt_list = SQL.excute_sql(_sql)
+        status_legend = []
+        status_data = []
+        _code_list = []
+        if _cnt != 0:
+            for _status,_count in _rt_list:
+                status_legend.append(_status)
+                status_data.append({'name':_status,'value':_count})
+            return status_legend, status_data
+        return [],[]
+
+    @classmethod
+    def log2_time_status(cls):
+        _sql = 'select date_format(logtime,"%%Y-%%m-%%d %%H:00:00"),status,count(*) from access_logs2 where logtime >= %s group by logtime,status;'
+        _last_time = time.strftime('2014-08-%d %H:%M:%S',time.localtime(time.time() - 2 * 24 * 60 * 60))          #最近24小时的
+        _cnt,_rt_list = SQL.excute_sql(_sql,(_last_time,))
+
+        _legends = []
+        _times = []
+        _datas = []
+        _temp_dict = {}
+        for _time ,_status ,_cnt in _rt_list:
+            if _status not in _legends:
+                _legends.append(_status)
+            if _time not in _times:
+                _times.append(_time)
+            _temp_dict.setdefault(_status,{})
+            _temp_dict[_status][_time] = _cnt
+
+        for _status,_stat in _temp_dict.items():
+            _node = {
+                'name': _status,
+                'type': 'bar',
+                'barWidth':30,
+                'stack':'web_time_code',
+                'data':[_stat.get(x,0) for x in _times]
+            }
+            _datas.append(_node)
+
+        return _legends,_times,_datas
+
+    @classmethod
+    def log2_map(cls):
+        _map_geocoord = {
+            '上海': [121.4648, 31.2891],
+            '北京': [116.4551, 40.2539],
+            '大连': [122.2229, 39.4409],
+            '广州': [113.5107, 23.2196]
+        }
+
+        _map_markline = [
+            [{"name": '上海', "value": 95}, {"name": '北京'}],
+            [{"name": '广州', "value": 90}, {"name": '北京'}],
+            [{"name": '大连', "value": 80}, {"name": '北京'}]
+        ]
+
+        _map_markpoint = [
+            {"name": '上海', "value": 95},
+            {"name": '广州', "value": 90},
+            {"name": '大连', "value": 80}
+        ]
+
+        return _map_geocoord,_map_markline,_map_markpoint
 
 class Assets(object):
 

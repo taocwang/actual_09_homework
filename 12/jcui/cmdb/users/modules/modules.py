@@ -279,6 +279,12 @@ class Logs(object):
 
     @classmethod
     def log2_map(cls):
+        _sql = 'select city,lat,lng,count(city) from access_logs2 group by city,lat,lng;'
+        _server_ip = ''
+        _server_addr = ''
+        _server_lat = ''
+        _server_lng = ''
+
         _map_geocoord = {
             '上海': [121.4648, 31.2891],
             '北京': [116.4551, 40.2539],

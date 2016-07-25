@@ -49,7 +49,28 @@ ip varchar(128),
 url text,
 status int,
 lat float,
-lng float
+lng float,
+city varchar(32)
 ) engine=innodb default charset=utf8;
+
+
+
+python manage.py
+
+    web服务器 nginx + uwsgi + flask
+    wsgi => web server 网关接口 => 规范
+    uwsgi => 实现,工具,gunicorn
+
+    pip install uwsgi
+    pip install gunicorn
+
+    uwsgi -s 127.0.0.1:9010 -w moduel:Flask
+
+    user/__init__.py
+    uwsgi -s 127.0.0.1:9010 -w user:app
+    #uwsgi --http:9010 -w user:app
+    nginx => 9010
+
+
 
 '''

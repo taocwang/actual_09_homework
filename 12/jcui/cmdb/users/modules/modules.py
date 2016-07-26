@@ -250,7 +250,7 @@ class Logs(object):
     @classmethod
     def log2_time_status(cls):
         _sql = 'select date_format(logtime,"%%Y-%%m-%%d %%H:00:00"),status,count(*) from access_logs2 where logtime >= %s group by logtime,status;'
-        _last_time = time.strftime('2014-08-%d %H:%M:%S',time.localtime(time.time() - 2 * 24 * 60 * 60))          #最近24小时的
+        _last_time = time.strftime('2014-08-%d %H:%M:%S',time.localtime(time.time() - 4 * 24 * 60 * 60))          #最近24小时的
         _cnt,_rt_list = SQL.excute_sql(_sql,(_last_time,))
 
         _legends = []
@@ -280,31 +280,45 @@ class Logs(object):
     @classmethod
     def log2_map(cls):
         _sql = 'select city,lat,lng,count(city) from access_logs2 group by city,lat,lng;'
-        _server_ip = ''
-        _server_addr = ''
-        _server_lat = ''
-        _server_lng = ''
+        _server_ip = '211.151.99.93'
+        _server_addr = '北京'
+        _server_lat = '	117.10'
+        _server_lng = '40.13'
+        _cnt,_rt_list = SQL.excute_sql(_sql)
+        _map_geocoord = {}
+        _map_markline = []
+        _map_markpoint = []
+        if _cnt != 0:
+            for _city,_lat,_lng,_nums in _rt_list:
+                _map_geocoord[_city] = [_lng,_lat]
+                _map_markline.append([{'name':_city,'value':_nums},{'name':_server_addr}])
+                _map_markpoint.append({'name':_city,'value':_nums})
+            # print _map_geocoord
+            # print _map_markline
+            # print _map_markpoint
+            _map_geocoord[_server_addr] = [_server_lat,_server_lng]
+            #
+            # _map_geocoord = {
+            #     '上海': [121.4648, 31.2891],
+            #     '北京': [116.4551, 40.2539],
+            #     '大连': [122.2229, 39.4409],
+            #     '广州': [113.5107, 23.2196]
+            # }
 
-        _map_geocoord = {
-            '上海': [121.4648, 31.2891],
-            '北京': [116.4551, 40.2539],
-            '大连': [122.2229, 39.4409],
-            '广州': [113.5107, 23.2196]
-        }
+            # _map_markline = [
+            #     [{"name": '上海', "value": 95}, {"name": '北京'}],
+            #     [{"name": '广州', "value": 90}, {"name": '北京'}],
+            #     [{"name": '大连', "value": 80}, {"name": '北京'}]
+            # ]
+            #
+            # _map_markpoint = [
+            #     {"name": '上海', "value": 95},
+            #     {"name": '广州', "value": 90},
+            #     {"name": '大连', "value": 80}
+            # ]
 
-        _map_markline = [
-            [{"name": '上海', "value": 95}, {"name": '北京'}],
-            [{"name": '广州', "value": 90}, {"name": '北京'}],
-            [{"name": '大连', "value": 80}, {"name": '北京'}]
-        ]
-
-        _map_markpoint = [
-            {"name": '上海', "value": 95},
-            {"name": '广州', "value": 90},
-            {"name": '大连', "value": 80}
-        ]
-
-        return _map_geocoord,_map_markline,_map_markpoint
+            return _map_geocoord,_map_markline,_map_markpoint
+        return [],[],[]
 
 class Assets(object):
 

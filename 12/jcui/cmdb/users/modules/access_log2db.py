@@ -54,7 +54,6 @@ if __name__ == '__main__':
                 lng = response.location.longitude
             #lng 经度
             #lat 纬度
-
         except BaseException as e:
             print ip
             _rt = get_city(ip)

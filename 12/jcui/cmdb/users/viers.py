@@ -336,6 +336,20 @@ def performs_cpu():
     return jsonify({'y':0})
 
 
+#图表展示
+@app.route('/charts/')
+@User.login_check
+def charts():
+    status_legend,status_data = Logs.log2_code_list()
+
+    time_status_legend,time_status_date,time_status_data = Logs.log2_time_status()
+
+    _map_geocoord,_map_markline,_map_markpoint = Logs.log2_map()
+
+    return render_template('charts.html',status_legend=json.dumps(status_legend),status_data=json.dumps(status_data),
+                           time_legend=json.dumps(time_status_legend),time_date=json.dumps(time_status_date),
+                           time_data=json.dumps(time_status_data),map_geocoord=json.dumps(_map_geocoord),
+                           map_markline=json.dumps(_map_markline),map_markpoint=json.dumps(_map_markpoint))
 
 
 

@@ -10,7 +10,6 @@ from . import app         #user模块下的变量,在__init__.py  中定义
 from modules.modules import User,Assets,Logs,Performs
 from modules import gconfig
 
-
 #
 reload(sys)
 sys.setdefaultencoding('utf8')

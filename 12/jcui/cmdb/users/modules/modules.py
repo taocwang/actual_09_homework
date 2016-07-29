@@ -499,3 +499,8 @@ class Performs(object):
                 time_list.append(_time.strftime('%H:%M'))
             return time_list,cpu_list,ram_list
         return False,'',''
+
+
+
+    if __name__ == '__main__':
+        pass

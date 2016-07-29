@@ -7,7 +7,8 @@ import time
 
 
 if __name__ == '__main__':
-    logfile = '/home/jcui/files/www_access_20140823.log'
+    # logfile = '/home/jcui/files/www_access_20140823.log'
+    logfile = '/home/jcui/files/access.log'
     SQL.excute_sql('delete from access_logs2',(),fetch=False)
     reader = geoip2.database.Reader('../data/GeoLite2-City.mmdb')
     log_files  = open(logfile,'r')

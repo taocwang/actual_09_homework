@@ -3,6 +3,9 @@ import json
 import sys
 import random
 import string
+import time
+import csv
+from StringIO import StringIO
 
 import datetime
 from flask import render_template,request,redirect,session, flash ,jsonify
@@ -249,7 +252,7 @@ def assets_update():
 def assets_delete():
     params = request.args if request.method == 'GET' else request.form
     id = params.get('id')
-    print id
+    # print id
     _is_ok,_error = Assets.delete(int(id))
     if _is_ok:
         return redirect('/assets/')
@@ -373,3 +376,63 @@ def performs():
     return json.dumps({'code':200,'text':'success'})
 
 
+@app.route('/assets/download/')
+def assets_download():
+    _assets = Assets.get_list()
+    # fhandel = open('/tmp/assets_%s.cvs' % time.time(),'wb+')
+    s = StringIO()
+    # csv_writer = csv.writer(fhandel)
+    csv_writer = csv.writer(s)
+    hearders = 'id,sn,ip,hostname,os,cpu,ram,disk,idc_name,admin,business,purchase_date,warranty,vendor,model,status'.split(',')
+    csv_writer.writerow(hearders)
+    for asset in _assets:
+        _tmplist = []
+        for x in hearders:
+            _tmplist.append(asset.get(x))
+        csv_writer.writerow(_tmplist)
+    # fhandel.seek(0)
+    # cxt = fhandel.read()
+    cxt = s.getvalue()
+    s.close()
+    # fhandel.close()
+    return cxt,200,{'Content-Type':'text/csv,charset=utf-8','Content-disposition':'attachment;filename=test.csv'}
+
+
+@app.route('/api/assets/add/',methods=['POST','GET'])
+def api_assets_add():
+    params = request.args if request.method == 'GET' else request.form
+    _is_ok,_error = Assets.validate_create(params)
+    if _is_ok:
+        success = '添加成功'
+    else:
+        success = ''
+    asset = {}
+    return jsonify({'is_ok':_is_ok,'error':_error,'success':success,'result':asset})
+
+@app.route('/api/assets/delete/<key>/',methods=['DELETE'])
+def api_assets_delete(key):
+    _is_ok,_error =True,{}
+    Assets.delete(key)
+    if _is_ok:
+        success = '添加成功'
+    else:
+        success = ''
+    asset = {}
+    return jsonify({'is_ok':_is_ok,'error':_error,'success':success,'result':asset})
+
+#调用API  requests.delete('http://127.0.0.1:9000/api/assets/delete/4/')
+
+@app.route('/api/assets/',methods=['POST','GET'])
+@app.route('/api/assets/<key>/',methods=['PUT','DELETE'])
+def api_assets(key=None):
+    if request.method == 'POST':
+        return {}, 201
+    if request.method == 'DELETE':
+        return {}, 202
+    if request.method == 'PUT':
+        return {}, 203
+    if request.method == 'GET':
+        if key == None:
+            return {}, 204
+        else:
+            return {}, 205

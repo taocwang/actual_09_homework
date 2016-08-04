@@ -4,5 +4,5 @@ import user
 from user import view
 
 if __name__ == '__main__':
-    user.app.run(host='192.168.0.102',port=8080,debug=True)
+    user.app.run(host='0.0.0.0',port=18018,debug=True)
 

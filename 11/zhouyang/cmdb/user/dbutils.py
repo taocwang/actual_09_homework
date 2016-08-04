@@ -64,6 +64,6 @@ class MYSQLConnection(object):
         return _cnt,_rt_list
 
 if __name__ == "__main__":
-    _args=('zy11','123456')
+    _args=('zy22','123123')
     _sql="select username,password from user where username=%s and password=md5(%s);"
     print MYSQLConnection.excute_sql(_sql,_args)

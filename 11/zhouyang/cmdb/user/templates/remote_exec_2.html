@@ -18,7 +18,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label">ssh端口:</label>
         <div class="col-md-5">
-            <input type="text" class="form-control" id="bt-port" name="re_port" />
+            <input type="text" class="form-control" id="bt-port" placeholder="默认22" data-slider-value="22" name="re_port" />
         </div>
     </div>
     <div class="form-group">
@@ -36,7 +36,13 @@
     <div class="form-group">
         <label class="col-md-3 control-label">命令:</label>
         <div class="col-md-5">
-            <textarea class="form-control" id="bt-cmds" name="re_cmds"></textarea>
+            <textarea class="form-control" rows="5" id="bt-cmds"  placeholder="多个命令间用|分割" name="re_cmds"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">执行结果:</label>
+        <div class="col-md-5">
+            <textarea  class="form-control" rows="25" id="bt-result" name="re_result" readonly></textarea>
         </div>
     </div>
     <div class="modal-footer">
@@ -90,35 +96,9 @@ jQuery(document).ready(function() {
         jQuery.post(url, params, function(result) {
             console.log(result['_is_ok'])
             if(result['_is_ok']) {
-                    swal({
-                        title: '执行结果',
-                        text: result['msg'],
-                        type: "success",
-                        showCancelButton: false,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "确定",
-                        cancelButtonText: "关闭",
-                        closeOnConfirm: true,
-                        closeOnCancel: false
-                        },
-                        function(isConfirm){
-                            window.location.reload();
-                    });
+                    $('#bt-result').val(result['msg'])
             } else {
-                swal({
-                        title: "错误信息",
-                        text: result['msg'],
-                        type: "error",
-                        showCancelButton: false,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "确定",
-                        cancelButtonText: "关闭",
-                        closeOnConfirm: true,
-                        closeOnCancel: false
-                    },
-                    function(isConfirm){
-                    }
-                );
+                    $('#bt-result').val(result['msg'])
             }
         }, 'json')
     });

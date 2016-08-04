@@ -25,7 +25,7 @@ def get_ip():
 
 def collect_cpu():
     _cmd = "top -bn 1 |grep Cpu |awk '{print $8}'"
-    return execute_cmd(_cmd)
+    return 100 - float(execute_cmd(_cmd))
 
 def collect_ram():
     f = open('/proc/meminfo','r')
@@ -34,7 +34,7 @@ def collect_ram():
     f.readline()
     _buff = float(f.readline().split()[1])
     f.close()
-    return 100 - 100*(_free+_buff)/_totol
+    return 100*(_free+_buff)/_totol
 
 
 

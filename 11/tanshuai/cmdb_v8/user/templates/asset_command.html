@@ -1,0 +1,64 @@
+<form class="form-horizontal" id="asset-command" action="/asset/comm/" method="post">
+  <div class="form-group">
+    <label class="col-md-3 control-label">主机IP:</label>
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="ip" value="{{ ip }}" readonly="readonly">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-3 control-label">管理员密码:</label>
+      <div class="col-md-4">
+        <input type="password" class="form-control" name="mpassword" placeholder="Admin password">
+      </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-3 control-label">执行命令:</label>
+    <div class="col-md-8">
+        <textarea class="form-control" rows="1" name="command" placeholder="Command to execute"></textarea>
+        <!--<input type="text" class="form-control" name="command" placeholder="Command to execute">-->
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-3 control-label">返回信息:</label>
+    <div class="col-md-8">
+        <textarea class="form-control" rows="10" name="info" id="info" readonly="readonly">{{ info }}</textarea>
+    </div>
+  </div>
+</form>
+<script type="text/javascript" >
+    $('#asset-command').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            command: {
+                message: 'The username is not valid',
+                validators: {
+                    notEmpty: {
+                        message: '命令不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 128,
+                        message: '命令必须大于2个字符，并且小于128个字符！'
+                    }
+                }
+            },
+            mpassword: {
+                message: 'The username is not valid',
+                validators: {
+                    notEmpty: {
+                        message: '管理员密码不能为空'
+                    },
+                    stringLength: {
+                        min: 6,
+                        message: '密码长度必须大于6位'
+                    }
+                }
+            }
+        }
+    });
+</script>

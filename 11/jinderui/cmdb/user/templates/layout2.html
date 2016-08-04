@@ -1,0 +1,17 @@
+<form {% block commit %}{% endblock %}>
+  <input type="hidden" id="userid" name="userid"></input>
+
+  <div class="form-group">
+    <label for="username" class="control-label">用户名:</label>
+    <input type="text" class="form-control" id="username" name="username" {% block readuser %}{% endblock %}></input>
+  </div>
+
+
+  {% block password %}{% endblock %}
+  {% block age %}{% endblock %}
+
+  {% block managepassword %}{% endblock %}
+  {% block userpassword %}{% endblock %}
+</form>
+
+

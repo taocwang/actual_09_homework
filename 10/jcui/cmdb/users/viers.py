@@ -274,8 +274,24 @@ def assets__conssh():
 @User.login_check
 def assets__concmd():
     params = request.args if request.method == 'GET' else request.form
-    _is_ok,_error = User.validate_mpass(params)
-    pass
+    _is_ok,_result = User.validate_mpass(params)
+    if _is_ok:
+        error = ''
+        _data = []
+        nums = 1
+        for x in _result:
+            if x[0] :
+                _data += (nums,x[0])
+            else:
+                _data += (nums, x[1])
+            nums +=1
+    elif _result:
+        error = _result
+        _data = ''
+    else:
+        error = '执行失败'
+        _data = ''
+    return jsonify({'is_ok':_is_ok,'error':error,'data_result':_data})
 
 '''
 登出用户

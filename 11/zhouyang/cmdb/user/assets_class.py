@@ -96,9 +96,7 @@ class Performs(object):
         _cpu=req.get('cpu')
         _ram=req.get('ram')
         _sql="insert into performs(`time`,`ip`,`cpu`,`ram`) VALUES (%s,%s,%s,%s)"
-        print _sql
         _args=(_time,_ip,_cpu,_ram)
-        print _args
         _cnt,_res=MYSQLConnection.excute_sql(_sql,_args,fetch=False)
         if _cnt == 0:
             return False,'入库失败'
@@ -107,7 +105,7 @@ class Performs(object):
     @classmethod
     def get_performs_view(cls,_iner_ip):
         import datetime
-        last_hour=(datetime.datetime.now() - datetime.timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')
+        last_hour=(datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
         _sql_time="select time from performs where ip=%s and time > %s order by time;"
         _sql_cpu="select cpu from performs where ip=%s and time > %s order by time;"
         _sql_ram="select ram from performs where ip=%s and time > %s order by time;"
@@ -143,7 +141,7 @@ class remote_exec(object):
         #连接服务器
         ssh.connect(re_ip,re_port,re_user,re_pass)
 
-        for cmd in cmds.split(';'):
+        for cmd in cmds.split('|'):
             stdin,stdout,stderr=ssh.exec_command(cmd)
             rt_list.append([cmd,stdout.readlines(),stderr.readlines()])
 

@@ -198,6 +198,7 @@ def asset_del():
 @app.route('/performs/',methods=['POST'])
 def performs():
     req=request.get_json()
+    print req
     from assets_class import Performs
     if Performs.performs(req):
         return json.dumps({'code':200,'text':'success'})
@@ -215,14 +216,14 @@ def asset_performs():
 
 @app.route('/remote/exec/',methods=['POST','GET'])
 def remote_exec():
-    return render_template('remote_exec.html')
+    return render_template('remote_exec_2.html')
 
 @app.route('/remote/doing/',methods=['POST','GET'])
 def remote_doing():
     params=request.args if request.method == 'GET' else request.form
     from assets_class import remote_exec
     msg=remote_exec.remote_cmds(params)
-    print msg
+    #print msg[1]
     return json.dumps({'_is_ok':1,'msg':msg})
 
 

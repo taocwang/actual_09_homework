@@ -63,18 +63,21 @@ def send(msg):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(Level=logging.DEBUG,
-                        format="%(asctime)s %(name)s %(pathname)s %(levelname)s %(message)s",
-                        filename='/home/jcui/temp/stdout.log')
-    while True:
-        try:
-            _msg = collect()
-            logger.debug(_msg)
-            send(_msg)
-            time.sleep(10)
-            logger.debug(time.strftime('%Y-%m-%d %H:%M:%S'))
-        except BaseException as e:
-            logger.error(traceback.format_exc())
+    try:
+        logging.basicConfig(Level=logging.DEBUG,
+                            format="%(asctime)s %(name)s %(pathname)s %(levelname)s %(message)s",
+                            filename='/home/jcui/temp/stdout.log')
+        while True:
+            try:
+                _msg = collect()
+                logger.debug(_msg)
+                send(_msg)
+                time.sleep(10)
+                logger.debug(time.strftime('%Y-%m-%d %H:%M:%S'))
+            except BaseException as e:
+                logger.error(traceback.format_exc())
+    except KeyboardInterrupt as e:
+        logger.error(traceback.format_exc())
 
     '''
     Content-Type application/json

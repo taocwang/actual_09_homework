@@ -304,7 +304,6 @@ def assets__conssh():
 def assets__concmd():
     params = request.args if request.method == 'GET' else request.form
     _is_ok,_result = User.validate_mpass(params)
-    print _result
     if _is_ok:
         error = ''
         _data = ''
@@ -318,7 +317,6 @@ def assets__concmd():
         error = '执行失败'
         _data = ''
     error = ''
-    print _data
     return jsonify({'is_ok':_is_ok,'error':error,'data_result':_data})
 
 @app.route('/assets/performs/endstat/')

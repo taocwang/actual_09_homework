@@ -163,12 +163,18 @@ class Ssh_cmd(object):
         _rt_list = []
         if self._ssh:
             for _cmd in self.cmd:
+                print _cmd.strip('\r')
                 stdin, stdout, stderr = self._ssh.exec_command(_cmd.strip('\r'))
-                # _rt_list.append([_cmd, stdout.readlines(), stderr.readlines()])
                 _rt_list.append([stdout.readlines(), stderr.readlines()])
-
             self._ssh.close()
-            return True,_rt_list
+            _result = []
+            for _stdout,_stderr in _rt_list:
+                print _stdout
+                print _stderr
+                _result.append(''.join(_stdout))
+                _result.append(''.join(_stderr))
+
+            return True,_result
         return False,'执行失败'
 
 

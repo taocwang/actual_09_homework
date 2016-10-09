@@ -148,7 +148,14 @@ jQuery(document).ready(function () {
                 confirmButtonColor: "#ec6c62"
             }, function() {
                 jQuery.post("/assets/delete/", {id: id}, function(data) {
-                    location.reload();
+                    swal({
+                        title:"删除成功!",
+                        text:text+"已删除完毕.",
+                        type:"success"
+                    },function () {
+                        window.location.reload();
+                        // window.location.href = '/assets/';
+                    })
                 })
             });
         })

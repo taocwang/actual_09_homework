@@ -13,6 +13,13 @@ python多线程和多进程
 
 
 CAP原理
+
+Consistency 一致性
+Availability 可用性
+Partition tolerance 可靠性(分区容错性)
+
+任何分布式只可满足二点,无法三者兼顾
+
 '''
 
 

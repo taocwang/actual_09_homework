@@ -40,6 +40,7 @@ def binary_search():
             mid = mid - len(num_list[left:right])/2  - 1
     else:
         print "您输入的数字:%s不在列表中" % nums ,
+        break
 
 '''
 二分查找优化版本
@@ -49,7 +50,7 @@ def binary_search_two():
    num_list = [-1, 5, 6, 10, 23, 34, 123, 213, 344, 435, 65535]
    nums = int(raw_input("%s 请从列表中选择查找的数字:" % num_list))
    left = 0
-   right = len(num_list)
+   right = len(num_list)-1
    while True:
        if left <= right:
            mid = (left+right)/2
@@ -62,6 +63,7 @@ def binary_search_two():
                right = mid - 1
        else:
            print "您输入的数字:%s不在列表中" % nums ,
+           break
 
 
 '''
